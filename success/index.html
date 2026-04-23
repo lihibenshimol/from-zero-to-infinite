@@ -9,6 +9,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="../assets/style/main.css"/>
 <link rel="stylesheet" href="../assets/style/pages/success.css"/>
+<!-- Calendly widget CSS -->
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet"/>
 </head>
 <body>
 
@@ -17,17 +19,17 @@
 <div class="page">
 
 <!-- ── HERO (LOGO) ── -->
-<section class="hero" style="min-height:35vh;padding:60px 24px 0">
-  <img src="brand_assets/logo.png" alt="From Zero to Infinite" class="hero-logo" style="width:clamp(180px,20vw,380px)"/>
+<section class="hero" style="min-height:30vh;padding:56px 24px 0">
+  <img src="../brand_assets/logo.png" alt="From Zero to Infinite" class="hero-logo" style="width:clamp(180px,20vw,380px)"/>
 </section>
 
 <!-- ── CONFIRMATION ── -->
-<section style="padding:48px 24px 96px">
+<section style="padding:40px 24px 0">
   <div class="wrap">
     <p class="section-label reveal">&gt; SEQUENCE_INITIATED</p>
-    <div class="circuitry-line reveal" style="margin-bottom:48px"></div>
+    <div class="circuitry-line reveal" style="margin-bottom:40px"></div>
 
-    <div class="glass border-neon reveal glow-neon" style="padding:clamp(40px,6vw,72px);text-align:center">
+    <div class="glass border-neon reveal glow-neon" style="padding:clamp(32px,5vw,64px);text-align:center">
 
       <!-- check icon -->
       <div class="success-icon reveal d1">
@@ -36,25 +38,50 @@
         </svg>
       </div>
 
-      <h1 class="reveal d1" style="font-size:clamp(22px,4vw,34px);font-weight:600;color:rgba(240,240,255,0.95);line-height:1.5;margin-bottom:20px" dir="rtl">
+      <h1 class="reveal d1" style="font-size:clamp(22px,4vw,34px);font-weight:600;color:rgba(240,240,255,0.95);line-height:1.5;margin-bottom:16px" dir="rtl">
         המקום שלך מאובטח.
       </h1>
 
-      <p class="reveal d2" style="font-size:clamp(15px,2.5vw,18px);color:var(--muted);line-height:1.8;max-width:520px;margin:0 auto 40px" dir="rtl">
-        קיבלתי את הפרטים שלך וכבר מכינה את הסביבה לקראת המסע שלנו.<br/>
-        <strong style="color:rgba(240,240,255,0.85)">בדקי את הוואטסאפ שלך</strong> — אשלח לך שם הודעת ברוכה הבאה עם כל הפרטים לפגישה הראשונה.
-      </p>
-
-      <div class="circuitry-line reveal d2" style="margin-bottom:40px;max-width:400px;margin-left:auto;margin-right:auto"></div>
-
-      <p class="reveal d3" style="font-size:12px;letter-spacing:0.22em;text-transform:uppercase;color:var(--neon);margin-bottom:4px">
-        BY LIHI ZIV
-      </p>
-      <p class="reveal d3" style="font-size:13px;color:var(--muted);line-height:1.7" dir="rtl">
-        ממתינה לפגוש אותך.
+      <p class="reveal d2" style="font-size:clamp(14px,2vw,17px);color:var(--muted);line-height:1.8;max-width:480px;margin:0 auto 32px" dir="rtl">
+        קיבלתי את הפרטים שלך וכבר מכינה את הסביבה לקראת המסע שלנו.
       </p>
 
     </div>
+  </div>
+</section>
+
+<!-- ── CALENDLY ── -->
+<section style="padding:40px 24px 32px">
+  <div class="wrap">
+
+    <p class="reveal" style="font-size:13px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--neon);text-align:center;margin-bottom:24px">
+      צעד אחרון: תיאום המפגש האישי שלנו ביומן
+    </p>
+
+    <div class="glass border-neon reveal" style="overflow:hidden;padding:0">
+      <!-- Calendly inline widget — dark background matches site theme -->
+      <div
+        class="calendly-inline-widget"
+        data-url="https://calendly.com/lihi-zivb/meet-with-me?background_color=0a0a0f&text_color=dcdceb&primary_color=4db8ff"
+        style="min-width:280px;height:550px"
+      ></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── WHATSAPP SUPPORT ── -->
+<section style="padding:0 24px 80px">
+  <div class="wrap" style="text-align:center">
+    <a
+      href="https://wa.me/972542390294"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="wa-support-btn reveal"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+      צריכה עזרה? דברי איתי בוואטסאפ
+    </a>
   </div>
 </section>
 
@@ -69,6 +96,9 @@
 </footer>
 
 </div><!-- /.page -->
+
+<!-- Calendly widget JS -->
+<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
 
 <script>
 /* ── CANVAS ── */

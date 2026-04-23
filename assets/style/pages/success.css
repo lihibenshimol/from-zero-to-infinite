@@ -12,6 +12,35 @@
   box-shadow: 0 0 30px rgba(77, 184, 255, 0.15), 0 0 60px rgba(77, 184, 255, 0.06);
 }
 
+/* WhatsApp support button */
+.wa-support-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 40px;
+  padding: 12px 28px;
+  transition: color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  direction: rtl;
+}
+
+.wa-support-btn:hover {
+  color: #25D366;
+  border-color: rgba(37, 211, 102, 0.4);
+  box-shadow: 0 0 20px rgba(37, 211, 102, 0.12);
+}
+
+/* Calendly container responsive height */
+@media (max-width: 768px) {
+  .calendly-inline-widget { height: 400px !important; }
+}
+
 @media (max-width: 640px) {
   .success-icon { width: 52px; height: 52px; margin-bottom: 24px; }
+  .calendly-inline-widget { height: 380px !important; }
+  .wa-support-btn { font-size: 13px; padding: 11px 20px; }
 }
