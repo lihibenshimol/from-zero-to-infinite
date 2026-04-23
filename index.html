@@ -1,1181 +1,501 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>From Zero To Infinite — Quantum Unconscious Architecture</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
-
-<style>
-  /* ─── TOKENS ─────────────────────────────────────────────── */
-  :root {
-    --midnight-void:  #010214;
-    --deep-nebula:    #05113F;
-    --cyan-glow:      #0AFFF0;
-    --alien-yellow:   #EFFF0A;
-    --soft-cosmic:    #4C7CFF;
-    --shadow-tint:    rgba(5, 17, 63, 0.45);
-    --crystal-border: rgba(10, 255, 240, 0.18);
-    --crystal-glow:   rgba(10, 255, 240, 0.06);
-  }
-
-  /* ─── RESET ──────────────────────────────────────────────── */
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-
-  /* ─── SVG GRAIN TEXTURE ──────────────────────────────────── */
-  body {
-    background-color: var(--midnight-void);
-    color: var(--soft-cosmic);
-    font-family: 'Space Mono', monospace;
-    font-size: 15px;
-    line-height: 1.75;
-    min-height: 100vh;
-    overflow-x: hidden;
-    position: relative;
-  }
-
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
-    background-repeat: repeat;
-    background-size: 300px 300px;
-  }
-
-  /* scanlines */
-  body::after {
-    content: '';
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    background: repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      rgba(10, 255, 240, 0.012) 2px,
-      rgba(10, 255, 240, 0.012) 4px
-    );
-  }
-
-  /* ─── LAYOUT WRAPPER ─────────────────────────────────────── */
-  .page { position: relative; z-index: 1; }
-
-  /* ─── STAR FIELD ─────────────────────────────────────────── */
-  #starfield {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    overflow: hidden;
-  }
-  .star {
-    position: absolute;
-    border-radius: 50%;
-    background: #fff;
-    animation: twinkle var(--d, 4s) ease-in-out infinite var(--delay, 0s);
-  }
-  @keyframes twinkle {
-    0%, 100% { opacity: var(--min-op, 0.15); transform: scale(1); }
-    50%       { opacity: var(--max-op, 0.7);  transform: scale(1.4); }
-  }
-
-  /* ─── NAV ────────────────────────────────────────────────── */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 18px 48px;
-    backdrop-filter: blur(20px);
-    background: rgba(1, 2, 20, 0.72);
-    border-bottom: 1px solid var(--crystal-border);
-  }
-  .nav-logo {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 13px;
-    letter-spacing: 0.22em;
-    color: var(--alien-yellow);
-    text-transform: uppercase;
-  }
-  .nav-logo span { color: var(--cyan-glow); }
-  .nav-cta {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--midnight-void);
-    background: var(--cyan-glow);
-    border: none;
-    padding: 10px 22px;
-    cursor: pointer;
-    text-decoration: none;
-    clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
-    transition: background 0.2s, box-shadow 0.2s;
-  }
-  .nav-cta:hover {
-    background: var(--alien-yellow);
-    box-shadow: 0 0 24px rgba(239, 255, 10, 0.55);
-  }
-
-  /* ─── HERO ───────────────────────────────────────────────── */
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 120px 24px 80px;
-    position: relative;
-  }
-  .hero-eyebrow {
-    font-size: 11px;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--cyan-glow);
-    margin-bottom: 28px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .hero-eyebrow::before,
-  .hero-eyebrow::after {
-    content: '';
-    display: block;
-    width: 40px;
-    height: 1px;
-    background: var(--cyan-glow);
-    box-shadow: 0 0 8px var(--cyan-glow);
-  }
-
-  .hero-title {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: clamp(52px, 10vw, 110px);
-    line-height: 0.92;
-    letter-spacing: -0.02em;
-    text-transform: uppercase;
-    color: var(--alien-yellow);
-    text-shadow: 0 0 60px rgba(239,255,10,0.35), 0 0 120px rgba(239,255,10,0.15);
-    margin-bottom: 12px;
-  }
-  .hero-title .to {
-    color: var(--cyan-glow);
-    text-shadow: 0 0 60px rgba(10,255,240,0.45), 0 0 120px rgba(10,255,240,0.2);
-  }
-  .hero-infinity {
-    font-size: clamp(64px, 12vw, 130px);
-    line-height: 1;
-    color: var(--alien-yellow);
-    text-shadow: 0 0 80px rgba(239,255,10,0.4);
-    display: block;
-    margin-bottom: 32px;
-  }
-
-  .hero-subtitle {
-    font-family: 'Syne', sans-serif;
-    font-size: 13px;
-    letter-spacing: 0.35em;
-    text-transform: uppercase;
-    color: var(--soft-cosmic);
-    margin-bottom: 52px;
-  }
-
-  .hero-tag {
-    display: inline-block;
-    border: 1px solid var(--crystal-border);
-    background: var(--crystal-glow);
-    padding: 10px 28px;
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--cyan-glow);
-    clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
-    box-shadow: 0 0 20px rgba(10, 255, 240, 0.12), inset 0 0 20px rgba(10, 255, 240, 0.04);
-  }
-
-  .scroll-hint {
-    position: absolute;
-    bottom: 36px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    color: rgba(76,124,255,0.5);
-    text-transform: uppercase;
-    animation: scrollHint 2.5s ease-in-out infinite;
-  }
-  .scroll-hint::after {
-    content: '';
-    display: block;
-    width: 1px;
-    height: 40px;
-    background: linear-gradient(to bottom, rgba(10,255,240,0.6), transparent);
-  }
-  @keyframes scrollHint {
-    0%, 100% { opacity: 0.4; transform: translateX(-50%) translateY(0); }
-    50%       { opacity: 1;   transform: translateX(-50%) translateY(6px); }
-  }
-
-  /* ─── SECTION BASE ───────────────────────────────────────── */
-  section { position: relative; padding: 100px 24px; }
-  .container { max-width: 960px; margin: 0 auto; }
-  .container-wide { max-width: 1200px; margin: 0 auto; }
-
-  .section-label {
-    font-size: 10px;
-    letter-spacing: 0.35em;
-    text-transform: uppercase;
-    color: var(--cyan-glow);
-    margin-bottom: 16px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .section-label::before {
-    content: '';
-    display: block;
-    width: 24px;
-    height: 1px;
-    background: var(--cyan-glow);
-    box-shadow: 0 0 6px var(--cyan-glow);
-  }
-
-  .section-heading {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: clamp(32px, 5vw, 56px);
-    line-height: 1.05;
-    color: var(--alien-yellow);
-    text-transform: uppercase;
-    letter-spacing: -0.01em;
-    margin-bottom: 24px;
-  }
-
-  /* ─── CRYSTAL CARD ───────────────────────────────────────── */
-  .crystal-card {
-    background: var(--deep-nebula);
-    border: 1px solid var(--crystal-border);
-    box-shadow:
-      0 4px 30px var(--shadow-tint),
-      0 1px 0 rgba(10,255,240,0.08) inset,
-      0 0 60px rgba(5,17,63,0.6);
-    padding: 40px 48px;
-    position: relative;
-    overflow: hidden;
-  }
-  .crystal-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--cyan-glow), transparent);
-    opacity: 0.5;
-  }
-
-  /* ─── ABOUT SECTION ──────────────────────────────────────── */
-  .about-section { background: transparent; }
-
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2px;
-    margin-top: 64px;
-  }
-
-  .about-stat {
-    background: var(--deep-nebula);
-    border: 1px solid var(--crystal-border);
-    padding: 36px 40px;
-    position: relative;
-    overflow: hidden;
-    transition: border-color 0.3s;
-  }
-  .about-stat:hover { border-color: rgba(10,255,240,0.4); }
-  .about-stat::after {
-    content: '';
-    position: absolute;
-    bottom: 0; right: 0;
-    width: 60px; height: 60px;
-    background: radial-gradient(circle at bottom right, rgba(10,255,240,0.07), transparent 70%);
-  }
-
-  .stat-number {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 48px;
-    color: var(--alien-yellow);
-    line-height: 1;
-    text-shadow: 0 0 30px rgba(239,255,10,0.3);
-    display: block;
-    margin-bottom: 8px;
-  }
-  .stat-label {
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--soft-cosmic);
-  }
-
-  .about-body {
-    font-size: 15px;
-    line-height: 1.85;
-    color: var(--soft-cosmic);
-    direction: rtl;
-    text-align: right;
-  }
-  .about-body strong {
-    color: var(--alien-yellow);
-    font-weight: 700;
-  }
-  .about-body em {
-    color: var(--cyan-glow);
-    font-style: normal;
-  }
-
-  /* ─── JOURNEY / SESSIONS ─────────────────────────────────── */
-  .journey-section { background: transparent; }
-
-  .sessions-list { margin-top: 72px; }
-
-  .session-item {
-    display: grid;
-    grid-template-columns: 80px 1fr;
-    gap: 0;
-    margin-bottom: 2px;
-    position: relative;
-  }
-
-  .session-number-col {
-    background: var(--deep-nebula);
-    border: 1px solid var(--crystal-border);
-    border-left: none;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 40px 0;
-    position: relative;
-  }
-  .session-number-col::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 1px;
-    height: 2px;
-    background: var(--cyan-glow);
-  }
-  .session-index {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 11px;
-    letter-spacing: 0.25em;
-    color: var(--cyan-glow);
-    writing-mode: vertical-rl;
-    text-transform: uppercase;
-  }
-  .session-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--cyan-glow);
-    box-shadow: 0 0 12px var(--cyan-glow), 0 0 24px rgba(10,255,240,0.4);
-    margin-bottom: 14px;
-  }
-
-  .session-body {
-    background: var(--deep-nebula);
-    border: 1px solid var(--crystal-border);
-    border-right: none;
-    padding: 40px 48px;
-    position: relative;
-    transition: background 0.3s;
-  }
-  .session-item:hover .session-body { background: rgba(5,17,63,0.9); }
-  .session-body::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, var(--cyan-glow), transparent);
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-  .session-item:hover .session-body::before { opacity: 0.5; }
-
-  .session-tag {
-    font-size: 10px;
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
-    color: var(--cyan-glow);
-    margin-bottom: 10px;
-  }
-  .session-title {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 28px;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: var(--alien-yellow);
-    margin-bottom: 20px;
-    text-shadow: 0 0 30px rgba(239,255,10,0.2);
-  }
-  .session-text {
-    font-size: 14px;
-    line-height: 1.85;
-    color: var(--soft-cosmic);
-    direction: rtl;
-    text-align: right;
-    max-width: 680px;
-  }
-
-  /* ─── FIT SECTION ────────────────────────────────────────── */
-  .fit-section { background: transparent; }
-
-  .fit-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-    margin-top: 64px;
-    align-items: start;
-  }
-
-  .fit-card-yes, .fit-card-no {
-    border: 1px solid;
-    padding: 40px;
-    position: relative;
-    overflow: hidden;
-  }
-  .fit-card-yes {
-    background: rgba(5,17,63,0.6);
-    border-color: rgba(10,255,240,0.25);
-    box-shadow: 0 4px 40px rgba(5,17,63,0.5), inset 0 0 40px rgba(10,255,240,0.03);
-  }
-  .fit-card-no {
-    background: rgba(1,2,20,0.8);
-    border-color: rgba(76,124,255,0.15);
-    box-shadow: 0 4px 30px rgba(1,2,20,0.5);
-  }
-
-  .fit-card-label {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 11px;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    margin-bottom: 28px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .fit-card-yes .fit-card-label { color: var(--cyan-glow); }
-  .fit-card-no .fit-card-label  { color: rgba(76,124,255,0.6); }
-
-  .fit-item {
-    display: flex;
-    gap: 14px;
-    align-items: flex-start;
-    margin-bottom: 20px;
-    direction: rtl;
-    text-align: right;
-  }
-  .fit-item:last-child { margin-bottom: 0; }
-  .fit-bullet {
-    flex-shrink: 0;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    margin-top: 8px;
-  }
-  .fit-card-yes .fit-bullet {
-    background: var(--cyan-glow);
-    box-shadow: 0 0 8px var(--cyan-glow);
-  }
-  .fit-card-no .fit-bullet {
-    background: rgba(76,124,255,0.4);
-  }
-  .fit-item-text {
-    font-size: 14px;
-    line-height: 1.8;
-    color: var(--soft-cosmic);
-  }
-  .fit-item-text strong {
-    color: var(--alien-yellow);
-    font-family: 'Syne', sans-serif;
-    font-size: 13px;
-    display: block;
-    margin-bottom: 4px;
-  }
-
-  /* ─── VALUE SECTION ──────────────────────────────────────── */
-  .value-section {
-    background: transparent;
-  }
-
-  .value-cards {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
-    margin-top: 64px;
-    margin-bottom: 64px;
-  }
-
-  .value-card {
-    background: var(--deep-nebula);
-    border: 1px solid var(--crystal-border);
-    padding: 40px 32px;
-    position: relative;
-    overflow: hidden;
-    transition: border-color 0.3s;
-  }
-  .value-card:hover { border-color: rgba(10,255,240,0.35); }
-  .value-card::before {
-    content: '';
-    position: absolute;
-    top: 0; right: 0;
-    width: 1px;
-    height: 0;
-    background: var(--cyan-glow);
-    transition: height 0.4s ease;
-    box-shadow: 0 0 8px var(--cyan-glow);
-  }
-  .value-card:hover::before { height: 100%; }
-
-  .value-icon {
-    font-size: 28px;
-    margin-bottom: 20px;
-    display: block;
-    filter: drop-shadow(0 0 10px rgba(10,255,240,0.4));
-  }
-  .value-card-title {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 16px;
-    color: var(--alien-yellow);
-    margin-bottom: 12px;
-    letter-spacing: 0.05em;
-    direction: rtl;
-    text-align: right;
-  }
-  .value-card-text {
-    font-size: 13px;
-    line-height: 1.8;
-    color: var(--soft-cosmic);
-    direction: rtl;
-    text-align: right;
-  }
-
-  /* ─── PRICE BLOCK ────────────────────────────────────────── */
-  .price-block {
-    background: var(--deep-nebula);
-    border: 1px solid rgba(10,255,240,0.3);
-    box-shadow:
-      0 0 80px rgba(10,255,240,0.06),
-      0 4px 40px var(--shadow-tint),
-      inset 0 0 80px rgba(5,17,63,0.4);
-    padding: 64px 80px;
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 64px;
-    align-items: center;
-    position: relative;
-    overflow: hidden;
-  }
-  .price-block::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--cyan-glow), var(--alien-yellow), var(--cyan-glow), transparent);
-    opacity: 0.6;
-  }
-  .price-block::after {
-    content: '';
-    position: absolute;
-    bottom: -80px; left: -80px;
-    width: 300px; height: 300px;
-    background: radial-gradient(circle, rgba(10,255,240,0.05), transparent 70%);
-    pointer-events: none;
-  }
-
-  .price-details { direction: rtl; text-align: right; }
-  .price-title {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 22px;
-    color: var(--alien-yellow);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-bottom: 20px;
-  }
-  .price-meta {
-    font-size: 13px;
-    line-height: 1.9;
-    color: var(--soft-cosmic);
-  }
-  .price-meta-row {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    justify-content: flex-end;
-    margin-bottom: 6px;
-  }
-  .price-meta-row::before {
-    content: '//';
-    color: var(--cyan-glow);
-    font-size: 11px;
-  }
-
-  .price-amount-col { text-align: center; flex-shrink: 0; }
-  .price-amount {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 64px;
-    color: var(--alien-yellow);
-    line-height: 1;
-    text-shadow: 0 0 40px rgba(239,255,10,0.35), 0 0 80px rgba(239,255,10,0.15);
-    display: block;
-  }
-  .price-currency {
-    font-family: 'Space Mono', monospace;
-    font-size: 12px;
-    letter-spacing: 0.2em;
-    color: var(--cyan-glow);
-    text-transform: uppercase;
-    margin-top: 8px;
-    display: block;
-  }
-
-  /* ─── CTA SECTION ────────────────────────────────────────── */
-  .cta-section {
-    padding: 120px 24px;
-    text-align: center;
-    position: relative;
-  }
-  .cta-section::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 50%;
-    transform: translateX(-50%);
-    width: 1px;
-    height: 80px;
-    background: linear-gradient(to bottom, transparent, var(--cyan-glow));
-  }
-
-  .cta-heading {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: clamp(36px, 6vw, 68px);
-    color: var(--alien-yellow);
-    text-transform: uppercase;
-    line-height: 1.05;
-    margin-bottom: 20px;
-    text-shadow: 0 0 60px rgba(239,255,10,0.25);
-  }
-  .cta-sub {
-    font-size: 14px;
-    letter-spacing: 0.15em;
-    color: var(--soft-cosmic);
-    margin-bottom: 52px;
-    direction: rtl;
-  }
-
-  .cta-btn {
-    display: inline-block;
-    font-family: 'Space Mono', monospace;
-    font-size: 12px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--midnight-void);
-    background: var(--cyan-glow);
-    border: none;
-    padding: 20px 56px;
-    cursor: pointer;
-    text-decoration: none;
-    clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
-    box-shadow: 0 0 40px rgba(10, 255, 240, 0.35), 0 0 80px rgba(10, 255, 240, 0.12);
-    transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
-    font-weight: 700;
-  }
-  .cta-btn:hover {
-    background: var(--alien-yellow);
-    box-shadow: 0 0 50px rgba(239, 255, 10, 0.5), 0 0 100px rgba(239, 255, 10, 0.2);
-    transform: translateY(-2px);
-  }
-  .cta-btn:active { transform: translateY(0); }
-
-  .cta-note {
-    margin-top: 24px;
-    font-size: 11px;
-    letter-spacing: 0.15em;
-    color: rgba(76,124,255,0.5);
-    direction: rtl;
-  }
-
-  /* ─── FOOTER ─────────────────────────────────────────────── */
-  footer {
-    border-top: 1px solid var(--crystal-border);
-    padding: 40px 48px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: rgba(1,2,20,0.8);
-    backdrop-filter: blur(20px);
-    position: relative;
-    z-index: 1;
-  }
-  .footer-logo {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 12px;
-    letter-spacing: 0.22em;
-    color: var(--alien-yellow);
-    text-transform: uppercase;
-  }
-  .footer-copy {
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    color: rgba(76,124,255,0.4);
-    direction: rtl;
-  }
-
-  /* ─── DECORATIVE ELEMENTS ────────────────────────────────── */
-  .deco-line {
-    position: absolute;
-    background: linear-gradient(to bottom, var(--cyan-glow), transparent);
-    width: 1px;
-    top: 0;
-    opacity: 0.2;
-  }
-
-  /* ─── ANIMATIONS ─────────────────────────────────────────── */
-  @keyframes pulseGlow {
-    0%, 100% { box-shadow: 0 0 20px rgba(10,255,240,0.15); }
-    50%       { box-shadow: 0 0 40px rgba(10,255,240,0.35), 0 0 80px rgba(10,255,240,0.1); }
-  }
-
-  .session-dot { animation: pulseGlow 3s ease-in-out infinite; }
-
-  /* ─── CURSOR BLINK ───────────────────────────────────────── */
-  .cursor {
-    display: inline-block;
-    width: 2px;
-    height: 1em;
-    background: var(--cyan-glow);
-    margin-right: 4px;
-    vertical-align: text-bottom;
-    animation: blink 1.1s step-end infinite;
-  }
-  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
-
-  /* ─── RESPONSIVE ─────────────────────────────────────────── */
-  @media (max-width: 768px) {
-    nav { padding: 16px 24px; }
-    .about-grid { grid-template-columns: 1fr; }
-    .session-item { grid-template-columns: 1fr; }
-    .session-number-col { display: none; }
-    .session-body { border-right: 1px solid var(--crystal-border); padding: 28px 24px; }
-    .fit-grid { grid-template-columns: 1fr; }
-    .value-cards { grid-template-columns: 1fr; }
-    .price-block { grid-template-columns: 1fr; gap: 40px; padding: 40px 28px; }
-    .price-amount-col { order: -1; }
-    footer { flex-direction: column; gap: 12px; text-align: center; }
-    section { padding: 72px 20px; }
-  }
-</style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>From Zero to Infinite</title>
+<meta name="description" content="תהליך ליווי לקפיצה קוונטית"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="styles.css"/>
 </head>
-
 <body>
 
-<!-- Star field -->
-<div id="starfield"></div>
-
-<!-- SVG defs for glow filter -->
-<svg width="0" height="0" style="position:absolute">
-  <defs>
-    <filter id="noiseFilter">
-      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/>
-    </filter>
-    <filter id="glow">
-      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
-  </defs>
-</svg>
+<!-- CANVAS BG -->
+<canvas id="bg-canvas"></canvas>
 
 <div class="page">
 
-  <!-- NAV -->
-  <nav>
-    <div class="nav-logo">From Zero <span>→</span> Infinite</div>
-    <a href="#cta" class="nav-cta">לקביעת שיחת התאמה</a>
-  </nav>
+<!-- ── HERO ── -->
+<section class="hero">
+  <div style="max-width:900px;margin:0 auto;width:100%">
+    <img src="brand_assets/logo.png" alt="From Zero to Infinite" class="hero-logo"/>
+    <div class="wrap" style="padding:0">
+      <p class="hero-title" dir="rtl">הגיע הזמן ליצור מציאות חדשה</p>
+      <p class="hero-sub" dir="rtl">
+        לשלב הבא שלך לא מגיעים עם עוד "ריפוי".<br/>
+        <strong style="color:rgba(240,240,255,0.95)">מגיעים עם החלפת זהות.</strong>
+      </p>
+      <a href="https://wa.me/message/VIHIGNG2RHHWK1" target="_blank" rel="noopener noreferrer" class="btn-outline">
+        <span class="cursor-blink">_</span>START THE QUANTUM LEAP
+      </a>
+      <p class="hero-byline">BY LIHI ZIV</p>
+    </div>
+  </div>
+</section>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-eyebrow">Quantum Unconscious Architecture</div>
-    <h1 class="hero-title">
-      FROM ZERO<br/>
-      <span class="to">TO</span>
-    </h1>
-    <span class="hero-infinity">∞</span>
-    <p class="hero-subtitle">by Lihi Ziv &nbsp;·&nbsp; Quantum Unconscious Architecture</p>
-    <div class="hero-tag"><span class="cursor"></span>OS UPGRADE FOR PEOPLE BUILT FOR BIG THINGS</div>
-    <div class="scroll-hint">scroll</div>
-  </section>
+<!-- ── PROBLEM ── -->
+<section>
+  <div class="wrap">
+    <p class="section-label reveal">&gt; IDENTITY_GAP_DETECTED</p>
+    <div class="circuitry-line reveal" style="margin-bottom:48px"></div>
 
-  <!-- ABOUT -->
-  <section class="about-section">
-    <div class="container">
-      <div class="section-label">SYSTEM OVERVIEW</div>
-      <h2 class="section-heading">שדרוג<br/>מערכת ההפעלה</h2>
-
-      <div class="crystal-card" style="margin-bottom: 2px;">
-        <p class="about-body">
-          תהליך ליווי בלעדי במעבר ממצב של <strong>מאמץ, מסיכות וסיבוכים (0)</strong> למצב של
-          <strong>יצירת מציאות טהורה, עוצמה פנימית וגדילה אינסופית (∞).</strong>
-          <br/><br/>
-          בעולם של היום, עבור אנשים שכבר נמצאים בתנועה, בעשייה ובהובלה —
-          המחסום הוא <em>אף פעם לא</em> חוסר בידע או בכלים טכניים.
-          <strong>המחסום הוא תודעתי,</strong> והוא יושב עמוק בתוך החיווטים של המוח והנפש.
-          <br/><br/>
-          כדי לפרוץ את המחסום הזה, זיקקתי תהליך משילוב ייחודי של נוירופלסטיקה,
-          חוכמה סינית עתיקה, נומרולוגיה, טיפול רגשי, ליווי רוחני <em>ותודעת קוונטים</em> —
-          המאפשרות לעבור מתפיסה ליניארית <strong>לתפיסה אינסופית.</strong>
+    <div class="glass border-neon reveal" style="padding:48px 40px">
+      <h3 style="font-size:clamp(18px,3vw,22px);color:rgba(240,240,255,0.95);font-weight:400;line-height:1.6;margin-bottom:32px" dir="rtl">
+        עשית כבר הכל, עברת תהליכי עומק, שחררת טראומות, ריפאת את הילדה הפנימית...
+      </h3>
+      <h2 class="text-neon" style="font-size:clamp(20px,3.5vw,28px);font-weight:600;line-height:1.55;margin-bottom:40px" dir="rtl">
+        אז למה את עדיין לא חיה את המציאות שאת יודעת שנועדת לה?
+      </h2>
+      <div style="border-top:1px solid rgba(255,255,255,0.08);padding-top:32px">
+        <p style="font-size:clamp(14px,2vw,17px);color:var(--muted);line-height:1.8" dir="rtl">
+          כאן לא "מטפלים" – כאן מעצבים מחדש את הארכיטקטורה התודעתית שלך. את מרגישה שאת יכולה הרבה יותר, ואת כנראה צודקת – אבל המערכת הישנה שלך פשוט לא תומכת בגרסה הזו שלך עדיין. כל מה שאת צריכה, זה לעדכן לגרסה המתאימה.
         </p>
       </div>
-
-      <div class="about-grid">
-        <div class="about-stat">
-          <span class="stat-number">4</span>
-          <span class="stat-label">מפגשי עומק // 90–120 דקות</span>
-        </div>
-        <div class="about-stat">
-          <span class="stat-number">∞</span>
-          <span class="stat-label">The Infinite Map // מפת ה-OS החדש שלך</span>
-        </div>
-      </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- JOURNEY / SESSIONS -->
-  <section class="journey-section">
-    <div class="container">
-      <div class="section-label">THE PROTOCOL</div>
-      <h2 class="section-heading">מסלול<br/>ארבעת השלבים</h2>
-    </div>
+<!-- ── SCENARIOS ── -->
+<section>
+  <div class="wrap">
+    <p class="section-label reveal">&gt; DEEP_SCAN_INITIATED</p>
 
-    <div class="container-wide" style="margin-top: 64px;">
-      <div class="sessions-list">
+    <div style="display:flex;flex-direction:column;gap:16px;margin-bottom:48px">
 
-        <!-- Session 1 -->
-        <div class="session-item">
-          <div class="session-number-col">
-            <div class="session-dot"></div>
-            <span class="session-index">מפגש 01</span>
-          </div>
-          <div class="session-body">
-            <div class="session-tag">SESSION_01 // DIAGNOSTICS</div>
-            <div class="session-title">THE ZERO POINT</div>
-            <p class="session-text">
-              בשלב הראשון מבצעים "צילום רנטגן" למערכת התודעתית שלך. באמצעות מפגש עומק וסריקה
-              אנרגטית הוליסטית, נזהה את ה"באג" המרכזי במערכת — המנגנון הסמוי שמייצר מאמץ יתר,
-              סיבוכים או צורך במסיכות. נמפה את נקודות דליפת האנרגיה בקריירה וביחסים, ונזקק את
-              המחסום המדויק שמונע ממך לפעול מהגאונות הנקייה שלך.
-            </p>
-          </div>
-        </div>
-
-        <!-- Session 2 -->
-        <div class="session-item">
-          <div class="session-number-col">
-            <div class="session-dot"></div>
-            <span class="session-index">מפגש 02</span>
-          </div>
-          <div class="session-body">
-            <div class="session-tag">SESSION_02 // DEFRAG</div>
-            <div class="session-title">THE VECTOR</div>
-            <p class="session-text">
-              לאחר זיהוי החסמים, עוברים לשלב הניקוי האקטיבי ברמה האנרגטית והתאית. באמצעות עבודת
-              תדרים ממוקדת, נסיר את הקיבועים התודעתיים והמשקעים שהצטברו בשדה. המטרה: להביא את
-              המערכת למצב של <strong>"שדה נקי"</strong> — תדר של קלילות וקבלה שמאפשר למציאות
-              להתהוות ללא התנגדות, דרך קידוד שתואם את המטרות שלך.
-            </p>
-          </div>
-        </div>
-
-        <!-- Session 3 -->
-        <div class="session-item">
-          <div class="session-number-col">
-            <div class="session-dot"></div>
-            <span class="session-index">מפגש 03</span>
-          </div>
-          <div class="session-body">
-            <div class="session-tag">SESSION_03 // INSTALL</div>
-            <div class="session-title">THE METHODOLOGY</div>
-            <p class="session-text">
-              בשלב זה מטמיעים את "מערכת ההפעלה" החדשה שלך. ננסח יחד את חוקי הברזל האישיים שלך
-              ליצירת מציאות <strong>(The Infinite Code)</strong> ונבנה פרוטוקול לקבלת החלטות מתוך
-              תדר גבוה ונקי. זהו שלב הארכיטקטורה — שבו לומדים לזהות "נפילות" למנגנונים ישנים
-              ולחזור במהירות למרחב האינסוף, בכל זמן ומצב.
-            </p>
-          </div>
-        </div>
-
-        <!-- Session 4 -->
-        <div class="session-item">
-          <div class="session-number-col">
-            <div class="session-dot" style="background:var(--alien-yellow);box-shadow:0 0 12px var(--alien-yellow),0 0 24px rgba(239,255,10,0.4);"></div>
-            <span class="session-index" style="color:var(--alien-yellow);">מפגש 04</span>
-          </div>
-          <div class="session-body" style="border-color:rgba(239,255,10,0.2);">
-            <div class="session-tag" style="color:var(--alien-yellow);">SESSION_04 // LAUNCH</div>
-            <div class="session-title">THE INFINITE</div>
-            <p class="session-text">
-              השלב הסופי מוקדש לעיגון המערכת במציאות הפיזית וביסוס היציבות המבנית. נבצע סריקת
-              אימות אחרונה לווידוא שהשדה נקי ומיוצב, ונבנה את חזון הסקייל האישי שלך: איך האימפריה
-              והעשייה שלך נראות כשהן מופעלות על ידי התודעה החדשה. זהו רגע המעבר הסופי מניהול
-              <strong>הישרדותי</strong> להובלה <strong>עוצמתית ורחבת היקף.</strong>
-            </p>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- FIT SECTION -->
-  <section class="fit-section">
-    <div class="container">
-      <div class="section-label">ACCESS CONTROL</div>
-      <h2 class="section-heading">זה<br/>בשבילך?</h2>
-
-      <div class="fit-grid">
-
-        <!-- YES -->
-        <div class="fit-card-yes">
-          <div class="fit-card-label">
-            <svg width="12" height="12" viewBox="0 0 12 12"><circle cx="6" cy="6" r="6" fill="#0AFFF0" opacity="0.8"/></svg>
-            התהליך מדויק לך אם
-          </div>
-
-          <div class="fit-item">
-            <div class="fit-bullet"></div>
-            <div class="fit-item-text">
-              <strong>את בונה דברים גדולים</strong>
-              יזמית, יוצרת, או בעלת עסק שמרגישה שהיא "מסבכת" תהליכים פשוטים ומשקיעה מאמץ יתר במקום שבו אמורה להיות זרימה.
-            </div>
-          </div>
-
-          <div class="fit-item">
-            <div class="fit-bullet"></div>
-            <div class="fit-item-text">
-              <strong>את מזהה את המסיכות</strong>
-              חלק מהאנרגיה שלך מושקע ב"לתחזק" דמות מסוימת בחוץ, מה שמונע ממך להביא את הגאונות הנקייה שלך לקדמת הבמה.
-            </div>
-          </div>
-
-          <div class="fit-item">
-            <div class="fit-bullet"></div>
-            <div class="fit-item-text">
-              <strong>את עייפה מהליטופים</strong>
-              את מחפשת מי שתעמוד מולך בתור המעצמה ותיתן לך כלים של אסטרטגיה תודעתית — לא רק "אוזן קשבת".
-            </div>
-          </div>
-
-          <div class="fit-item">
-            <div class="fit-bullet"></div>
-            <div class="fit-item-text">
-              <strong>את מאמינה "בקיצורי דרך"</strong>
-              שינוי בתדר האנרגטי ובמנגנונים הסמויים של המוח שווה הרבה יותר מעשרה קורסים עסקיים.
-            </div>
-          </div>
-
-          <div class="fit-item">
-            <div class="fit-bullet"></div>
-            <div class="fit-item-text">
-              <strong>את מוכנה לסקייל הבא</strong>
-              התשתית שלך כבר קיימת — את רק צריכה את הדיוק, הניקוי והמפה כדי לפרוץ את תקרת הזכוכית האישית שלך.
-            </div>
-          </div>
-        </div>
-
-        <!-- NO -->
-        <div class="fit-card-no">
-          <div class="fit-card-label">
-            <svg width="12" height="12" viewBox="0 0 12 12"><circle cx="6" cy="6" r="6" fill="#4C7CFF" opacity="0.4"/></svg>
-            זה לא בשבילך אם
-          </div>
-
-          <div class="fit-item">
-            <div class="fit-bullet"></div>
-            <div class="fit-item-text">את מחפשת מישהי שתחזיק לך את היד בתהליך איטי של שנים.</div>
-          </div>
-
-          <div class="fit-item">
-            <div class="fit-bullet"></div>
-            <div class="fit-item-text">את לא מוכנה להסתכל לאמת — למנגנונים הסמויים — בעיניים.</div>
-          </div>
-
-          <div class="fit-item">
-            <div class="fit-bullet"></div>
-            <div class="fit-item-text">את מעדיפה להישאר ב"סיבוך" כי הוא מעניק לך תחושת ביטחון מדומה.</div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- VALUE & INVESTMENT -->
-  <section class="value-section">
-    <div class="container">
-      <div class="section-label">PACKAGE SPECS</div>
-      <h2 class="section-heading">VALUE &<br/>INVESTMENT</h2>
-
-      <div class="value-cards">
-        <div class="value-card">
-          <span class="value-icon">⬡</span>
-          <div class="value-card-title">4 מפגשי עומק</div>
-          <p class="value-card-text">
-            סדרה אסטרטגית המשלבת אבחון מערכתי, אסטרטגיה תודעתית וניקוי אנרגטי רב-מימדי.
-            בין שעה וחצי לשעתיים של עבודה ממוקדת לכל מפגש.
-          </p>
-        </div>
-
-        <div class="value-card">
-          <span class="value-icon">◈</span>
-          <div class="value-card-title">עבודה פרקטית</div>
-          <p class="value-card-text">
-            לאחר כל מפגש תקבלי חוברת עבודה כתובה שנועדה להטמיע את השינוי בשטח — גוף, נפש ותודעה.
-            בכל רובד, תרגיל מעשי ליישום והגשה.
-          </p>
-        </div>
-
-        <div class="value-card">
-          <span class="value-icon">◉</span>
-          <div class="value-card-title">The Infinite Map</div>
-          <p class="value-card-text">
-            בסיום התהליך תקבלי את מפת מערכת ההפעלה החדשה שלך — קוד ההתנהלות, חוקי קבלת ההחלטות
-            ואלגוריתם הפעולה האישי שלך.
-          </p>
+      <div class="glass border-neon reveal" style="padding:24px 28px;display:flex;align-items:flex-start;gap:16px">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--neon);flex-shrink:0;margin-top:4px"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" x2="20" y1="19" y2="19"></line></svg>
+        <div>
+          <p class="font-heading" style="font-size:10px;color:var(--neon);margin-bottom:8px">SCENARIO_A</p>
+          <p style="color:rgba(240,240,255,0.92);font-size:15px;line-height:1.7" dir="rtl">את בונה אימפריה, אבל מרגישה שכל צעד דורש ממך מאמץ לא אנושי.</p>
         </div>
       </div>
 
-      <!-- Price block -->
-      <div class="price-block">
-        <div class="price-details">
-          <div class="price-title">פרטים טכניים</div>
-          <div class="price-meta">
-            <div class="price-meta-row">תדירות: אחת לשבועיים</div>
-            <div class="price-meta-row">פורמט: פרונטלי בתל אביב או בזום</div>
-            <div class="price-meta-row">4 מפגשים · עד 120 דקות כל אחד</div>
-            <div class="price-meta-row">חוברת עבודה + The Infinite Map</div>
-          </div>
+      <div class="glass border-neon reveal d1" style="padding:24px 28px;display:flex;align-items:flex-start;gap:16px">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--neon);flex-shrink:0;margin-top:4px"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" x2="20" y1="19" y2="19"></line></svg>
+        <div>
+          <p class="font-heading" style="font-size:10px;color:var(--neon);margin-bottom:8px">SCENARIO_B</p>
+          <p style="color:rgba(240,240,255,0.92);font-size:15px;line-height:1.7" dir="rtl">בחוץ הכל נראה מושלם, אבל בפנים את עדיין מנהלת "הישרדות" במקום להוביל בעוצמה.</p>
         </div>
-        <div class="price-amount-col">
-          <span class="price-amount">3,333</span>
-          <span class="price-currency">₪ // השקעה מלאה</span>
+      </div>
+
+      <div class="glass border-neon reveal d2" style="padding:24px 28px;display:flex;align-items:flex-start;gap:16px">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--neon);flex-shrink:0;margin-top:4px"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" x2="20" y1="19" y2="19"></line></svg>
+        <div>
+          <p class="font-heading" style="font-size:10px;color:var(--neon);margin-bottom:8px">SCENARIO_C</p>
+          <p style="color:rgba(240,240,255,0.92);font-size:15px;line-height:1.7" dir="rtl">את יודעת שאת נועדת להרבה יותר, אבל משהו בלתי נראה מחזיק אותך בלופ של "כמעט שם".</p>
         </div>
       </div>
     </div>
-  </section>
 
-  <!-- CTA -->
-  <section class="cta-section" id="cta">
-    <div class="container" style="text-align:center;">
-      <div class="section-label" style="justify-content:center;">INITIATE SEQUENCE</div>
-      <h2 class="cta-heading">מוכנה<br/>לקפוץ?</h2>
-      <p class="cta-sub">לקביעת שיחת התאמה — ללא עלות וללא מחויבות</p>
-      <a href="#" class="cta-btn">לקביעת שיחת התאמה &nbsp;→</a>
-      <p class="cta-note">// כל הזכויות שמורות ליהי זיו · 2026 ©</p>
+    <div class="glass border-neon glow-neon reveal" style="padding:36px;text-align:center">
+      <p class="font-heading" style="font-size:10px;color:var(--neon);margin-bottom:16px">SOLUTION_FOUND</p>
+      <p style="font-size:clamp(16px,2.5vw,19px);color:rgba(240,240,255,0.92);line-height:1.7" dir="rtl">
+        זהו תהליך של <span class="text-neon" style="font-weight:600">קפיצה קוונטית</span> – שינוי תדר וזהות שמיישר קו בין מי שאת היום לבין מי שאת באמת.
+      </p>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-logo">From Zero → ∞</div>
-    <div class="footer-copy">Quantum Unconscious Architecture · by Lihi Ziv · © 2026</div>
-  </footer>
+<!-- ── JOURNEY ── -->
+<section>
+  <div class="wrap-lg">
+    <p class="section-label reveal">&gt; EXECUTION_SEQUENCE</p>
+    <h2 class="font-heading text-silver reveal" style="font-size:clamp(22px,4vw,32px);text-align:center;margin-bottom:8px">SOFTWARE UPDATES</h2>
+    <p style="color:var(--muted);text-align:center;margin-bottom:48px" dir="rtl" class="reveal">ארבעה שדרוגים למערכת ההפעלה התודעתית</p>
+
+    <div class="session-grid">
+      <div class="glass border-neon session-card reveal">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+          <span class="session-num">01</span>
+          <div>
+            <h3 class="font-heading text-silver" style="font-size:12px;letter-spacing:0.15em">THE ZERO POINT</h3>
+            <p class="text-neon" style="font-size:12px" dir="rtl">אבחון וזיהוי הבאג</p>
+          </div>
+        </div>
+        <div class="circuitry-line" style="margin-bottom:16px"></div>
+        <p style="font-size:14px;color:var(--muted);line-height:1.75" dir="rtl">צילום רנטגן למערכת התודעתית שלך. נזהה את המנגנון הסמוי שמייצר מאמץ יתר, סיבוכים או צורך במסיכות. נמפה את נקודות דליפת האנרגיה ונזקק את המחסום המדויק.</p>
+      </div>
+
+      <div class="glass border-neon session-card reveal d1">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+          <span class="session-num">02</span>
+          <div>
+            <h3 class="font-heading text-silver" style="font-size:12px;letter-spacing:0.15em">THE VECTOR</h3>
+            <p class="text-neon" style="font-size:12px" dir="rtl">ניקוי תאי ואנרגטי</p>
+          </div>
+        </div>
+        <div class="circuitry-line" style="margin-bottom:16px"></div>
+        <p style="font-size:14px;color:var(--muted);line-height:1.75" dir="rtl">ניקוי אקטיבי ברמה האנרגטית והתאית. באמצעות עבודת תדרים ממוקדת, נסיר את הקיבועים התודעתיים ונביא את המערכת למצב של "שדה נקי" – תדר של קלילות וקבלה.</p>
+      </div>
+
+      <div class="glass border-neon session-card reveal d2">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+          <span class="session-num">03</span>
+          <div>
+            <h3 class="font-heading text-silver" style="font-size:12px;letter-spacing:0.15em">THE METHODOLOGY</h3>
+            <p class="text-neon" style="font-size:12px" dir="rtl">התקנת קוד האינסוף האישי</p>
+          </div>
+        </div>
+        <div class="circuitry-line" style="margin-bottom:16px"></div>
+        <p style="font-size:14px;color:var(--muted);line-height:1.75" dir="rtl">הטמעת "מערכת ההפעלה" החדשה. ננסח את חוקי הברזל האישיים שלך ליצירת מציאות ונבנה פרוטוקול לקבלת החלטות מתוך תדר גבוה ונקי.</p>
+      </div>
+
+      <div class="glass border-neon session-card reveal d3">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+          <span class="session-num">04</span>
+          <div>
+            <h3 class="font-heading text-silver" style="font-size:12px;letter-spacing:0.15em">THE INFINITE</h3>
+            <p class="text-neon" style="font-size:12px" dir="rtl">ביסוס יציבות וסקייל לאימפריה</p>
+          </div>
+        </div>
+        <div class="circuitry-line" style="margin-bottom:16px"></div>
+        <p style="font-size:14px;color:var(--muted);line-height:1.75" dir="rtl">עיגון המערכת במציאות הפיזית וביסוס יציבות מבנית. סריקת אימות סופית ובניית חזון הסקייל האישי שלך – האימפריה מופעלת על ידי התודעה החדשה.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS ── -->
+<section>
+  <div class="wrap-lg">
+    <p class="section-label reveal">&gt; SYSTEM_VERIFIED</p>
+    <h2 class="font-heading text-silver reveal" style="font-size:clamp(22px,4vw,32px);text-align:center;margin-bottom:48px">תוצאות מהשטח</h2>
+
+    <div class="testi-grid">
+      <div class="glass border-silver reveal" style="padding:24px">
+        <div style="display:flex;align-items:flex-start;gap:12px" dir="rtl">
+          <div style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.07);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--neon)"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+          </div>
+          <div>
+            <p class="font-heading" style="font-size:10px;color:var(--muted);margin-bottom:8px">נועה כ.</p>
+            <p style="color:rgba(240,240,255,0.92);line-height:1.7;font-size:14px">״יש משהו ממש מרפא בלהגיע בדיוק לשורש הבעיה בלי ללכת כל כך הרבה מסביב״</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass border-silver reveal d1" style="padding:24px">
+        <div style="display:flex;align-items:flex-start;gap:12px" dir="rtl">
+          <div style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.07);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--neon)"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+          </div>
+          <div>
+            <p class="font-heading" style="font-size:10px;color:var(--muted);margin-bottom:8px">שיר כ.</p>
+            <p style="color:rgba(240,240,255,0.92);line-height:1.7;font-size:14px">״אני כבר שנים בעולמות ההתפתחות והרוח ועדיין גיליתי על עצמי כל כך הרבה בזכות התהליך. עוד במהלכו כבר הוצאתי לאור את המוצר החדש שלי!״</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass border-silver reveal d2" style="padding:24px">
+        <div style="display:flex;align-items:flex-start;gap:12px" dir="rtl">
+          <div style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.07);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--neon)"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+          </div>
+          <div>
+            <p class="font-heading" style="font-size:10px;color:var(--muted);margin-bottom:8px">ליאור ב.</p>
+            <p style="color:rgba(240,240,255,0.92);line-height:1.7;font-size:14px">״רק מהאבחון במפגש הראשון הרגשתי כמה בהירות אני מקבלת על החיים שלי וכמה כוח יש לי לשנות אותם מהיסוד״</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass border-silver reveal d3" style="padding:24px">
+        <div style="display:flex;align-items:flex-start;gap:12px" dir="rtl">
+          <div style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.07);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--neon)"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+          </div>
+          <div>
+            <p class="font-heading" style="font-size:10px;color:var(--muted);margin-bottom:8px">נעם א.</p>
+            <p style="color:rgba(240,240,255,0.92);line-height:1.7;font-size:14px">״קפיצה קוונטית אמיתית. החיים שלי השתנו עוד במהלך הליווי זה מטורף״</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PRICING ── -->
+<section id="pricing">
+  <div class="wrap">
+    <p class="section-label reveal">&gt; ACCESS_GRANTED</p>
+
+    <div class="glass glow-silver reveal" style="border:1px solid rgba(220,220,235,0.15);border-radius:16px;padding:48px 40px;text-align:center;max-width:680px;margin:0 auto">
+
+      <!-- includes -->
+      <div style="display:flex;flex-direction:column;gap:16px;margin-bottom:40px">
+        <div class="check-row">
+          <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--neon)"><path d="M20 6 9 17l-5-5"></path></svg>
+          <p style="color:rgba(240,240,255,0.92);font-size:15px" dir="rtl">4 מפגשי עומק אסטרטגיים (שעה וחצי עד שעתיים כל מפגש)</p>
+        </div>
+        <div class="check-row">
+          <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--neon)"><path d="M20 6 9 17l-5-5"></path></svg>
+          <p style="color:rgba(240,240,255,0.92);font-size:15px" dir="rtl">חוברת עבודה לסנכרון גוף-נפש-תודעה אחרי כל מפגש</p>
+        </div>
+        <div class="check-row">
+          <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--neon)"><path d="M20 6 9 17l-5-5"></path></svg>
+          <p style="color:rgba(240,240,255,0.92);font-size:15px" dir="rtl">ה-Infinite Map האישי שלך – מפת מערכת ההפעלה החדשה</p>
+        </div>
+      </div>
+
+      <!-- price -->
+      <div style="border-top:1px solid rgba(255,255,255,0.08);padding-top:32px;margin-bottom:32px">
+        <p class="font-heading" style="font-size:10px;color:var(--muted);margin-bottom:12px">INVESTMENT</p>
+        <p style="color:var(--muted);font-size:17px;text-decoration:line-through;margin-bottom:6px" dir="rtl">4,789 ₪</p>
+        <p class="font-heading text-silver" style="font-size:clamp(48px,10vw,64px);line-height:1" dir="rtl">3,369 ₪</p>
+        <p style="color:var(--muted);font-size:16px;margin-top:8px" dir="rtl">או 337 ש״ח בלבד ב-10 תשלומים</p>
+      </div>
+
+      <!-- countdown -->
+      <div style="margin-bottom:32px">
+        <p class="countdown-pulse" style="margin-bottom:16px">ההטבה מסתיימת בקרוב</p>
+        <div style="display:flex;align-items:flex-start;justify-content:center;gap:12px">
+          <div style="text-align:center">
+            <div class="cd-box"><span class="cd-num" id="cd-d">00</span></div>
+            <p class="cd-lbl">ימים</p>
+          </div>
+          <div style="text-align:center">
+            <div class="cd-box"><span class="cd-num" id="cd-h">00</span></div>
+            <p class="cd-lbl">שעות</p>
+          </div>
+          <div style="text-align:center">
+            <div class="cd-box"><span class="cd-num" id="cd-m">00</span></div>
+            <p class="cd-lbl">דקות</p>
+          </div>
+          <div style="text-align:center">
+            <div class="cd-box"><span class="cd-num" id="cd-s">00</span></div>
+            <p class="cd-lbl">שניות</p>
+          </div>
+        </div>
+      </div>
+
+      <a href="https://wa.me/message/VIHIGNG2RHHWK1" target="_blank" rel="noopener noreferrer" class="btn-outline" style="width:100%;max-width:360px">
+        לקביעת שיחת התאמה
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── ABOUT ── -->
+<section>
+  <div class="wrap">
+    <p class="section-label reveal">&gt; THE_ARCHITECT</p>
+    <div class="circuitry-line reveal" style="margin-bottom:40px"></div>
+
+    <div class="glass border-silver glow-silver reveal" style="padding:48px 40px;text-align:center">
+      <h2 class="font-heading text-silver" style="font-size:clamp(24px,4vw,32px);margin-bottom:8px">LIHI ZIV</h2>
+      <p class="font-heading text-neon" style="font-size:10px;letter-spacing:0.2em;margin-bottom:32px">MIND DESIGN &amp; QUANTUM ARCHITECTURE</p>
+      <p style="font-size:clamp(15px,2vw,17px);color:rgba(240,240,255,0.92);line-height:1.8;max-width:580px;margin:0 auto 28px" dir="rtl">
+        מומחית לעיצוב תודעה (Mind Design) וטיפול בזיכרון תאי (CMT). עם רקע עשיר בפסיכותרפיה הוליסטית, נומרולוגיה ונוירופלסטיקה, אני מלווה נשים בפריצות דרך קוונטיות ושינוי זהות עמוק.
+      </p>
+      <a href="https://www.instagram.com/lihiziv.mindbody/" target="_blank" rel="noopener noreferrer"
+         style="display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:12px;letter-spacing:0.12em;text-decoration:none;border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:7px 16px;transition:all .2s"
+         onmouseover="this.style.color='hsl(210,100%,65%)';this.style.borderColor='rgba(77,184,255,0.35)'"
+         onmouseout="this.style.color='var(--muted)';this.style.borderColor='rgba(255,255,255,0.1)'">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>
+        @lihiziv.mindbody
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── FAQ ── -->
+<section>
+  <div class="wrap">
+    <p class="section-label reveal">&gt; FREQUENTLY_ASKED</p>
+    <h2 class="font-heading text-silver reveal" style="font-size:clamp(22px,4vw,32px);text-align:center;margin-bottom:48px">שאלות נפוצות</h2>
+
+    <div style="display:flex;flex-direction:column;gap:8px">
+
+      <div class="faq-item reveal">
+        <button class="faq-btn" onclick="toggleFaq(this)">
+          מה התדירות של המפגשים?
+          <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg>
+        </button>
+        <div class="faq-body">
+          <div class="faq-body-inner">המפגשים מתקיימים אחת לשבועיים, כדי לאפשר למערכת הפיזית והאנרגטית להטמיע את התדרים והקודים החדשים בין מפגש למפגש.</div>
+        </div>
+      </div>
+
+      <div class="faq-item reveal d1">
+        <button class="faq-btn" onclick="toggleFaq(this)">
+          האם המפגשים פרונטליים בלבד?
+          <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg>
+        </button>
+        <div class="faq-body">
+          <div class="faq-body-inner">לא. המפגשים מתקיימים פרונטלית בתל אביב או בזום — ללא השפעה על מבנה התהליך או יעילותו.</div>
+        </div>
+      </div>
+
+      <div class="faq-item reveal d2">
+        <button class="faq-btn" onclick="toggleFaq(this)">
+          מה ההבדל בין זה לטיפול רגיל?
+          <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg>
+        </button>
+        <div class="faq-body">
+          <div class="faq-body-inner">כאן לא "מטפלים" ולא חופרים בעבר. מעצבים מחדש את הארכיטקטורה התודעתית - מזהים את הבאג, מנקים, ומתקינים את מערכת ההפעלה החדשה. 4 מפגשים ממוקדים במקום שנים של עיבוד.</div>
+        </div>
+      </div>
+
+      <div class="faq-item reveal d3">
+        <button class="faq-btn" onclick="toggleFaq(this)">
+          למי התהליך מתאים?
+          <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg>
+        </button>
+        <div class="faq-body">
+          <div class="faq-body-inner">לנשים שכבר בתנועה — יזמיות, יוצרות, מנהלות — שמרגישות שהתשתית קיימת אבל משהו עוצר אותן מלפרוץ לשלב הבא. לא מתאים למי שמחפשת תהליך איטי של שנים.</div>
+        </div>
+      </div>
+
+      <div class="faq-item reveal d4">
+        <button class="faq-btn" onclick="toggleFaq(this)">
+          כמה זמן לוקח התהליך?
+          <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg>
+        </button>
+        <div class="faq-body">
+          <div class="faq-body-inner">4 מפגשים, אחת לשבועיים — סה"כ כחודשיים. כל מפגש אורך בין שעה וחצי לשעתיים.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER CTA ── -->
+<section style="padding:64px 24px 32px">
+  <div class="wrap" style="text-align:center">
+    <a href="https://wa.me/message/VIHIGNG2RHHWK1" target="_blank" rel="noopener noreferrer" class="btn-outline reveal" style="margin-bottom:48px;display:inline-flex">
+      <span class="cursor-blink">_</span>START THE QUANTUM LEAP
+    </a>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <a href="https://www.instagram.com/lihiziv.mindbody/" target="_blank" rel="noopener noreferrer"
+     style="color:var(--muted);transition:color .2s" aria-label="Instagram"
+     onmouseover="this.style.color='hsl(210,100%,65%)'" onmouseout="this.style.color='var(--muted)'">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>
+  </a>
+  <p class="font-heading" style="font-size:10px;color:var(--muted);letter-spacing:0.15em">© FROM ZERO TO INFINITE — LIHI ZIV</p>
+</footer>
 
 </div><!-- /page -->
 
+<!-- FLOATING WHATSAPP -->
+<div class="wa-float">
+  <span class="wa-hint">INITIALIZE_CHAT</span>
+  <a href="https://wa.me/message/VIHIGNG2RHHWK1" target="_blank" rel="noopener noreferrer" class="wa-btn" aria-label="WhatsApp Chat">
+    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg>
+  </a>
+</div>
+
 <script>
-  /* ── STAR FIELD ─────────────────────────────────────────── */
-  (function () {
-    const field = document.getElementById('starfield');
-    const count = 140;
-    for (let i = 0; i < count; i++) {
-      const s = document.createElement('div');
-      s.className = 'star';
-      const size = Math.random() * 2.2 + 0.4;
-      const minOp = (Math.random() * 0.1 + 0.08).toFixed(2);
-      const maxOp = (Math.random() * 0.5 + 0.35).toFixed(2);
-      s.style.cssText = `
-        width:${size}px; height:${size}px;
-        top:${Math.random()*100}%;
-        left:${Math.random()*100}%;
-        --d:${(Math.random()*5+2).toFixed(1)}s;
-        --delay:-${(Math.random()*6).toFixed(1)}s;
-        --min-op:${minOp}; --max-op:${maxOp};
-      `;
-      field.appendChild(s);
-    }
+/* ── CANVAS CIRCUIT ANIMATION ── */
+(function(){
+  const canvas=document.getElementById('bg-canvas');
+  const ctx=canvas.getContext('2d');
+  let W,H,nodes=[];
 
-    /* rare cyan glint stars */
-    for (let i = 0; i < 8; i++) {
-      const s = document.createElement('div');
-      s.className = 'star';
-      const size = Math.random() * 3 + 2;
-      s.style.cssText = `
-        width:${size}px; height:${size}px;
-        top:${Math.random()*100}%;
-        left:${Math.random()*100}%;
-        --d:${(Math.random()*4+3).toFixed(1)}s;
-        --delay:-${(Math.random()*5).toFixed(1)}s;
-        --min-op:0.2; --max-op:0.9;
-        background:#0AFFF0;
-        box-shadow: 0 0 6px #0AFFF0;
-      `;
-      field.appendChild(s);
-    }
-  })();
+  function resize(){
+    W=canvas.width=window.innerWidth;
+    H=canvas.height=window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize',()=>{resize();init();});
 
-  /* ── SCROLL REVEAL ──────────────────────────────────────── */
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.style.opacity = '1';
-        e.target.style.transform = 'translateY(0)';
+  function Node(){
+    this.x=Math.random()*W;
+    this.y=Math.random()*H;
+    this.vx=(Math.random()-.5)*.3;
+    this.vy=(Math.random()-.5)*.3;
+    this.r=Math.random()*1.5+.5;
+    this.opacity=Math.random()*.5+.2;
+  }
+
+  function init(){
+    nodes=[];
+    const count=Math.floor((W*H)/18000);
+    for(let i=0;i<count;i++) nodes.push(new Node());
+  }
+  init();
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    // connections
+    for(let i=0;i<nodes.length;i++){
+      for(let j=i+1;j<nodes.length;j++){
+        const dx=nodes[i].x-nodes[j].x;
+        const dy=nodes[i].y-nodes[j].y;
+        const dist=Math.sqrt(dx*dx+dy*dy);
+        if(dist<160){
+          ctx.beginPath();
+          ctx.moveTo(nodes[i].x,nodes[i].y);
+          ctx.lineTo(nodes[j].x,nodes[j].y);
+          ctx.strokeStyle=`rgba(77,184,255,${(1-dist/160)*.15})`;
+          ctx.lineWidth=.5;
+          ctx.stroke();
+        }
       }
+    }
+    // nodes
+    nodes.forEach(n=>{
+      ctx.beginPath();
+      ctx.arc(n.x,n.y,n.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(77,184,255,${n.opacity})`;
+      ctx.fill();
+      n.x+=n.vx; n.y+=n.vy;
+      if(n.x<0||n.x>W) n.vx*=-1;
+      if(n.y<0||n.y>H) n.vy*=-1;
     });
-  }, { threshold: 0.1 });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
 
-  document.querySelectorAll(
-    '.session-item, .fit-card-yes, .fit-card-no, .value-card, .about-stat, .crystal-card'
-  ).forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(28px)';
-    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-    observer.observe(el);
+/* ── COUNTDOWN (72h) ── */
+(function(){
+  let end=sessionStorage.getItem('fz_end');
+  if(!end){end=Date.now()+72*60*60*1000;sessionStorage.setItem('fz_end',end);}
+  end=parseInt(end);
+  function tick(){
+    const diff=Math.max(0,end-Date.now());
+    const d=Math.floor(diff/86400000);
+    const h=Math.floor((diff%86400000)/3600000);
+    const m=Math.floor((diff%3600000)/60000);
+    const s=Math.floor((diff%60000)/1000);
+    const p=n=>String(n).padStart(2,'0');
+    const g=id=>document.getElementById(id);
+    if(g('cd-d'))g('cd-d').textContent=p(d);
+    if(g('cd-h'))g('cd-h').textContent=p(h);
+    if(g('cd-m'))g('cd-m').textContent=p(m);
+    if(g('cd-s'))g('cd-s').textContent=p(s);
+    if(diff>0)setTimeout(tick,1000);
+  }
+  tick();
+})();
+
+/* ── SCROLL REVEAL ── */
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');});
+},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+/* ── FAQ ── */
+function toggleFaq(btn){
+  const item=btn.closest('.faq-item');
+  const body=item.querySelector('.faq-body');
+  const isOpen=item.classList.contains('open');
+  // close all
+  document.querySelectorAll('.faq-item.open').forEach(el=>{
+    el.classList.remove('open');
+    el.querySelector('.faq-body').style.maxHeight='0';
   });
+  if(!isOpen){
+    item.classList.add('open');
+    body.style.maxHeight=body.scrollHeight+'px';
+  }
+}
 </script>
-
 </body>
 </html>
