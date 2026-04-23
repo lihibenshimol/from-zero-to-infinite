@@ -1,20 +1,26 @@
-# ♾️ FROM ZERO TO INFINITE — BRAND GUIDELINES (LOVABLE INSPIRED)
+# ♾️ FROM ZERO TO INFINITE — BRAND GUIDELINES (V2)
 
-## [ CORE VISUAL CONCEPT ]
-The aesthetic is "Sophisticated Minimalist Tech". High contrast, extreme clarity, and premium dark mode. It should feel like a high-end SaaS product or a futuristic luxury brand.
+## [ DESIGN PHILOSOPHY ]
+**Minimalist-Tech OS.** High-end, precise, and sophisticated. Use "Glassmorphism" for depth and "Circuitry" lines for separation. Everything should feel like an elite digital interface.
 
-## [ THE PALETTE ]
-* **Background:** #030303 (Deep Charcoal/Black)
-* **Text Primary:** #FFFFFF (Pure White)
-* **Text Secondary:** #A1A1AA (Muted Gray for subtext)
-* **Accents:** #3B82F6 (Electric Blue) only for small highlights/links.
-* **Glass:** Semi-transparent backgrounds with `backdrop-filter: blur(12px)`.
+## [ THE REFINED PALETTE (CSS Variables) ]
+* **--bg:** #0a0a0f (Deep Midnight)
+* **--neon:** hsl(210, 100%, 65%) (Electric Blue Glow)
+* **--silver:** rgba(220, 220, 235, 0.9) (Main Text)
+* **--muted:** rgba(160, 160, 180, 0.6) (Secondary Text)
 
-## [ TYPOGRAPHY ]
-* **Headings:** Sans-serif, bold, wide tracking. (Inter or Geist). 
-* **Body:** Clean, legible sans-serif with generous line-height (1.6).
+## [ CORE COMPONENTS & CLASSES ]
+1. **Glass Surfaces:** Use `.glass` with `.border-neon` or `.border-silver` for containers. Always add `backdrop-filter: blur(12px)`.
+2. **Typography:** - Headers: `.font-heading` (Inter, Bold, 0.12em spacing, Uppercase).
+   - Labels: `.section-label` (Tiny, Neon, extreme spacing).
+3. **Buttons:** Always use `.btn-outline`. It must have the hover glow effect and be centered on mobile.
+4. **Structure:** Use `.circuitry-line` as a sophisticated divider between sections.
+5. **Animation:** Use `.reveal` with delays (`.d1`, `.d2`, etc.) for all entering elements.
 
-## [ UI ELEMENTS ]
-* **Cards:** Dark background (#09090b), very subtle border (1px solid #27272a), rounded corners (xl).
-* **Buttons:** Primary is Pure White with Black text. Secondary is outline.
-* **Animations:** Slow, smooth "Fade-in and Slide-up" for every section.
+## [ THE LOGO RULES ]
+- **Hero Priority:** The Logo is the king. Massive, central, and floating (`.hero-logo`). 
+- **No Text Headlines:** Let the logo and the `.hero-title` sub-text do the work.
+
+## [ CONVERSION FUNNEL LOGIC ]
+- **Multi-step Forms:** Use `.glass` cards for forms. 
+- **WhatsApp Integration:** All qualification forms must trigger a pre-filled Hebrew message to Lihi.

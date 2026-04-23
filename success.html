@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>המקום שלך מאובטח · From Zero to Infinite</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="styles.css"/>
+<style>
+.success-icon{
+  width:64px;height:64px;
+  border-radius:50%;
+  border:1px solid rgba(77,184,255,0.35);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 32px;
+  box-shadow:0 0 30px rgba(77,184,255,0.15),0 0 60px rgba(77,184,255,0.06);
+}
+</style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<div class="page">
+
+<!-- ── HERO (LOGO) ── -->
+<section class="hero" style="min-height:35vh;padding:60px 24px 0">
+  <img src="brand_assets/logo.png" alt="From Zero to Infinite" class="hero-logo" style="width:clamp(180px,20vw,380px)"/>
+</section>
+
+<!-- ── CONFIRMATION ── -->
+<section style="padding:48px 24px 96px">
+  <div class="wrap">
+    <p class="section-label reveal">&gt; SEQUENCE_INITIATED</p>
+    <div class="circuitry-line reveal" style="margin-bottom:48px"></div>
+
+    <div class="glass border-neon reveal glow-neon" style="padding:clamp(40px,6vw,72px);text-align:center">
+
+      <!-- check icon -->
+      <div class="success-icon reveal d1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="hsl(210,100%,65%)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </div>
+
+      <h1 class="reveal d1" style="font-size:clamp(22px,4vw,34px);font-weight:600;color:rgba(240,240,255,0.95);line-height:1.5;margin-bottom:20px" dir="rtl">
+        המקום שלך מאובטח.
+      </h1>
+
+      <p class="reveal d2" style="font-size:clamp(15px,2.5vw,18px);color:var(--muted);line-height:1.8;max-width:520px;margin:0 auto 40px" dir="rtl">
+        קיבלתי את הפרטים שלך וכבר מכינה את הסביבה לקראת המסע שלנו.<br/>
+        <strong style="color:rgba(240,240,255,0.85)">בדקי את הוואטסאפ שלך</strong> — אשלח לך שם הודעת ברוכה הבאה עם כל הפרטים לפגישה הראשונה.
+      </p>
+
+      <div class="circuitry-line reveal d2" style="margin-bottom:40px;max-width:400px;margin-left:auto;margin-right:auto"></div>
+
+      <p class="reveal d3" style="font-size:12px;letter-spacing:0.22em;text-transform:uppercase;color:var(--neon);margin-bottom:4px">
+        BY LIHI ZIV
+      </p>
+      <p class="reveal d3" style="font-size:13px;color:var(--muted);line-height:1.7" dir="rtl">
+        ממתינה לפגוש אותך.
+      </p>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <p class="text-muted" style="font-size:12px;letter-spacing:0.1em;direction:rtl">© 2025 From Zero to Infinite · Lihi Ziv</p>
+</footer>
+
+</div><!-- /.page -->
+
+<script>
+/* ── CANVAS ── */
+(function(){
+  const canvas=document.getElementById('bg-canvas');
+  const ctx=canvas.getContext('2d');
+  let W,H,nodes=[];
+  function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
+  resize();
+  window.addEventListener('resize',()=>{resize();init();});
+  function Node(){
+    this.x=Math.random()*W;this.y=Math.random()*H;
+    this.vx=(Math.random()-.5)*.3;this.vy=(Math.random()-.5)*.3;
+    this.r=Math.random()*1.5+.5;this.opacity=Math.random()*.5+.2;
+  }
+  function init(){nodes=[];const c=Math.floor((W*H)/18000);for(let i=0;i<c;i++)nodes.push(new Node());}
+  init();
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    for(let i=0;i<nodes.length;i++){
+      for(let j=i+1;j<nodes.length;j++){
+        const dx=nodes[i].x-nodes[j].x,dy=nodes[i].y-nodes[j].y;
+        const d=Math.sqrt(dx*dx+dy*dy);
+        if(d<160){ctx.beginPath();ctx.moveTo(nodes[i].x,nodes[i].y);ctx.lineTo(nodes[j].x,nodes[j].y);ctx.strokeStyle=`rgba(77,184,255,${(1-d/160)*.15})`;ctx.lineWidth=.5;ctx.stroke();}
+      }
+    }
+    nodes.forEach(n=>{
+      ctx.beginPath();ctx.arc(n.x,n.y,n.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(77,184,255,${n.opacity})`;ctx.fill();
+      n.x+=n.vx;n.y+=n.vy;
+      if(n.x<0||n.x>W)n.vx*=-1;if(n.y<0||n.y>H)n.vy*=-1;
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ── SCROLL REVEAL ── */
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');});
+},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+
+</body>
+</html>

@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>כניסה לתהליך · From Zero to Infinite</title>
+<meta name="description" content="פורטל לקוחות – From Zero to Infinite"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="styles.css"/>
+<style>
+/* ── FORM ── */
+.form-group{display:flex;flex-direction:column;gap:8px;margin-bottom:24px}
+.form-label{
+  font-family:'Inter',sans-serif;font-size:11px;font-weight:600;
+  letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--neon);
+}
+.form-input,.form-textarea{
+  width:100%;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:8px;
+  padding:14px 18px;
+  font-family:'Inter',sans-serif;font-size:15px;
+  color:rgba(240,240,255,0.92);
+  outline:none;
+  transition:border-color 0.3s ease,box-shadow 0.3s ease;
+  direction:rtl;
+}
+.form-input::placeholder,.form-textarea::placeholder{color:var(--muted)}
+.form-input:focus,.form-textarea:focus{
+  border-color:rgba(77,184,255,0.45);
+  box-shadow:0 0 0 3px rgba(77,184,255,0.08);
+}
+.form-textarea{resize:vertical;min-height:120px;line-height:1.65}
+
+.form-submit{
+  width:100%;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  border:1px solid rgba(220,220,235,0.3);
+  color:var(--silver);
+  background:transparent;
+  font-family:'Inter',sans-serif;
+  font-weight:600;font-size:15px;
+  letter-spacing:0.12em;text-transform:uppercase;
+  padding:0 48px;height:56px;
+  border-radius:8px;
+  cursor:pointer;
+  transition:border-color 0.4s ease,color 0.4s ease,box-shadow 0.4s ease;
+  margin-top:8px;
+}
+.form-submit:hover{
+  border-color:rgba(77,184,255,0.6);
+  color:var(--neon);
+  box-shadow:0 0 30px rgba(77,184,255,0.2);
+}
+
+/* divider */
+.form-divider{
+  border:none;
+  height:1px;
+  background:rgba(255,255,255,0.06);
+  margin:8px 0 28px;
+}
+
+/* error state */
+.form-input.error,.form-textarea.error{
+  border-color:rgba(255,107,107,0.5);
+}
+</style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<div class="page">
+
+<!-- ── HERO (LOGO ONLY) ── -->
+<section class="hero" style="min-height:40vh;padding:60px 24px 0">
+  <img src="brand_assets/logo.png" alt="From Zero to Infinite" class="hero-logo" style="width:clamp(200px,22vw,420px)"/>
+</section>
+
+<!-- ── WELCOME ── -->
+<section style="padding:48px 24px 0">
+  <div class="wrap">
+    <p class="section-label reveal">&gt; PRIVATE_CLIENT_PORTAL</p>
+    <div class="circuitry-line reveal" style="margin-bottom:48px"></div>
+
+    <div class="glass border-neon reveal" style="padding:48px 40px;text-align:center">
+      <p style="font-size:clamp(18px,3vw,24px);font-weight:500;color:rgba(240,240,255,0.95);line-height:1.7;margin-bottom:20px" dir="rtl">
+        ליהי כאן. אני מתרגשת להתחיל את המסע הטרנספורמטיבי הזה יחד.
+      </p>
+      <p style="font-size:15px;color:var(--muted);line-height:1.8;max-width:560px;margin:0 auto" dir="rtl">
+        מלאי את הפרטים הבאים בקפידה — המידע הזה ישמש אותי לניתוח הנומרולוגי שלך, לשליחת חומרי העבודה הפיזיים, ולהכנת המפגש הראשון. אחרי שליחת הטופס תועברי לדף התשלום כדי לאבטח את מקומך בתהליך.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ── INTAKE FORM ── -->
+<section style="padding:48px 24px 96px">
+  <div class="wrap">
+    <div class="glass border-neon reveal glow-neon" style="padding:clamp(28px,5vw,56px)">
+
+      <p class="section-label" style="margin-bottom:32px">&gt; INTAKE_FORM</p>
+
+      <form
+        id="intake-form"
+        action="https://formspree.io/f/mlgaoygw"
+        method="POST"
+        novalidate
+      >
+        <!-- hidden redirect field — Formspree will use _next -->
+        <input type="hidden" name="_next" value="https://REPLACE_WITH_YOUR_DOMAIN/success.html"/>
+        <input type="hidden" name="_subject" value="לקוחה חדשה – From Zero to Infinite"/>
+
+        <!-- Full Name -->
+        <div class="form-group">
+          <label class="form-label" for="fullname">שם מלא</label>
+          <input
+            class="form-input"
+            type="text"
+            id="fullname"
+            name="fullname"
+            placeholder="שם פרטי + שם משפחה"
+            required
+            autocomplete="name"
+          />
+        </div>
+
+        <!-- Full Address -->
+        <div class="form-group">
+          <label class="form-label" for="address">כתובת מלאה לשליחת ספר העבודה</label>
+          <input
+            class="form-input"
+            type="text"
+            id="address"
+            name="address"
+            placeholder="רחוב, מספר בית, עיר, מיקוד"
+            required
+            autocomplete="street-address"
+          />
+        </div>
+
+        <hr class="form-divider"/>
+
+        <!-- Date of Birth -->
+        <div class="form-group">
+          <label class="form-label" for="dob">תאריך לידה — לניתוח נומרולוגי וזיכרון תאי</label>
+          <input
+            class="form-input"
+            type="date"
+            id="dob"
+            name="dob"
+            required
+          />
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+          <label class="form-label" for="email">כתובת אימייל</label>
+          <input
+            class="form-input"
+            type="email"
+            id="email"
+            name="email"
+            placeholder="your@email.com"
+            required
+            autocomplete="email"
+            dir="ltr"
+          />
+        </div>
+
+        <hr class="form-divider"/>
+
+        <!-- Intention -->
+        <div class="form-group" style="margin-bottom:32px">
+          <label class="form-label" for="intention">מה הכוונה המרכזית שלך למסע של 8 השבועות?</label>
+          <textarea
+            class="form-textarea"
+            id="intention"
+            name="intention"
+            placeholder="כתבי בחופשיות. אין תשובה נכונה או לא נכונה."
+            required
+            rows="5"
+          ></textarea>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" class="form-submit" id="submit-btn">
+          <span id="submit-label">אישור פרטים ומעבר לתשלום</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+
+        <!-- Inline error message -->
+        <p id="form-error" style="display:none;text-align:center;margin-top:16px;font-size:13px;color:#ff6b6b;direction:rtl">
+          אנא מלאי את כל השדות לפני שליחת הטופס.
+        </p>
+
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <p class="text-muted" style="font-size:12px;letter-spacing:0.1em;direction:rtl">© 2025 From Zero to Infinite · Lihi Ziv</p>
+</footer>
+
+</div><!-- /.page -->
+
+<script>
+/* ── CANVAS ── */
+(function(){
+  const canvas=document.getElementById('bg-canvas');
+  const ctx=canvas.getContext('2d');
+  let W,H,nodes=[];
+  function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
+  resize();
+  window.addEventListener('resize',()=>{resize();init();});
+  function Node(){
+    this.x=Math.random()*W;this.y=Math.random()*H;
+    this.vx=(Math.random()-.5)*.3;this.vy=(Math.random()-.5)*.3;
+    this.r=Math.random()*1.5+.5;this.opacity=Math.random()*.5+.2;
+  }
+  function init(){nodes=[];const c=Math.floor((W*H)/18000);for(let i=0;i<c;i++)nodes.push(new Node());}
+  init();
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    for(let i=0;i<nodes.length;i++){
+      for(let j=i+1;j<nodes.length;j++){
+        const dx=nodes[i].x-nodes[j].x,dy=nodes[i].y-nodes[j].y;
+        const d=Math.sqrt(dx*dx+dy*dy);
+        if(d<160){ctx.beginPath();ctx.moveTo(nodes[i].x,nodes[i].y);ctx.lineTo(nodes[j].x,nodes[j].y);ctx.strokeStyle=`rgba(77,184,255,${(1-d/160)*.15})`;ctx.lineWidth=.5;ctx.stroke();}
+      }
+    }
+    nodes.forEach(n=>{
+      ctx.beginPath();ctx.arc(n.x,n.y,n.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(77,184,255,${n.opacity})`;ctx.fill();
+      n.x+=n.vx;n.y+=n.vy;
+      if(n.x<0||n.x>W)n.vx*=-1;if(n.y<0||n.y>H)n.vy*=-1;
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ── SCROLL REVEAL ── */
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');});
+},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+/* ── FORM SUBMIT ── */
+(function(){
+  const form=document.getElementById('intake-form');
+  const btn=document.getElementById('submit-btn');
+  const label=document.getElementById('submit-label');
+  const errMsg=document.getElementById('form-error');
+
+  form.addEventListener('submit',async function(e){
+    e.preventDefault();
+    errMsg.style.display='none';
+
+    // client-side validation
+    const fields=['fullname','address','dob','email','intention'];
+    let valid=true;
+    fields.forEach(id=>{
+      const el=document.getElementById(id);
+      el.classList.remove('error');
+      if(!el.value.trim()){el.classList.add('error');valid=false;}
+    });
+    if(!valid){errMsg.style.display='block';return;}
+
+    // submit
+    label.textContent='שולחת...';
+    btn.disabled=true;
+
+    try{
+      const data=new FormData(form);
+      const res=await fetch(form.action,{method:'POST',body:data,headers:{Accept:'application/json'}});
+      if(res.ok){
+        // redirect to payment
+        window.location.href='https://mrng.to/MXAe5IBTOU';
+      } else {
+        throw new Error('server error');
+      }
+    } catch(err){
+      label.textContent='אישור פרטים ומעבר לתשלום';
+      btn.disabled=false;
+      errMsg.textContent='משהו השתבש. אנא נסי שוב או צרי קשר בוואטסאפ.';
+      errMsg.style.display='block';
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
