@@ -1,0 +1,13 @@
+/* ── LAYOUT ────────────────────────────────────────────────────────────── */
+.page    { position: relative; z-index: 1; }
+.wrap    { max-width: 900px;  margin: 0 auto; padding: 0 24px; }
+.wrap-lg { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+section {
+  padding: 96px 24px;
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  section { padding: 64px 20px; }
+}

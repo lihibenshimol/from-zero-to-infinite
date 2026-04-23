@@ -1,0 +1,18 @@
+/* ════════════════════════════════════════════════════════════════════════
+   MAIN.CSS — From Zero to Infinite
+   All shared/global styles. Imported by every page.
+   To change a component globally (e.g. buttons, footer), edit the
+   corresponding file inside basics/.
+   ════════════════════════════════════════════════════════════════════════ */
+
+@import './basics/variables.css';
+@import './basics/reset.css';
+@import './basics/canvas.css';
+@import './basics/layout.css';
+@import './basics/glass.css';
+@import './basics/circuitry.css';
+@import './basics/typography.css';
+@import './basics/buttons.css';
+@import './basics/hero.css';
+@import './basics/footer.css';
+@import './basics/reveal.css';

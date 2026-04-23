@@ -1,0 +1,113 @@
+/* ── ONBOARDING PAGE ────────────────────────────────────────────────────── */
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.form-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--neon);
+}
+
+.form-input,
+.form-textarea {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 14px 18px;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  color: rgba(240, 240, 255, 0.92);
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  direction: rtl;
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: var(--muted);
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  border-color: rgba(77, 184, 255, 0.45);
+  box-shadow: 0 0 0 3px rgba(77, 184, 255, 0.08);
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 120px;
+  line-height: 1.65;
+}
+
+/* Inline submit button — full-width variant of .btn-outline */
+.form-submit {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid rgba(220, 220, 235, 0.3);
+  color: var(--silver);
+  background: transparent;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0 48px;
+  height: 56px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color 0.4s ease, color 0.4s ease, box-shadow 0.4s ease;
+  margin-top: 8px;
+}
+
+.form-submit:hover {
+  border-color: rgba(77, 184, 255, 0.6);
+  color: var(--neon);
+  box-shadow: 0 0 30px rgba(77, 184, 255, 0.2);
+}
+
+.form-submit:active  { transform: scale(0.98); }
+
+.form-submit:focus-visible {
+  outline: 2px solid var(--neon);
+  outline-offset: 3px;
+}
+
+.form-divider {
+  border: none;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.06);
+  margin: 8px 0 28px;
+}
+
+/* Validation error state */
+.form-input.error,
+.form-textarea.error {
+  border-color: rgba(255, 107, 107, 0.5);
+}
+
+/* ── MOBILE ── */
+@media (max-width: 640px) {
+  .form-input,
+  .form-textarea {
+    font-size: 16px; /* prevents iOS zoom on focus */
+    padding: 12px 14px;
+  }
+
+  .form-submit {
+    font-size: 13px;
+    height: 52px;
+    padding: 0 20px;
+  }
+}

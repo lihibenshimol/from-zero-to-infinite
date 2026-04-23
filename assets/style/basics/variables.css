@@ -1,0 +1,15 @@
+/* ── DESIGN TOKENS ─────────────────────────────────────────────────────────
+   Edit here to change the entire site's colour palette in one place.
+   ──────────────────────────────────────────────────────────────────────── */
+:root {
+  --bg:          #0a0a0f;
+  --neon:        hsl(210, 100%, 65%);
+  --neon-dim:    rgba(77, 184, 255, 0.15);
+  --silver:      rgba(220, 220, 235, 0.9);
+  --silver-dim:  rgba(220, 220, 235, 0.5);
+  --muted:       rgba(160, 160, 180, 0.6);
+  --border:      rgba(255, 255, 255, 0.08);
+  --border-neon: rgba(77, 184, 255, 0.25);
+  --glass:       rgba(255, 255, 255, 0.04);
+  --glass-hover: rgba(255, 255, 255, 0.07);
+}

@@ -1,0 +1,13 @@
+/* ── GLASS SURFACES ────────────────────────────────────────────────────── */
+.glass {
+  background: rgba(15, 15, 25, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 12px;
+}
+
+.border-neon   { border: 1px solid var(--border-neon); }
+.border-silver { border: 1px solid rgba(220, 220, 235, 0.15); }
+
+.glow-neon   { box-shadow: 0 0 30px rgba(77, 184, 255, 0.12), 0 0 60px rgba(77, 184, 255, 0.06); }
+.glow-silver { box-shadow: 0 0 30px rgba(220, 220, 235, 0.08); }

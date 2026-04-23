@@ -1,0 +1,62 @@
+/* ── BUTTONS ───────────────────────────────────────────────────────────── */
+/* Edit here to change ALL button styles across every page at once.        */
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid rgba(220, 220, 235, 0.3);
+  color: var(--silver);
+  background: transparent;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0 48px;
+  height: 56px;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: border-color 0.4s ease, color 0.4s ease, box-shadow 0.4s ease;
+  white-space: nowrap;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.btn-outline:hover {
+  border-color: rgba(77, 184, 255, 0.6);
+  color: var(--neon);
+  box-shadow: 0 0 30px rgba(77, 184, 255, 0.2);
+}
+
+.btn-outline:active {
+  transform: scale(0.98);
+}
+
+.btn-outline:focus-visible {
+  outline: 2px solid var(--neon);
+  outline-offset: 3px;
+}
+
+/* blinking cursor used in CTA labels */
+.cursor-blink {
+  display: inline-block;
+  animation: blink 1.1s step-end infinite;
+  margin-left: -4px;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+@media (max-width: 640px) {
+  .btn-outline {
+    width: 100%;
+    padding: 0 24px;
+    font-size: 13px;
+    height: 52px;
+  }
+}

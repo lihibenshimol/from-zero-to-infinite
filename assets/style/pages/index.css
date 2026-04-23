@@ -1,0 +1,264 @@
+/* ── INDEX PAGE ─────────────────────────────────────────────────────────── */
+
+/* Hero text — index only (logo/centering comes from basics/hero.css) */
+.hero-logo { width: clamp(280px, 30vw, 580px); }
+
+.hero-title {
+  font-size: clamp(22px, 4vw, 32px);
+  font-weight: 600;
+  color: rgba(240, 240, 255, 0.95);
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+.hero-sub {
+  font-size: clamp(15px, 2.5vw, 18px);
+  color: var(--muted);
+  max-width: 520px;
+  margin: 0 auto 48px;
+  line-height: 1.7;
+}
+
+.hero-byline {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 24px;
+}
+
+/* Session / Journey grid */
+.session-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 640px) {
+  .session-grid { grid-template-columns: 1fr; }
+}
+
+.session-card {
+  padding: 24px 28px 28px;
+  transition: box-shadow 0.5s ease;
+}
+
+.session-card:hover {
+  box-shadow: 0 0 30px rgba(77, 184, 255, 0.12), 0 0 60px rgba(77, 184, 255, 0.06);
+}
+
+.session-num {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 32px;
+  color: var(--neon);
+  opacity: 0.35;
+  transition: opacity 0.4s ease;
+  line-height: 1;
+}
+
+.session-card:hover .session-num { opacity: 1; }
+
+/* Testimonials */
+.testi-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 640px) {
+  .testi-grid { grid-template-columns: 1fr; }
+}
+
+/* Pricing countdown */
+.cd-box {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cd-num {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--silver);
+}
+
+.cd-lbl {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--muted);
+  margin-top: 4px;
+  letter-spacing: 0.05em;
+}
+
+.countdown-pulse {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #ff6b6b;
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 4px;
+  animation: cpulse 2s ease-in-out infinite;
+}
+
+@keyframes cpulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+.check-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-direction: row-reverse;
+}
+
+.check-icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+}
+
+/* FAQ Accordion */
+.faq-item {
+  border-bottom: 1px solid var(--border-neon);
+  border-radius: 8px;
+  padding: 0 20px;
+  margin-bottom: 8px;
+  background: rgba(15, 15, 25, 0.5);
+  backdrop-filter: blur(8px);
+  overflow: hidden;
+}
+
+.faq-item:last-child { margin-bottom: 0; }
+
+.faq-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 16px 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: rgba(240, 240, 255, 0.92);
+  text-align: right;
+  direction: rtl;
+  gap: 12px;
+}
+
+.faq-btn:hover { color: #fff; }
+
+.faq-chevron {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--muted);
+  transition: transform 0.2s ease;
+}
+
+.faq-item.open .faq-chevron { transform: rotate(180deg); }
+
+.faq-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.faq-body-inner {
+  padding-bottom: 16px;
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--muted);
+  direction: rtl;
+  text-align: right;
+}
+
+/* Floating WhatsApp */
+.wa-float {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 50;
+}
+
+.wa-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #25D366;
+  box-shadow: 0 4px 16px rgba(37, 211, 102, 0.4);
+  text-decoration: none;
+  transition: transform 0.3s ease;
+}
+
+.wa-btn:hover { transform: scale(1.1); }
+
+.wa-hint {
+  position: absolute;
+  bottom: 68px;
+  right: 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--neon);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.wa-float:hover .wa-hint { opacity: 1; }
+
+/* About section card */
+.about-card { padding: 48px; text-align: center; }
+
+/* ── MOBILE ─────────────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .about-card { padding: 32px 24px; }
+
+  /* hero text */
+  .hero-title  { font-size: 20px; }
+  .hero-sub    { font-size: 15px; margin-bottom: 32px; }
+  .hero-byline { font-size: 10px; }
+
+  /* grids go single-column */
+  .session-grid,
+  .testi-grid { grid-template-columns: 1fr; }
+
+  /* session card tighter */
+  .session-card { padding: 20px; }
+  .session-num  { font-size: 24px; }
+
+  /* pricing countdown */
+  .cd-box { width: 48px; height: 48px; }
+  .cd-num { font-size: 17px; }
+
+  /* FAQ */
+  .faq-btn  { font-size: 14px; }
+  .faq-item { padding: 0 14px; }
+
+  /* WhatsApp — keep visible but smaller */
+  .wa-float { bottom: 16px; right: 16px; }
+  .wa-btn   { width: 48px; height: 48px; }
+}

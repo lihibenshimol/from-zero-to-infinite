@@ -1,0 +1,28 @@
+/* ── CIRCUITRY DIVIDER LINE ────────────────────────────────────────────── */
+.circuitry-line {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--border-neon) 20%,
+    var(--border-neon) 80%,
+    transparent
+  );
+  position: relative;
+  overflow: visible;
+}
+
+.circuitry-line::before,
+.circuitry-line::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--neon);
+  box-shadow: 0 0 6px var(--neon);
+}
+
+.circuitry-line::before { left: 20%; }
+.circuitry-line::after  { right: 20%; }

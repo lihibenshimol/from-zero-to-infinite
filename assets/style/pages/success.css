@@ -1,0 +1,17 @@
+/* ── SUCCESS PAGE ───────────────────────────────────────────────────────── */
+
+.success-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 1px solid rgba(77, 184, 255, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 32px;
+  box-shadow: 0 0 30px rgba(77, 184, 255, 0.15), 0 0 60px rgba(77, 184, 255, 0.06);
+}
+
+@media (max-width: 640px) {
+  .success-icon { width: 52px; height: 52px; margin-bottom: 24px; }
+}

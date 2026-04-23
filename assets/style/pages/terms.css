@@ -1,0 +1,6 @@
+/* ── TERMS PAGE ─────────────────────────────────────────────────────────── */
+
+@media (max-width: 640px) {
+  /* tighten the back-link spacing */
+  section { padding-top: 56px; }
+}
