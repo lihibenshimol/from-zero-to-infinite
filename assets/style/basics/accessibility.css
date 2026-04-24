@@ -1,0 +1,53 @@
+/* ── ACCESSIBILITY (WCAG 2.0 AA / Israeli Law) ─────────────────────────── */
+
+/* Skip to main content — visually hidden until focused by keyboard */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  right: 0;
+  z-index: 9999;
+  padding: 12px 24px;
+  background: var(--neon);
+  color: #000;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 0 0 8px 8px;
+  transition: top 0.2s ease;
+}
+.skip-link:focus {
+  top: 0;
+  outline: 3px solid #000;
+  outline-offset: 2px;
+}
+
+/* Screen-reader-only text — invisible but announced by screen readers */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Strong focus ring for all interactive elements */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--neon);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Remove focus ring only for mouse users — keeps it for keyboard */
+:focus:not(:focus-visible) {
+  outline: none;
+}
