@@ -40,6 +40,47 @@
   outline-offset: 3px;
 }
 
+/* filled primary button — used for the main conversion CTA only */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(135deg, hsl(42,90%,58%), hsl(36,85%,50%));
+  color: #0a0808;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0 48px;
+  height: 56px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: opacity 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 0 30px rgba(220,165,40,0.3), 0 0 60px rgba(220,165,40,0.12);
+}
+
+.btn-primary:hover {
+  opacity: 0.92;
+  box-shadow: 0 0 50px rgba(220,165,40,0.5), 0 0 90px rgba(220,165,40,0.22);
+  transform: translateY(-1px);
+}
+
+.btn-primary:active  { transform: scale(0.98); }
+
+.btn-primary:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+@media (max-width: 640px) {
+  .btn-primary { width: 100%; font-size: 13px; height: 52px; padding: 0 24px; }
+}
+
 /* blinking cursor used in CTA labels */
 .cursor-blink {
   display: inline-block;

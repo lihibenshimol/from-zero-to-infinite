@@ -117,12 +117,27 @@
   50%       { opacity: 0.4; }
 }
 
+@keyframes discountPulse {
+  0%, 100% {
+    box-shadow: 0 0 40px rgba(77,184,255,0.1);
+    border-color: rgba(77,184,255,0.25);
+  }
+  50% {
+    box-shadow: 0 0 60px rgba(77,184,255,0.35), 0 0 100px rgba(77,184,255,0.15);
+    border-color: rgba(77,184,255,0.7);
+  }
+}
+
+.discount-badge {
+  animation: discountPulse 2.4s ease-in-out infinite;
+}
+
 .check-row {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 12px;
-  flex-direction: row-reverse;
+  flex-direction: row;
 }
 
 .check-icon {
