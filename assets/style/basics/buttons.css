@@ -9,7 +9,7 @@
   border: 1px solid rgba(220, 220, 235, 0.3);
   color: var(--silver);
   background: transparent;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Assistant', sans-serif;
   font-weight: 600;
   font-size: 15px;
   letter-spacing: 0.12em;
@@ -48,7 +48,7 @@
   gap: 8px;
   background: linear-gradient(135deg, hsl(42,90%,58%), hsl(36,85%,50%));
   color: #0a0808;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Assistant', sans-serif;
   font-weight: 700;
   font-size: 15px;
   letter-spacing: 0.12em;

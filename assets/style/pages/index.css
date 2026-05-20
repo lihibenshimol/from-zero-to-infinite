@@ -34,7 +34,7 @@ main > section:nth-child(odd) {
 }
 
 .hero-byline {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Assistant', sans-serif;
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.3em;
@@ -64,7 +64,7 @@ main > section:nth-child(odd) {
 }
 
 .session-num {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Assistant', sans-serif;
   font-weight: 700;
   font-size: 32px;
   color: var(--neon);
@@ -99,7 +99,7 @@ main > section:nth-child(odd) {
 }
 
 .cd-num {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Assistant', sans-serif;
   font-weight: 700;
   font-size: 20px;
   color: var(--silver);
@@ -114,7 +114,7 @@ main > section:nth-child(odd) {
 }
 
 .countdown-pulse {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Assistant', sans-serif;
   font-size: 10px;
   font-weight: 600;
   letter-spacing: 0.15em;
@@ -182,7 +182,7 @@ main > section:nth-child(odd) {
   border: none;
   cursor: pointer;
   padding: 16px 0;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Assistant', sans-serif;
   font-size: 15px;
   font-weight: 500;
   color: rgba(240, 240, 255, 0.92);
@@ -245,7 +245,7 @@ main > section:nth-child(odd) {
   position: absolute;
   bottom: 68px;
   right: 0;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Assistant', sans-serif;
   font-size: 9px;
   font-weight: 600;
   letter-spacing: 0.2em;

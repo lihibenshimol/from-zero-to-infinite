@@ -7,7 +7,7 @@
 <meta name="description" content="תהליך ליווי לקפיצה קוונטית"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="assets/style/main.css"/>
 <link rel="stylesheet" href="assets/style/pages/index.css"/>
 </head>
@@ -300,42 +300,71 @@
 </section>
 
 <!-- ── IDENTITY SHIFT ── -->
-<section aria-labelledby="identity-heading" style="padding:80px 24px;background:rgba(255,255,255,0.03);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)">
-  <div class="wrap" style="max-width:720px">
+<section aria-labelledby="identity-heading" style="
+  padding:100px 24px;
+  background:
+    radial-gradient(ellipse at 50% 0%,   rgba(220,165,40,0.10) 0%, transparent 55%),
+    radial-gradient(ellipse at 50% 100%, rgba(77,184,255,0.08)  0%, transparent 55%),
+    rgba(8,8,16,0.7);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  border-top:1px solid rgba(220,165,40,0.12);
+  border-bottom:1px solid rgba(77,184,255,0.12);
+">
+  <div class="wrap" style="max-width:680px">
 
-    <div class="reveal" style="text-align:center;line-height:1.8;color:var(--silver);font-size:clamp(15px,2vw,17px)">
+    <div class="reveal" style="text-align:center;line-height:1.9;color:var(--silver)">
 
-      <!-- Contrast lines -->
-      <p dir="rtl" style="margin-bottom:12px">יש הבדל תהומי בין ״להפסיק לעשן״ לבין להיות ״אדם שלא מעשן״.</p>
-      <p dir="rtl" style="margin-bottom:12px">יש הבדל בין ״לנסות להרוויח כסף״ לבין להיות ״אישה שחיה בשפע״.</p>
-      <p dir="rtl" style="margin-bottom:40px">יש הבדל בין ״להצליח בחיים״ לבין להיות ״אדם מוצלח״.</p>
+      <!-- Big contrast lines -->
+      <div style="margin-bottom:48px;display:flex;flex-direction:column;gap:16px">
+        <p dir="rtl" style="font-size:clamp(18px,3vw,26px);font-weight:500;color:rgba(240,240,255,0.88)">
+          יש הבדל תהומי בין ״להפסיק לעשן״<br/>
+          לבין להיות <em style="font-style:normal;color:hsl(42,90%,62%);font-weight:700">״אדם שלא מעשן״</em>.
+        </p>
+        <p dir="rtl" style="font-size:clamp(18px,3vw,26px);font-weight:500;color:rgba(240,240,255,0.88)">
+          יש הבדל בין ״לנסות להרוויח כסף״<br/>
+          לבין להיות <em style="font-style:normal;color:hsl(42,90%,62%);font-weight:700">״אישה שחיה בשפע״</em>.
+        </p>
+        <p dir="rtl" style="font-size:clamp(18px,3vw,26px);font-weight:500;color:rgba(240,240,255,0.88)">
+          יש הבדל בין ״להצליח בחיים״<br/>
+          לבין להיות <em style="font-style:normal;color:hsl(42,90%,62%);font-weight:700">״אדם מוצלח״</em>.
+        </p>
+      </div>
+
+      <!-- Separator -->
+      <div class="circuitry-line" style="margin-bottom:40px;opacity:0.6"></div>
 
       <!-- The explanation -->
-      <p dir="rtl" style="margin-bottom:16px;color:rgba(240,240,255,0.85)">והטעות של רוב האנשים, היא שהם לא מבינים את ההבדל הזה.</p>
-      <p dir="rtl" style="margin-bottom:40px;color:var(--muted)">כי לעשות שינוי זה לפתח הרגלים חדשים, להיפטר מהרגלים שליליים, לעשות פעולות אחרות. אבל קפיצה קוונטית היא לעצב מחדש את ה-DNA של הזהות שלך.<br/><strong style="color:rgba(240,240,255,0.9)">וזה הבדל תהומי.</strong></p>
+      <p dir="rtl" style="margin-bottom:16px;font-size:clamp(15px,2vw,18px);color:rgba(240,240,255,0.8)">והטעות של רוב האנשים, היא שהם לא מבינים את ההבדל הזה.</p>
+      <p dir="rtl" style="margin-bottom:12px;font-size:clamp(14px,1.8vw,17px);color:var(--muted)">כי לעשות שינוי זה לפתח הרגלים חדשים, להיפטר מהרגלים שליליים, לעשות פעולות אחרות. אבל קפיצה קוונטית היא לעצב מחדש את ה-DNA של הזהות שלך.</p>
+
+      <!-- Big statement -->
+      <p dir="rtl" style="font-size:clamp(22px,4vw,36px);font-weight:700;color:var(--neon);margin:32px 0 48px;line-height:1.4">
+        וזה הבדל תהומי.
+      </p>
 
       <!-- Invitation -->
-      <p dir="rtl" style="margin-bottom:32px">
-        <strong id="identity-heading" style="font-size:clamp(16px,2.2vw,19px);color:rgba(240,240,255,0.95);font-weight:600">
+      <p dir="rtl" style="margin-bottom:28px;font-size:clamp(16px,2.5vw,21px)">
+        <strong id="identity-heading" style="color:rgba(240,240,255,0.97);font-weight:600">
           תעצמי רגע עיניים ותדמייני את הגרסה הזו שלך, זו שמעבר לשינוי:
         </strong>
       </p>
 
       <!-- The vision -->
-      <div dir="rtl" style="display:flex;flex-direction:column;gap:20px;margin-bottom:40px;text-align:right;border-left:2px solid var(--border-neon);padding-left:24px">
-        <p>היא לא ״מנסה״ להיות רגועה. היא פשוט אדם רגוע. כזה שהשקט הפנימי שלו לא תלוי בשום דבר שקורה בחוץ.</p>
-        <p>היא לא ״נלחמת״ כדי להביא לקוחות או כסף. היא פשוט מגנט. היא פועלת מתוך ידיעה פנימית שהערך שלה הוא אינסופי, והמציאות פשוט מתיישרת לפי זה.</p>
-        <p>היא לא עושה הכל ״נכון״ – היא פשוט חיה נכון.</p>
+      <div dir="rtl" style="display:flex;flex-direction:column;gap:20px;margin-bottom:40px;text-align:right;border-left:2px solid rgba(220,165,40,0.4);padding-left:24px;background:rgba(220,165,40,0.03);border-radius:0 8px 8px 0;padding:20px 20px 20px 24px">
+        <p style="font-size:clamp(14px,1.8vw,17px);color:rgba(240,240,255,0.85)">היא לא ״מנסה״ להיות רגועה. היא פשוט אדם רגוע. כזה שהשקט הפנימי שלו לא תלוי בשום דבר שקורה בחוץ.</p>
+        <p style="font-size:clamp(14px,1.8vw,17px);color:rgba(240,240,255,0.85)">היא לא ״נלחמת״ כדי להביא לקוחות או כסף. היא פשוט מגנט. היא פועלת מתוך ידיעה פנימית שהערך שלה הוא אינסופי, והמציאות פשוט מתיישרת לפי זה.</p>
+        <p style="font-size:clamp(14px,1.8vw,17px);color:rgba(240,240,255,0.85)">היא לא עושה הכל ״נכון״ - היא פשוט חיה נכון.</p>
       </div>
 
       <!-- Close -->
-      <p dir="rtl" style="margin-bottom:16px;color:rgba(240,240,255,0.85)">זה לא שינוי של ״מה את עושה בבוקר״. זה שינוי של ״מי את כשאת קמה בבוקר״.</p>
-      <p dir="rtl" style="margin-bottom:16px">את לא צריכה עוד כלי. את צריכה עדכון גרסה למי שאת.</p>
-      <p dir="rtl" style="margin-bottom:56px;color:rgba(240,240,255,0.9);font-weight:500">בואי נתחיל לכתוב את הסיפור החדש שלך. לא מהמקום שרוצה להשתפר, אלא מהמקום שכבר יודע שהוא שלם.</p>
+      <p dir="rtl" style="margin-bottom:12px;font-size:clamp(15px,2vw,18px);color:rgba(240,240,255,0.85)">זה לא שינוי של ״מה את עושה בבוקר״. זה שינוי של ״מי את כשאת קמה בבוקר״.</p>
+      <p dir="rtl" style="margin-bottom:12px;font-size:clamp(15px,2vw,18px)">את לא צריכה עוד כלי. את צריכה עדכון גרסה למי שאת.</p>
+      <p dir="rtl" style="margin-bottom:56px;font-size:clamp(15px,2vw,18px);color:rgba(240,240,255,0.9);font-weight:500">בואי נתחיל לכתוב את הסיפור החדש שלך. לא מהמקום שרוצה להשתפר, אלא מהמקום שכבר יודע שהוא שלם.</p>
 
       <!-- CTA -->
-      <a href="#pricing" class="btn-outline reveal d1" style="display:inline-flex">
-        אני מוכנה לעדכון גרסה
+      <a href="#pricing" class="btn-primary btn-pill reveal d1">
+        אני מוכנה לעדכון גרסה ←
       </a>
 
     </div>
