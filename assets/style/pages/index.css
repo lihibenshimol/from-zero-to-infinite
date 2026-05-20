@@ -1,5 +1,19 @@
 /* ── INDEX PAGE ─────────────────────────────────────────────────────────── */
 
+/* ── ALTERNATING SECTION BACKGROUNDS ── */
+main > section:nth-child(even) {
+  background: radial-gradient(ellipse at 60% 50%, rgba(77,184,255,0.04) 0%, transparent 70%);
+}
+main > section:nth-child(odd) {
+  background: radial-gradient(ellipse at 40% 50%, rgba(10,10,20,0.6) 0%, transparent 80%);
+}
+
+/* ── PILL CTA ── */
+.btn-pill {
+  border-radius: 100px !important;
+  padding: 0 40px !important;
+}
+
 /* Hero text — index only (logo/centering comes from basics/hero.css) */
 .hero-logo { width: clamp(280px, 30vw, 580px); }
 
@@ -247,6 +261,15 @@
 
 /* About section card */
 .about-card { padding: 48px; text-align: center; }
+
+/* Outcomes grid */
+.outcomes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+/* Sticky bar — hidden on desktop when pricing is visible */
+@media (max-width: 640px) {
+  .outcomes-grid { grid-template-columns: 1fr; }
+  #sticky-bar p { font-size: 13px; }
+}
 
 /* ── MOBILE ─────────────────────────────────────────────────────────────── */
 @media (max-width: 640px) {

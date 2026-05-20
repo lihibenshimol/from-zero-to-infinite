@@ -23,21 +23,39 @@
 <main id="main-content">
 
 <!-- ── HERO ── -->
-<section class="hero">
-  <div style="max-width:900px;margin:0 auto;width:100%">
+<section class="hero hero-split">
+
+  <!-- Left: animated visual -->
+  <div class="hero-visual" aria-hidden="true">
+    <div class="hero-rings">
+      <div class="ring ring-1"></div>
+      <div class="ring ring-2"></div>
+      <div class="ring ring-3"></div>
+      <div class="ring ring-4"></div>
+    </div>
     <img src="brand_assets/logo.png" alt="From Zero to Infinite" class="hero-logo"/>
-    <div class="wrap" style="padding:0">
-      <p class="hero-title" dir="rtl">הגיע הזמן ליצור מציאות חדשה</p>
-      <p class="hero-sub" dir="rtl">
-        לשלב הבא שלך לא מגיעים עם עוד "ריפוי".<br/>
-        <strong style="color:rgba(240,240,255,0.95)">מגיעים עם החלפת זהות.</strong>
-      </p>
-      <a href="#pricing" class="btn-outline">
-        <span class="cursor-blink">_</span>START THE QUANTUM LEAP
+  </div>
+
+  <!-- Right: text -->
+  <div class="hero-content">
+    <p class="hero-byline" style="margin-bottom:24px;text-align:right">BY LIHI ZIV</p>
+    <h1 dir="rtl" style="font-size:clamp(32px,5.5vw,64px);font-weight:700;line-height:1.25;color:rgba(240,240,255,0.97);margin-bottom:28px;letter-spacing:-0.01em">
+      את יודעת שאת<br/>
+      יכולה <em style="font-style:italic;color:hsl(42,90%,62%);font-weight:700">הרבה יותר</em>.<br/>
+      הגיע הזמן<br/>
+      <span style="color:var(--neon)">לחיות את זה.</span>
+    </h1>
+    <p class="hero-sub" dir="rtl" style="text-align:right;margin-bottom:40px;max-width:440px;margin-right:0">
+      לשלב הבא שלך לא מגיעים עם עוד "ריפוי".<br/>
+      <strong style="color:rgba(240,240,255,0.92)">מגיעים עם החלפת זהות.</strong>
+    </p>
+    <div style="text-align:right">
+      <a href="#pricing" class="btn-primary btn-pill" dir="rtl">
+        אני מוכנה לעדכון גרסה ←
       </a>
-      <p class="hero-byline">BY LIHI ZIV</p>
     </div>
   </div>
+
 </section>
 
 <!-- ── PROBLEM ── -->
@@ -47,15 +65,15 @@
     <div class="circuitry-line reveal" style="margin-bottom:48px"></div>
 
     <div class="glass border-neon reveal" style="padding:48px 40px">
-      <h3 style="font-size:clamp(18px,3vw,22px);color:rgba(240,240,255,0.95);font-weight:400;line-height:1.6;margin-bottom:32px" dir="rtl">
-        עשית כבר הכל, עברת תהליכי עומק, שחררת טראומות, ריפאת את הילדה הפנימית...
+      <h3 style="font-size:clamp(19px,3vw,24px);color:rgba(240,240,255,0.95);font-weight:400;line-height:1.65;margin-bottom:28px" dir="rtl">
+        עשית כבר הכל. תהליכי עומק, שחרורים, ריפוי ילדה פנימית, קואצ׳ינג, מדיטציות...
       </h3>
-      <h2 class="text-neon" style="font-size:clamp(20px,3.5vw,28px);font-weight:600;line-height:1.55;margin-bottom:40px" dir="rtl">
-        אז למה את עדיין לא חיה את המציאות שאת יודעת שנועדת לה?
+      <h2 class="text-neon" style="font-size:clamp(22px,4vw,34px);font-weight:700;line-height:1.45;margin-bottom:40px" dir="rtl">
+        אז למה את עדיין לא חיה את החיים שאת יודעת שנועדת להם?
       </h2>
       <div style="border-top:1px solid rgba(255,255,255,0.08);padding-top:32px">
-        <p style="font-size:clamp(14px,2vw,17px);color:var(--muted);line-height:1.8" dir="rtl">
-          כאן לא "מטפלים" – כאן מעצבים מחדש את הארכיטקטורה התודעתית שלך. את מרגישה שאת יכולה הרבה יותר, ואת כנראה צודקת – אבל המערכת הישנה שלך פשוט לא תומכת בגרסה הזו שלך עדיין. כל מה שאת צריכה, זה לעדכן לגרסה המתאימה.
+        <p style="font-size:clamp(15px,2vw,18px);color:var(--muted);line-height:1.85" dir="rtl">
+          כי הבעיה היא לא מה שאת <em>עושה</em> - הבעיה היא מי שאת <em>מאמינה שאת</em>. כאן אנחנו לא מוסיפות עוד כלי - אנחנו מעדכנות את הגרסה של מי שאת.
         </p>
       </div>
     </div>
@@ -107,8 +125,8 @@
 <section>
   <div class="wrap-lg">
     <p class="section-label reveal">&gt; EXECUTION_SEQUENCE</p>
-    <h2 class="font-heading text-silver reveal" style="font-size:clamp(22px,4vw,32px);text-align:center;margin-bottom:8px">SOFTWARE UPDATES</h2>
-    <p style="color:var(--muted);text-align:center;margin-bottom:48px" dir="rtl" class="reveal">ארבעה שדרוגים למערכת ההפעלה התודעתית</p>
+    <h2 class="font-heading text-silver reveal" style="font-size:clamp(26px,4.5vw,40px);text-align:center;margin-bottom:8px">4 מפגשים. זהות אחרת.</h2>
+    <p style="color:var(--muted);text-align:center;margin-bottom:48px;font-size:clamp(15px,2vw,18px)" dir="rtl" class="reveal">ארבעה שלבים שמחברים גוף, נפש ותודעה לגרסה החדשה שלך</p>
 
     <div class="session-grid">
       <div class="glass border-neon session-card reveal">
@@ -162,11 +180,63 @@
   </div>
 </section>
 
+<!-- ── OUTCOMES ── -->
+<section>
+  <div class="wrap">
+    <p class="section-label reveal">&gt; WHAT_YOU_GAIN</p>
+    <div class="circuitry-line reveal" style="margin-bottom:40px"></div>
+    <h2 class="reveal" style="font-size:clamp(22px,4vw,30px);font-weight:600;color:rgba(240,240,255,0.95);text-align:center;margin-bottom:12px" dir="rtl">
+      אז מה בדיוק תצאי עם?
+    </h2>
+    <p class="reveal" style="font-size:15px;color:var(--muted);text-align:center;margin-bottom:48px" dir="rtl">בלי ג׳רגון. בשפה פשוטה.</p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px" class="outcomes-grid">
+
+      <div class="glass border-neon reveal" style="padding:28px 24px">
+        <p style="font-size:28px;margin-bottom:12px">🧠</p>
+        <h3 style="font-size:14px;font-weight:700;color:rgba(240,240,255,0.95);margin-bottom:8px" dir="rtl">הבנה עמוקה של מי את</h3>
+        <p style="font-size:14px;color:var(--muted);line-height:1.75" dir="rtl">תדעי בדיוק איזה דפוס תודעתי עצר אותך עד עכשיו - ולמה.</p>
+      </div>
+
+      <div class="glass border-neon reveal d1" style="padding:28px 24px">
+        <p style="font-size:28px;margin-bottom:12px">⚡</p>
+        <h3 style="font-size:14px;font-weight:700;color:rgba(240,240,255,0.95);margin-bottom:8px" dir="rtl">זהות חדשה שמרגישה טבעית</h3>
+        <p style="font-size:14px;color:var(--muted);line-height:1.75" dir="rtl">לא תצטרכי "לנסות" להיות גרסה חדשה - היא פשוט תהיי את.</p>
+      </div>
+
+      <div class="glass border-neon reveal d1" style="padding:28px 24px">
+        <p style="font-size:28px;margin-bottom:12px">🗺️</p>
+        <h3 style="font-size:14px;font-weight:700;color:rgba(240,240,255,0.95);margin-bottom:8px" dir="rtl">ה-Infinite Map שלך</h3>
+        <p style="font-size:14px;color:var(--muted);line-height:1.75" dir="rtl">מפה אישית של מערכת ההפעלה החדשה - שלך לתמיד, להמשך הדרך.</p>
+      </div>
+
+      <div class="glass border-neon reveal d2" style="padding:28px 24px">
+        <p style="font-size:28px;margin-bottom:12px">🎁</p>
+        <h3 style="font-size:14px;font-weight:700;color:rgba(240,240,255,0.95);margin-bottom:8px" dir="rtl">מארז מתנה בלעדי</h3>
+        <p style="font-size:14px;color:var(--muted);line-height:1.75" dir="rtl">מארז פיזי שנבחר בקפידה כדי לתמוך בך לאורך כל התהליך ולאחר מכן.</p>
+      </div>
+
+      <div class="glass border-neon reveal d2" style="padding:28px 24px">
+        <p style="font-size:28px;margin-bottom:12px">🤍</p>
+        <h3 style="font-size:14px;font-weight:700;color:rgba(240,240,255,0.95);margin-bottom:8px" dir="rtl">שקט פנימי שלא תלוי בחוץ</h3>
+        <p style="font-size:14px;color:var(--muted);line-height:1.75" dir="rtl">תפסיקי לנהל את החיים שלך מתוך הישרדות. תתחילי להוביל מתוך עוצמה.</p>
+      </div>
+
+      <div class="glass border-neon reveal d3" style="padding:28px 24px">
+        <p style="font-size:28px;margin-bottom:12px">✨</p>
+        <h3 style="font-size:14px;font-weight:700;color:rgba(240,240,255,0.95);margin-bottom:8px" dir="rtl">חיים שמרגישים נכון</h3>
+        <p style="font-size:14px;color:var(--muted);line-height:1.75" dir="rtl">לא הכל "נכון" - את פשוט חיה נכון. ויש הבדל תהומי בין השניים.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <!-- ── TESTIMONIALS ── -->
 <section>
   <div class="wrap-lg">
     <p class="section-label reveal">&gt; SYSTEM_VERIFIED</p>
-    <h2 class="font-heading text-silver reveal" style="font-size:clamp(22px,4vw,32px);text-align:center;margin-bottom:48px">תוצאות מהשטח</h2>
+    <h2 class="font-heading text-silver reveal" style="font-size:clamp(26px,4.5vw,40px);text-align:center;margin-bottom:48px">הן כבר עשו את זה</h2>
 
     <div class="testi-grid">
       <div class="glass border-silver reveal" style="padding:24px">
@@ -224,7 +294,7 @@
 <section style="padding:0 24px 80px">
   <div class="wrap" style="text-align:center">
     <a href="#pricing" class="btn-outline reveal" style="display:inline-flex" dir="rtl">
-      אני רוצה את זה — קחי אותי לפרטים
+      אני רוצה את זה - קחי אותי לפרטים
     </a>
   </div>
 </section>
@@ -301,6 +371,10 @@
           <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--neon)"><path d="M20 6 9 17l-5-5"></path></svg>
           <p style="color:rgba(240,240,255,0.92);font-size:15px" dir="rtl"><strong style="color:var(--neon)">בונוס!</strong> מפגש עיגון 21 יום אחרי - לחזק, לייצב ולוודא שהזהות החדשה מושרשת</p>
         </div>
+        <div class="check-row" style="background:rgba(220,165,40,0.07);border:1px solid rgba(220,165,40,0.25);border-radius:10px;padding:12px 16px;margin-top:4px">
+          <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:hsl(42,90%,58%)"><path d="M20 6 9 17l-5-5"></path></svg>
+          <p style="color:rgba(240,240,255,0.92);font-size:15px" dir="rtl"><strong style="color:hsl(42,90%,58%)">🎁 מארז מתנה בלעדי</strong> - נשלח אליך הביתה לתמוך בתהליך ולאחריו</p>
+        </div>
       </div>
 
       <!-- launch discount -->
@@ -341,6 +415,11 @@
           </div>
         </div>
       </div>
+
+      <!-- scarcity -->
+      <p style="font-size:12px;color:rgba(255,107,107,0.8);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:20px;font-weight:600" dir="rtl">
+        ⚠ &nbsp;מקומות מוגבלים בכל מחזור
+      </p>
 
       <!-- fit call note -->
       <div style="background:rgba(77,184,255,0.05);border:1px solid rgba(77,184,255,0.15);border-radius:10px;padding:16px 20px;margin-bottom:28px;direction:rtl;text-align:right">
@@ -402,7 +481,7 @@
           <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg>
         </button>
         <div class="faq-body">
-          <div class="faq-body-inner">לא. המפגשים מתקיימים פרונטלית בתל אביב או בזום — ללא השפעה על מבנה התהליך או יעילותו.</div>
+          <div class="faq-body-inner">לא. המפגשים מתקיימים פרונטלית בתל אביב או בזום - ללא השפעה על מבנה התהליך או יעילותו.</div>
         </div>
       </div>
 
@@ -422,7 +501,7 @@
           <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg>
         </button>
         <div class="faq-body">
-          <div class="faq-body-inner">לנשים שכבר בתנועה — יזמיות, יוצרות, מנהלות — שמרגישות שהתשתית קיימת אבל משהו עוצר אותן מלפרוץ לשלב הבא. לא מתאים למי שמחפשת תהליך איטי של שנים.</div>
+          <div class="faq-body-inner">לנשים שכבר בתנועה - יזמיות, יוצרות, מנהלות - שמרגישות שהתשתית קיימת אבל משהו עוצר אותן מלפרוץ לשלב הבא. לא מתאים למי שמחפשת תהליך איטי של שנים.</div>
         </div>
       </div>
 
@@ -432,7 +511,7 @@
           <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg>
         </button>
         <div class="faq-body">
-          <div class="faq-body-inner">4 מפגשים, אחת לשבועיים — סה"כ כחודשיים. כל מפגש אורך בין שעה וחצי לשעתיים.</div>
+          <div class="faq-body-inner">4 מפגשים, אחת לשבועיים - סה"כ כחודשיים. כל מפגש אורך בין שעה וחצי לשעתיים.</div>
         </div>
       </div>
 
@@ -451,6 +530,33 @@
 
 </main>
 
+<!-- ── STICKY CTA BAR ── -->
+<div id="sticky-bar" aria-hidden="true" style="
+  position:fixed;bottom:0;left:0;right:0;z-index:40;
+  background:rgba(10,10,15,0.92);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-top:1px solid rgba(220,165,40,0.25);
+  padding:14px 24px;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  transform:translateY(100%);transition:transform .45s ease;
+  direction:rtl;
+">
+  <p style="font-size:14px;color:rgba(240,240,255,0.85);line-height:1.4;flex:1" dir="rtl">
+    <strong style="color:hsl(42,90%,58%)">30% הנחת השקה</strong> · מקומות מוגבלים
+  </p>
+  <a href="#pricing" style="
+    display:inline-flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,hsl(42,90%,58%),hsl(36,85%,50%));
+    color:#0a0808;font-family:'Inter',sans-serif;font-weight:700;
+    font-size:13px;letter-spacing:0.1em;text-transform:uppercase;
+    padding:0 24px;height:44px;border-radius:8px;text-decoration:none;
+    white-space:nowrap;flex-shrink:0;
+    transition:opacity .2s;
+  " onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
+    אני רוצה את זה ←
+  </a>
+</div>
+
 <!-- ── FOOTER ── -->
 <footer>
   <a href="https://www.instagram.com/lihiziv.mindbody/" target="_blank" rel="noopener noreferrer"
@@ -458,7 +564,7 @@
      onmouseover="this.style.color='hsl(210,100%,65%)'" onmouseout="this.style.color='var(--muted)'">
     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>
   </a>
-  <p class="font-heading" style="font-size:10px;color:var(--muted);letter-spacing:0.15em">© FROM ZERO TO INFINITE — LIHI ZIV</p>
+  <p class="font-heading" style="font-size:10px;color:var(--muted);letter-spacing:0.15em">© FROM ZERO TO INFINITE - LIHI ZIV</p>
   <nav aria-label="קישורי תחתית עמוד" style="display:flex;flex-direction:column;align-items:center;gap:8px;margin-top:8px">
     <a href="/terms" style="font-size:11px;color:var(--muted);text-decoration:none;letter-spacing:0.08em;transition:color .2s"
        onmouseover="this.style.color='hsl(210,100%,65%)'" onmouseout="this.style.color='var(--muted)'">מדיניות ביטולים ותקנון</a>
@@ -568,6 +674,25 @@ const obs=new IntersectionObserver(entries=>{
   entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');});
 },{threshold:.1});
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+/* ── STICKY BAR ── */
+(function(){
+  const bar=document.getElementById('sticky-bar');
+  const hero=document.querySelector('.hero');
+  const pricing=document.getElementById('pricing');
+  const scrollObs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      // show bar once hero is out of view; hide when pricing is visible
+      if(!e.isIntersecting && e.target===hero) bar.style.transform='translateY(0)';
+      if(e.isIntersecting  && e.target===hero) bar.style.transform='translateY(100%)';
+      if(e.isIntersecting  && e.target===pricing) bar.style.transform='translateY(100%)';
+      if(!e.isIntersecting && e.target===pricing) bar.style.transform='translateY(0)';
+    });
+  },{threshold:0.1});
+  scrollObs.observe(hero);
+  scrollObs.observe(pricing);
+  bar.removeAttribute('aria-hidden');
+})();
 
 /* ── FAQ ── */
 function toggleFaq(btn){
