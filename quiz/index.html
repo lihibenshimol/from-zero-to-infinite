@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Code Reader — מה הקוד שלך? · From Zero to Infinite</title>
+<meta name="description" content="9 שאלות. 3 דקות. דיאגנוזה מדויקת של המנגנון שמחבל לך בהכל."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../assets/style/main.css"/>
+<style>
+.screen{display:none;min-height:100vh;padding:80px 24px 64px;max-width:680px;margin:0 auto;flex-direction:column;justify-content:center;animation:qFade .5s ease both}
+.screen.active{display:flex}
+@keyframes qFade{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+#screen-intro{gap:32px}
+.quiz-eyebrow{font-size:11px;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:var(--neon)}
+.quiz-title{font-size:clamp(36px,8vw,64px);font-weight:800;line-height:1.1;color:rgba(240,240,255,.97);letter-spacing:-.01em}
+.quiz-title em{font-style:italic;color:hsl(42,90%,62%)}
+.quiz-subtitle{font-size:clamp(15px,2vw,17px);line-height:1.8;color:var(--muted);max-width:500px}
+.quiz-subtitle strong{color:rgba(240,240,255,.9);font-weight:600}
+.meta-row{display:flex;gap:32px;align-items:center;direction:ltr}
+.meta-item{display:flex;flex-direction:column;gap:4px;align-items:center}
+.meta-num{font-size:28px;font-weight:700;color:rgba(240,240,255,.95);line-height:1}
+.meta-label{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
+.meta-divider{width:1px;height:32px;background:var(--border-neon)}
+#screen-quiz{gap:40px;justify-content:flex-start;padding-top:100px}
+.progress-bar-bg{width:100%;height:2px;background:rgba(77,184,255,.15);border-radius:2px;overflow:hidden}
+.progress-bar-fill{height:100%;background:var(--neon);border-radius:2px;transition:width .4s ease;box-shadow:0 0 8px rgba(77,184,255,.5)}
+.progress-label{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-top:10px}
+.q-number{font-size:12px;font-weight:600;letter-spacing:.2em;color:var(--neon);text-transform:uppercase}
+.q-text{font-size:clamp(18px,3.5vw,24px);font-weight:600;line-height:1.5;color:rgba(240,240,255,.95)}
+.options-grid{display:flex;flex-direction:column;gap:10px;margin-top:8px}
+.option-btn{background:rgba(15,15,25,.6);backdrop-filter:blur(8px);border:1px solid var(--border);border-radius:10px;padding:16px 20px;text-align:right;font-family:'Assistant',sans-serif;font-size:15px;line-height:1.6;color:var(--silver);cursor:pointer;transition:border-color .2s,background .2s,box-shadow .2s;position:relative;overflow:hidden}
+.option-btn::before{content:'';position:absolute;top:0;right:0;height:100%;width:3px;background:var(--neon);transform:scaleY(0);transition:transform .2s;border-radius:0 10px 10px 0}
+.option-btn:hover{border-color:var(--border-neon);background:rgba(77,184,255,.05)}
+.option-btn:hover::before,.option-btn.selected::before{transform:scaleY(1)}
+.option-btn.selected{border-color:var(--neon);background:rgba(77,184,255,.08);box-shadow:0 0 20px rgba(77,184,255,.1)}
+#screen-loading{align-items:center;text-align:center;gap:28px}
+.loading-symbol{font-size:72px;color:hsl(42,90%,62%);animation:infP 2s ease-in-out infinite;line-height:1;font-weight:700}
+@keyframes infP{0%,100%{opacity:.4;transform:scale(1)}50%{opacity:1;transform:scale(1.08)}}
+.loading-text{font-size:17px;color:var(--muted);animation:tC 6s ease infinite;min-height:28px}
+@keyframes tC{0%{opacity:0}10%{opacity:1}40%{opacity:1}55%{opacity:0}100%{opacity:0}}
+.loading-dots{display:flex;gap:8px;justify-content:center}
+.dot{width:6px;height:6px;background:var(--neon);border-radius:50%;animation:dB 1.4s ease infinite}
+.dot:nth-child(2){animation-delay:.2s}.dot:nth-child(3){animation-delay:.4s}
+@keyframes dB{0%,80%,100%{transform:scale(.6);opacity:.3}40%{transform:scale(1);opacity:1}}
+#screen-contact{gap:28px;justify-content:center}
+.contact-heading{font-size:clamp(22px,4vw,32px);font-weight:700;color:rgba(240,240,255,.97);line-height:1.4}
+.contact-heading em{font-style:italic;color:hsl(42,90%,62%)}
+.form-field{display:flex;flex-direction:column;gap:8px}
+.form-field label{font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--neon)}
+.form-field input{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:14px 18px;font-family:'Assistant',sans-serif;font-size:16px;color:rgba(240,240,255,.92);outline:none;transition:border-color .3s,box-shadow .3s;direction:rtl;width:100%}
+.form-field input::placeholder{color:var(--muted)}
+.form-field input:focus{border-color:rgba(77,184,255,.45);box-shadow:0 0 0 3px rgba(77,184,255,.08)}
+.form-field input.err{border-color:rgba(255,107,107,.5)}
+#form-error{font-size:13px;color:#ff6b6b;display:none}
+#screen-result{gap:0;justify-content:flex-start;padding-top:80px;padding-bottom:80px}
+.rb{margin-bottom:14px}
+.result-header{padding:28px;background:rgba(10,10,18,.85);border:1px solid var(--border-neon);border-radius:14px;display:flex;flex-direction:column;gap:10px}
+.result-code-label{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.result-code-name{font-size:clamp(28px,6vw,46px);font-weight:800;color:rgba(240,240,255,.97);line-height:1.15}
+.result-code-name em{font-style:italic;color:hsl(42,90%,62%)}
+.result-code-tagline{font-size:14px;color:var(--muted)}
+.score-card{background:rgba(15,15,25,.6);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:14px;padding:24px 28px}
+.score-card-title{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:20px}
+.score-row{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.score-row:last-child{margin-bottom:0}
+.score-row-top{display:flex;align-items:center;justify-content:space-between}
+.score-row-label{font-size:13px;font-weight:500;color:var(--silver);display:flex;align-items:center;gap:6px}
+.score-row-pct{font-size:13px;font-weight:700;color:rgba(240,240,255,.9)}
+.score-bar-bg{height:4px;background:rgba(255,255,255,.07);border-radius:4px;overflow:hidden}
+.score-bar-fill{height:100%;border-radius:4px;transition:width 1.2s ease;background:rgba(77,184,255,.35)}
+.score-bar-fill.dominant{background:linear-gradient(90deg,var(--neon),hsl(42,90%,62%));box-shadow:0 0 8px rgba(77,184,255,.4)}
+.info-card{background:rgba(15,15,25,.6);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:14px;padding:24px 28px}
+.info-card-header{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.info-card-icon{font-size:20px}
+.info-card-title{font-size:15px;font-weight:700;color:rgba(240,240,255,.95)}
+.info-list{display:flex;flex-direction:column;gap:12px}
+.info-item{display:flex;align-items:flex-start;gap:10px;font-size:14px;line-height:1.7;color:rgba(220,220,235,.8);direction:rtl}
+.info-item-dot{flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--neon);margin-top:8px}
+.info-item-dot.red{background:#ff6b6b}
+.deep-card{background:rgba(15,15,25,.6);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.deep-header{display:flex;align-items:center;justify-content:space-between;padding:20px 28px;cursor:pointer}
+.deep-toggle{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--neon);white-space:nowrap}
+.deep-body{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.deep-body-inner{padding:20px 28px 24px;font-size:14px;line-height:1.85;color:rgba(220,220,235,.75);direction:rtl;border-top:1px solid var(--border)}
+.deep-body-inner p{margin-bottom:14px}
+.deep-body-inner p:last-child{margin-bottom:0}
+.archetype-card{background:linear-gradient(135deg,rgba(220,165,40,.09),rgba(77,184,255,.05));border:1px solid rgba(220,165,40,.25);border-radius:14px;padding:28px}
+.archetype-label{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:hsl(42,90%,62%);margin-bottom:8px}
+.archetype-name{font-size:20px;font-weight:700;color:rgba(240,240,255,.97);margin-bottom:8px}
+.archetype-desc{font-size:14px;line-height:1.75;color:var(--muted)}
+.cta-card{background:rgba(220,165,40,.06);border:1px solid rgba(220,165,40,.2);border-radius:14px;padding:28px;text-align:center}
+.cta-title{font-size:clamp(17px,3vw,21px);font-weight:700;color:rgba(240,240,255,.97);line-height:1.55;margin-bottom:16px;direction:rtl}
+.urgency-banner{background:rgba(255,107,107,.07);border:1px solid rgba(255,107,107,.18);border-radius:10px;padding:14px 18px;margin-bottom:20px;display:flex;flex-direction:column;gap:6px}
+.urgency-line{font-size:13px;color:rgba(255,150,150,.9);direction:rtl}
+.cta-note{font-size:12px;color:var(--muted);margin-top:12px;direction:rtl}
+.btn-restart{background:none;border:1px solid rgba(255,255,255,.1);padding:10px 20px;font-family:'Assistant',sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);cursor:pointer;border-radius:8px;transition:all .2s}
+.btn-restart:hover{color:var(--silver);border-color:rgba(255,255,255,.25)}
+.back-link{position:fixed;top:24px;right:24px;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:color .2s;z-index:10}
+.back-link:hover{color:var(--neon)}
+@media(max-width:640px){.screen{padding:72px 18px 56px}#screen-quiz{padding-top:88px}.score-card,.info-card,.deep-card,.archetype-card,.cta-card,.result-header{padding:18px 16px}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">דלג לתוכן הראשי</a>
+<canvas id="bg-canvas" aria-hidden="true"></canvas>
+<a href="/" class="back-link"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>from zero to infinite</a>
+
+<main id="main-content">
+
+<!-- INTRO -->
+<div id="screen-intro" class="screen active">
+  <span class="quiz-eyebrow">&gt; CODE_READER</span>
+  <div class="circuitry-line" style="max-width:320px" aria-hidden="true"></div>
+  <h1 class="quiz-title" dir="rtl">מה ה<em>קוד</em><br/>שמריץ אותך?</h1>
+  <p class="quiz-subtitle" dir="rtl">מתחת לכל הסיפורים, כל הטיפולים וכל ה״עבודה״ - יש <strong>מנגנון אחד</strong> שמחבל לך בהכל.<br/>9 שאלות. 3 דקות. דיאגנוזה מדויקת.</p>
+  <div class="meta-row">
+    <div class="meta-item"><span class="meta-num">13</span><span class="meta-label">שאלות</span></div>
+    <div class="meta-divider" aria-hidden="true"></div>
+    <div class="meta-item"><span class="meta-num">3′</span><span class="meta-label">דקות</span></div>
+    <div class="meta-divider" aria-hidden="true"></div>
+    <div class="meta-item"><span class="meta-num">8</span><span class="meta-label">קודים</span></div>
+  </div>
+  <div><button class="btn-primary btn-pill" onclick="startQuiz()" dir="rtl">קוראים את הקוד ←</button></div>
+</div>
+
+<!-- QUIZ -->
+<div id="screen-quiz" class="screen">
+  <div>
+    <div class="progress-bar-bg" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressBar">
+      <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+    </div>
+    <div class="progress-label" id="progressLabel" aria-live="polite">שאלה 1 מתוך 9</div>
+  </div>
+  <div class="question-block">
+    <div class="q-number" id="qNumber" aria-hidden="true">01</div>
+    <div class="q-text" id="qText" role="heading" aria-level="2"></div>
+    <div class="options-grid" id="optionsGrid" role="group" aria-label="בחרי תשובה"></div>
+  </div>
+</div>
+
+<!-- LOADING -->
+<div id="screen-loading" class="screen" aria-live="polite">
+  <div class="loading-symbol" aria-hidden="true">∞</div>
+  <div class="loading-text" id="loadingText">קוראת את הארכיטקטורה שלך...</div>
+  <div class="loading-dots" aria-hidden="true"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+</div>
+
+<!-- CONTACT GATE -->
+<div id="screen-contact" class="screen">
+  <span class="quiz-eyebrow">&gt; ALMOST_THERE</span>
+  <h2 class="contact-heading" dir="rtl">הקוד שלך <em>זוהה</em>.<br/>לאן לשלוח את הניתוח?</h2>
+  <p style="font-size:15px;color:var(--muted);line-height:1.75" dir="rtl">ליהי תשלח לך את הניתוח המלא ישירות לוואטסאפ — ותוכלי לקרוא אותו כאן מיד אחרי שתשלחי.</p>
+  <div style="display:flex;flex-direction:column;gap:20px">
+    <div class="form-field"><label for="c-name">שם מלא</label><input type="text" id="c-name" placeholder="השם שלך" autocomplete="name" dir="rtl"/></div>
+    <div class="form-field"><label for="c-phone">מספר וואטסאפ</label><input type="tel" id="c-phone" placeholder="05X-XXXXXXX" autocomplete="tel" dir="ltr"/></div>
+    <div class="form-field"><label for="c-email">אימייל <span style="font-weight:400;letter-spacing:0;text-transform:none;color:var(--muted)">(אופציונלי)</span></label><input type="email" id="c-email" placeholder="your@email.com" autocomplete="email" dir="ltr"/></div>
+    <p id="form-error" role="alert">אנא מלאי שם ומספר וואטסאפ לפני המשך.</p>
+    <div>
+      <button class="btn-primary btn-pill" onclick="submitContact()" id="submit-btn" dir="rtl">
+        <span id="submit-label">הצגי לי את הניתוח ←</span>
+        <span id="submit-spinner" style="display:none">שולחת...</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- RESULT -->
+<div id="screen-result" class="screen">
+  <div class="result-header rb">
+    <span class="result-code-label">הקוד הדומיננטי שלך הוא —</span>
+    <div class="result-code-name" id="r-name"></div>
+    <div class="result-code-tagline" id="r-tagline"></div>
+  </div>
+  <div class="score-card rb"><div class="score-card-title">ניקוד לפי קוד</div><div id="score-breakdown"></div></div>
+  <div class="info-card rb">
+    <div class="info-card-header"><span class="info-card-icon">✅</span><span class="info-card-title">מה עובד לך טוב?</span></div>
+    <div class="info-list" id="r-strengths"></div>
+  </div>
+  <div class="info-card rb">
+    <div class="info-card-header"><span class="info-card-icon">⚠️</span><span class="info-card-title">מה מחבל לך?</span></div>
+    <div class="info-list" id="r-blockers"></div>
+  </div>
+  <div class="deep-card rb">
+    <div class="deep-header" onclick="toggleDeep(this)">
+      <div style="display:flex;align-items:center;gap:10px"><span class="info-card-icon">🔍</span><span class="info-card-title">למה זה תוקע אותך?</span></div>
+      <span class="deep-toggle">קראי עוד ∨</span>
+    </div>
+    <div class="deep-body"><div class="deep-body-inner" id="r-deep"></div></div>
+  </div>
+  <div class="archetype-card rb">
+    <div class="archetype-label">הארכיטיפ שלך לתהליך</div>
+    <div class="archetype-name" id="r-arch-name"></div>
+    <div class="archetype-desc" id="r-arch-desc"></div>
+  </div>
+  <div class="cta-card rb">
+    <p class="cta-title" id="r-cta"></p>
+    <div class="urgency-banner">
+      <div class="urgency-line">⚡ מקומות מוגבלים בתהליך — כל מחזור מתמלא מהר</div>
+      <div class="urgency-line">🔥 שיחת ההתאמה היא בחינם ובלי התחייבות</div>
+    </div>
+    <a href="https://wa.me/message/VIHIGNG2RHHWK1" target="_blank" rel="noopener noreferrer" class="btn-primary btn-pill" style="display:inline-flex;width:100%;justify-content:center" dir="rtl">אני רוצה לשנות את הקוד שלי ←</a>
+    <p class="cta-note">ליהי כבר מכינה לך את הניתוח לוואטסאפ 💙</p>
+  </div>
+  <!-- Share link -->
+  <div id="share-block" style="background:rgba(77,184,255,0.05);border:1px solid rgba(77,184,255,0.15);border-radius:12px;padding:18px 22px;text-align:center;margin-bottom:14px;display:none">
+    <p style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--neon);margin-bottom:10px">התוצאות שלך שמורות בלינק אישי</p>
+    <div style="display:flex;gap:10px;align-items:center;direction:ltr">
+      <input id="share-input" readonly style="flex:1;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:10px 14px;font-size:13px;color:var(--muted);outline:none;direction:ltr;font-family:'Assistant',sans-serif" />
+      <button id="copy-btn" onclick="copyShareLink()" style="background:var(--neon);color:#050510;border:none;border-radius:8px;padding:10px 16px;font-family:'Assistant',sans-serif;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;transition:opacity .2s" onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'">העתקי לינק 🔗</button>
+    </div>
+  </div>
+
+  <div style="text-align:center;margin-top:8px"><button class="btn-restart" onclick="restartQuiz()" dir="rtl">עשי את השאלון מחדש</button></div>
+</div>
+
+</main>
+<script>
+const MAKE_WEBHOOK = 'https://script.google.com/macros/s/AKfycbzi3ij1xQ2YurDv-4-rmBttsAzp4JvtQYctZwj3IsGeML8oKcck8ZDsMatHiUlcu90zMQ/exec';
+const FORMSPREE = 'https://formspree.io/f/mlgaoygw';
+
+// ── QUESTIONS ──
+// Options are shuffled on render so no pattern is visible to respondents
+const QUESTIONS = [
+  {
+    text: "כשמשהו לא יוצא כמו שרצית — מה הקול הפנימי הראשון שמופיע?",
+    options: [
+      { text: "״כדאי לוותר, זה ממילא לא הצליח לי אף פעם״", code: "H" },
+      { text: "״מה אחרים חושבים עלי עכשיו?״", code: "B" },
+      { text: "״ממילא הרעיון הבא שלי יהיה יותר טוב״", code: "E" },
+      { text: "״אין לי כוח — אני מתעייפת מהר מדי״", code: "D" },
+    ]
+  },
+  {
+    text: "כשאת ממש רוצה משהו — מה עוצר אותך בדרך כלל?",
+    options: [
+      { text: "פחד שאתאמץ עד הסוף ואז זה לא יצא", code: "A" },
+      { text: "מה יגידו אם לא יצליח", code: "B" },
+      { text: "לא יודעת מאיפה להתחיל — יש יותר מדי אפשרויות", code: "C" },
+      { text: "אחרות כבר עושות את זה הרבה יותר טוב ממני", code: "G" },
+    ]
+  },
+  {
+    text: "בזוגיות ובקשרים קרובים — איזה תפקיד לוקחת אוטומטית?",
+    options: [
+      { text: "זו שמסתגלת כדי שהכל יהיה בסדר ואף אחד לא יכעס", code: "B" },
+      { text: "זו שמנהלת, מארגנת ומוודאת שהכל הולך לפי הצ׳קליסט", code: "F" },
+      { text: "זו שנעלמת ומתכווצת כשדברים נהיים גדולים מדי", code: "D" },
+      { text: "זו שמדמיינת איך הקשר יהיה מושלם ״כשיבוא הזמן הנכון״", code: "E" },
+    ]
+  },
+  {
+    text: "כשיש לך הצלחה גדולה — מה הרגש הראשון שמגיע?",
+    options: [
+      { text: "מיד חושבת על הבא — מה עוד צריך לעשות כדי לשמר", code: "A" },
+      { text: "מחכה לראות מה אחרים אומרים לפני שחוגגת", code: "B" },
+      { text: "מסתכלת על מי שהצליחה יותר ומרגישה שזה לא מספיק", code: "G" },
+      { text: "מוודאת שהכל מסודר ומתועד לפני שאפשר להירגע", code: "F" },
+    ]
+  },
+  {
+    text: "כשפרויקט, מערכת יחסים או תהליך נהיים קשים — מה קורה?",
+    options: [
+      { text: "מחפשת מה אחרות עושות שאני לא עושה", code: "G" },
+      { text: "מרגישה שזה סימן שזה פשוט לא בשבילי — ועוצרת", code: "H" },
+      { text: "מחכה לרגע ״הנכון״ לפני שזזה קדימה", code: "C" },
+      { text: "מתקפלת ונעלמת במקום לפנות לעזרה", code: "D" },
+    ]
+  },
+  {
+    text: "מה שבסוף לא קורה אצלך — כי ״עוד לא הגיע הזמן הנכון״?",
+    options: [
+      { text: "להפסיק לאמץ כל כך קשה ולסמוך שהדברים יגיעו", code: "A" },
+      { text: "לסגור את הפרויקט שהתחלת ולצאת איתו לעולם", code: "H" },
+      { text: "לא להשוות את עצמך לאחרות ולמדוד רק לפי הדרך שלך", code: "G" },
+      { text: "לחיות את הרגע הזה — לא את הגרסה ה״עתידית״ שלך", code: "E" },
+    ]
+  },
+  {
+    text: "מה הדרך שלך להרגיש הכי בטוחה?",
+    options: [
+      { text: "להיות עסוקה ובעשייה — עצלנות מרגישה כמו כישלון", code: "A" },
+      { text: "לדעת שאני רצויה ומקובלת על ידי האנשים סביבי", code: "B" },
+      { text: "שיש לי תוכנית ברורה, סדר, ושליטה על כל המשתנים", code: "F" },
+      { text: "להתמקד בחלום הגדול ״כשיגיע הזמן״ — שם הכל בסדר", code: "E" },
+    ]
+  },
+  {
+    text: "כשאת לבד עם עצמך, ללא הסחות דעת — מה קורה?",
+    options: [
+      { text: "מנצלת את הזמן לעוד דברים ברשימה — גם מנוחה צריך להרוויח", code: "A" },
+      { text: "מנתחת, חושבת, מתכננת — הראש לא יכול לשבות", code: "C" },
+      { text: "מדמיינת גרסה עתידית מושלמת של החיים שלי", code: "E" },
+      { text: "מרגישה ספק — אולי כדאי לוותר על החלום ולהיות ריאלית", code: "H" },
+    ]
+  },
+  {
+    text: "מה הפחד הכי גדול שלך מ״לצאת לאור״ בגדול?",
+    options: [
+      { text: "שלא אצליח לשמור על הרמה ואכזב את כולם", code: "A" },
+      { text: "שזה יצא מבולגן, לא מדויק, לא מושלם מספיק", code: "C" },
+      { text: "שיגלו שאני לא מיוחדת כמו אחרות שכבר עושות את זה", code: "G" },
+      { text: "שאתאמץ עד הסוף ואז בדיוק לפני הסוף — אוותר", code: "H" },
+    ]
+  },
+  {
+    text: "כשאת חושבת על הכסף שלך — מה עולה?",
+    options: [
+      { text: "אני לא מרוויחה מספיק ביחס למה שאני עובדת", code: "A" },
+      { text: "אני מרוויחה פחות מאחרות שעושות דברים דומים", code: "G" },
+      { text: "אני יודעת כמה אני שווה אבל מתקשה לבקש את זה", code: "D" },
+      { text: "כשיגיע הפרויקט הנכון — אז אתחיל לגבות את המחיר האמיתי", code: "E" },
+    ]
+  },
+  {
+    text: "כשאת מסתכלת על יעד שהצבת לעצמך ולא השגת — מה מסביר את זה?",
+    options: [
+      { text: "לא עבדתי מספיק קשה, לא הייתי מספיק ממושמעת", code: "A" },
+      { text: "אנשים מסביבי לא עודדו אותי מספיק", code: "B" },
+      { text: "לא הייתה לי תוכנית ברורה ומסודרת מספיק", code: "F" },
+      { text: "הגעתי קרוב ואז משהו גרם לי לעצור ולא לסיים", code: "H" },
+    ]
+  },
+  {
+    text: "כשמישהי בתחום שלך מצליחה בגדול — מה קורה בפנים?",
+    options: [
+      { text: "השמחה שלי עבורה מעורבת בתחושה שאני צריכה לעבוד יותר", code: "A" },
+      { text: "מיד מסתכלת מה הם עושים שאני לא עושה", code: "G" },
+      { text: "שמחה עבורה אבל מרגישה קטנה לידה", code: "D" },
+      { text: "מתרגשת — זה מוכיח שאפשרי, ומתחילה לתכנן בגדול", code: "E" },
+    ]
+  },
+  {
+    text: "בסוף יום שבו ״הכל עבד״ — מה גורם לזה להרגיש כך?",
+    options: [
+      { text: "עשיתי הכל ברשימה ועוד קצת מעבר", code: "A" },
+      { text: "אנשים הגיבו טוב ואמרו דברים חיוביים", code: "B" },
+      { text: "הכל הלך לפי התוכנית ולא היו הפתעות", code: "F" },
+      { text: "לא השוויתי את עצמי לאף אחת ופשוט חייתי את היום שלי", code: "G" },
+    ]
+  }
+];
+
+const CODE_LABELS = {
+  A:"מאמץ 💪", B:"ריצוי 🪞", C:"סיבוך 🌀", D:"כיווץ 🦋",
+  E:"בריחה לעתיד 🌅", F:"שליטה ⚙️", G:"השוואה 🔢", H:"ויתור מוקדם 🚪"
+};
+
+const CODES = {
+  A: {
+    name:"קוד ה<em>מאמץ</em>", shortName:"מאמץ",
+    tagline:"כשהגוף רץ אבל הנשמה מתקשה לעמוד בקצב",
+    strengths:[
+      "עמידות ויכולת ביצוע יוצאת דופן — את מביאה תוצאות כשאחרים מוותרים",
+      "אמינות ומחויבות שאנשים סומכים עליהן — את לא מחמיצה",
+      "כשאת מחליטה על משהו — זה קורה. זה כוח שלא לכולן יש"
+    ],
+    blockers:[
+      "עייפות כרונית מצטברת — הגוף שולח אותות שנדחים שוב ושוב",
+      "הצלחות שמיד הופכות לרף חדש — אין נקודת ״מספיק״",
+      "קושי לקבל עזרה — ״אם רוצה שייעשה נכון, עושה לבד״ ממיר שותפות בבדידות"
+    ],
+    deep:`הקוד הזה נוצר בשלב מסוים כשלמדת שאהבה, מקום, והערכה — ניתנים בתנאי עשייה. אז המוח שלך פתר את זה בצורה הכי חכמה שידע: נהיי תמיד בעשייה. תמיד.
+
+הבעיה היא שהגוף לא תוכנן לרוץ ב-100% לנצח. ושהמציאות שאת בונה מתוך מאמץ — מחייבת אותך להמשיך לאמץ כדי לשמר אותה. זהו לופ.
+
+האבסורד הגדול: עצירה, נוכחות וריבונות — הם מה שיביאו אותך לאינסוף. לא עוד אחת שמאמצת יותר. כי כשאת פועלת ממקום של שלמות — לא ממקום של חוסר — המציאות מתיישרת בלי שתצטרכי לרדוף אחריה.`,
+    archetype:{ name:"הקיסרית 👑", desc:"שפע מגיע אליה מתוך נוכחות וראויות — לא ממאמץ. היא מגנט, לא רצה. כשהיא נכנסת לחדר, האנרגיה משתנה — לא בגלל מה שהיא עושה, אלא בגלל מי שהיא." },
+    cta:"הקוד הזה הוא בדיוק מה שעובדים עליו בתהליך. אם את מזהה את עצמך כאן — בואי נדבר.",
+    wa:"*קוד המאמץ* 💪\n\nהמוח שלך מאמין שהכל תלוי בכמה קשה תעבדי.\nכל הצלחה מיד הופכת לרף חדש. אין נקודת ״מספיק״.\n\nהאמת? עצירה ונוכחות הם מה שיביאו אותך לאינסוף.\n\nבואי נדבר ← wa.me/message/VIHIGNG2RHHWK1"
+  },
+  B: {
+    name:"קוד ה<em>ריצוי</em>", shortName:"ריצוי",
+    tagline:"כשהצרכים של אחרים תמיד מגיעים לפניך",
+    strengths:[
+      "אמפתיה גבוהה — את מרגישה אנשים לפני שהם פותחים פה",
+      "יכולת יצירת קשרים עמוקים — אנשים נמשכים אלייך וסומכים עלייך",
+      "גמישות ויכולת הכלה שמאפשרות קשרים מורכבים ועשירים"
+    ],
+    blockers:[
+      "הערך העצמי תלוי בתגובות חיצוניות — משפט אחד של ביקורת ויום שלם ירד לטמיון",
+      "קושי לאמור לא — גם כשכל הגוף צועק שזה לא נכון לך",
+      "ריצוי שנראה כמו טוב לב, אבל מוביל להתרוקנות ולתחושה שאף אחד לא באמת מכיר אותך"
+    ],
+    deep:`המוח שלך בנה מערכת שלמה שמטרתה אחת: לוודא שאחרים מרוצים, שאת נאהבת, שלא תדחי. את גמישה, נחמדה, תמיד מתחשבת — ושוכחת לשאול מה את רוצה.
+
+בשלב מסוים למדת שהדרך הכי בטוחה לאהבה היא להיות מה שאחרים צריכים. זה עבד. ובגדול. עד שהפך לכלוב שבנית לעצמך מתוך טוב לב.
+
+הדרך החוצה היא לא ״להיות יותר אגואיסטית״. היא להבין שנוכחות ריבונית — מה שאת באמת, בלי מסכות — היא מה שאנשים באמת נמשכים אליה. לא גרסה מסוננת שמנסה לרצות.`,
+    archetype:{ name:"הריבונית 🌙", desc:"פועלת מתוך סמכות טבעית ושקט פנימי. מחזיקה את הסטנדרטים שלה בלי התנצלות. לא צריכה אישור — היא האישור. אנשים נמשכים אליה כי היא אמיתית, לא כי היא נחמדה." },
+    cta:"קוד הריצוי הוא אחד הנפוצים — ואחד הכואבים ביותר לחיות איתו. אם הדיוק הזה מדבר אלייך, בואי נדבר.",
+    wa:"*קוד הריצוי* 🪞\n\nהערך שלך תלוי בתגובות של אחרים.\nאת גמישה, נחמדה — ושוכחת לשאול מה את רוצה.\n\nנוכחות ריבונית היא מה שמחכה בצד השני.\n\nבואי נדבר ← wa.me/message/VIHIGNG2RHHWK1"
+  },
+  C: {
+    name:"קוד ה<em>סיבוך</em>", shortName:"סיבוך",
+    tagline:"כשהחכמה שלך הופכת למחסום שלך",
+    strengths:[
+      "ראייה עמוקה ורחבה שרוב האנשים לא מגיעים אליה",
+      "יכולת ניתוח מורכבת שמאפשרת פתרונות יצירתיים ומדויקים",
+      "אינטליגנציה רגשית ומחשבתית גבוהה — את רואה מה שאחרים מחמיצים"
+    ],
+    blockers:[
+      "ניתוח-שיתוק — כשיש יותר מדי אפשרויות, קשה לבחור ולפעול",
+      "מחפשת עוד מידע כשיש כבר מספיק — הפרפקציוניזם מוסווה כחקירה",
+      "מסבירה מארבעה כיוונים מה שצריך פעולה אחת — הפישוט מרגיש מסוכן"
+    ],
+    deep:`את חכמה. מאוד. וזה בדיוק ה׳באג׳: המוח שלך פותר בעיות בצורה כל כך מתוחכמת — שהוא לפעמים יוצר בעיות כדי שיהיה לו מה לפתור.
+
+הסיבוך הוא לא חולשה — הוא הדרך של המוח שלך להרגיש בטוחה. כי כל עוד יש עוד שאלות, אי אפשר להיכשל. כל עוד יש עוד ניתוח, לא צריך לפעול. ופעולה — זה המקום שבו יש סיכון.
+
+האלכימאית שבך יודעת לקחת כל מצב מורכב ולהפוך אותו לפשוט בשנייה. היא כבר שם — קבורה מתחת לשכבות של ניתוח מגן.`,
+    archetype:{ name:"האלכימאית ✨", desc:"ממירה סיבוך לבהירות. פועלת מפשטות, לא מרעש. מינימום דרמה — מקסימום דיוק. כשהיא משחררת את הצורך לדעת הכל, היא פשוט יודעת." },
+    cta:"האלכימאית שלך קיימת — היא פשוט קבורה מתחת לשכבות של ניתוח. בואי נוציא אותה.",
+    wa:"*קוד הסיבוך* 🌀\n\nהמוח שלך פותר בעיות בצורה כל כך מתוחכמת שהוא לפעמים יוצר בעיות רק כדי שיהיה לו מה לפתור.\n\nהאלכימאית שבך כבר שם.\n\nבואי נוציא אותה ← wa.me/message/VIHIGNG2RHHWK1"
+  },
+  D: {
+    name:"קוד ה<em>כיווץ</em>", shortName:"כיווץ",
+    tagline:"כשהכוח שלך גדול מדי מכדי להרשות לעצמך להרגיש אותו",
+    strengths:[
+      "עומק ורגישות נדירים שמאפשרים חיבורים אמיתיים ועמוקים",
+      "הצניעות שלך מקסימה — יש בה משהו מיוחד ואותנטי שאנשים מזהים",
+      "כשאת בוחרת לדבר — מה שיוצא הוא מדויק ומשמעותי"
+    ],
+    blockers:[
+      "חוסמת רעיונות ואפשרויות לפני שהן יוצאות — הפילטר הפנימי קשוח מדי",
+      "ממתינה לאישור חיצוני לפני שזזה — ״מחכה שיזמינו״ במקום לצאת קדימה",
+      "מורידה מחיר, מסכימה כשלא מסכימה, מתנצלת על קיומך בחדר"
+    ],
+    deep:`יש לך עוצמה גדולה מאוד. כנראה שתמיד ידעת את זה — ובדיוק בגלל זה פיתחת מנגנון שמקטין אותך כדי ״לא לתפוס יותר מדי מקום״.
+
+הכיווץ נולד מתוך תבונה — בשלב מסוים הגדלות שלך יצרה תגובה שלילית. אז המוח שלך הסיק: קטני ותהיי בטוחה. זה עבד אז. והפך לכלוב עכשיו.
+
+הגאונות שבך לא צריכה רשות. הכוהנת הגדולה שבך כבר יודעת. השאלה היא מה ייקח לה להפסיק להתנצל על עצמה ולתת לשאר העולם להיפגש עם מי שהיא באמת.`,
+    archetype:{ name:"הכוהנת הגדולה 🌟", desc:"מחוברת לידיעות הגבוהות שלה. מתקשרת אותן כסמכות מוחלטת — בלי התנצלות. כשהיא מדברת, חדרים שותקים. לא כי היא רועשת — כי היא אמיתית." },
+    cta:"כיווץ הוא הקוד הכי כואב — כי הכל שם, רק לא יוצא. בואי נדבר על מה שמחכה בצד השני.",
+    wa:"*קוד הכיווץ* 🦋\n\nיש לך עוצמה גדולה — ובדיוק בגלל זה למדת לקטון.\nהכוהנת הגדולה שבך כבר יודעת. היא רק מחכה לאישור.\n\nבואי נדבר ← wa.me/message/VIHIGNG2RHHWK1"
+  },
+  E: {
+    name:"קוד ה<em>בריחה לעתיד</em>", shortName:"בריחה לעתיד",
+    tagline:"כשהעתיד תמיד נראה יותר טוב מהרגע הזה",
+    strengths:[
+      "חזון ויכולת לראות אפשרויות שאחרות לא מדמיינות — את מגדילה ראש",
+      "אופטימיות וחיוניות שמדביקות אנשים ומושכות הזדמנויות",
+      "יצירתיות גבוהה ויכולת לחשוב מחוץ לקופסה — הרעיונות שלך אמיתיים"
+    ],
+    blockers:[
+      "מתחילה דברים רבים אבל מסיימת מעט — ההתרגשות דועכת ברגע שמשהו הופך לשגרה",
+      "חיה ב״כשיגיע הזמן הנכון״ — הרגע הזה תמיד נדחה קדימה",
+      "הרגע הנוכחי מרגיש פחות מרגש מהחזון, ולכן קשה להיות נוכחת בו"
+    ],
+    deep:`העתיד הוא מקום בטוח — כי הוא עדיין לא אכזב אותך. בהווה יש סיכון אמיתי: אפשר להיכשל, להתאכזב, לגלות שזה לא מה שדמיינת. בעתיד? הכל עדיין מושלם.
+
+אז המוח שלך פיתח דרך מבריקה: תמיד יש רעיון טוב יותר בפתח. תמיד יש תוכנית מושלמת יותר ש״כשהתנאים יהיו נכונים״ — תצא לפועל. הלופ הזה מתחזה ליצירתיות, אבל בפועל הוא הימנעות.
+
+הנביאה שבך רואה את הפוטנציאל האמיתי שלה. השאלה היא מה יידרש ממנה כדי לעצור, לנשום, ולהתחיל לבנות את החזון הזה — כאן, עכשיו, בתנאים הקיימים.`,
+    archetype:{ name:"הנביאה 🌅", desc:"רואה אפשרויות שאחרות לא מדמיינות — ומממשת אותן בהווה, לא רק בחלום. כשהיא מחברת בין החזון לפעולה, היא בלתי ניתנת לעצירה." },
+    cta:"בריחה לעתיד היא אחד הקודים הכי חכמים — כי היא מתחפשת ליצירתיות. אם הדיוק הזה מדבר אלייך, בואי נדבר.",
+    wa:"*קוד הבריחה לעתיד* 🌅\n\nהעתיד תמיד נראה טוב יותר מהרגע הזה.\nאת מתחילה דברים, לא מסיימת — ותמיד יש רעיון טוב יותר מחכה.\n\nהחזון שלך ממתין שתביאי אותו להווה.\n\nבואי נדבר ← wa.me/message/VIHIGNG2RHHWK1"
+  },
+  F: {
+    name:"קוד ה<em>שליטה</em>", shortName:"שליטה",
+    tagline:"כשהביטחון שלך בנוי על מה שאת שולטת בו — לא על מי שאת",
+    strengths:[
+      "ארגון וסדר ברמה גבוהה — את יוצרת מבנים שאחרים מסתמכים עליהם",
+      "אחריות ומהימנות שמאפשרות להוביל פרויקטים ואנשים בהצלחה",
+      "ראיית פרטים ומניעת טעויות — הדיוק שלך שמר על הרבה דברים"
+    ],
+    blockers:[
+      "עייפות מניהול הכל — כשכולם תלויים בך ואין מי שאת תלויה בו",
+      "קושי לסמוך על אחרים — ״עדיף לעשות לבד כדי שייצא נכון״ מייצר בדידות",
+      "חרדה כשדברים יוצאים מה-script — גמישות מרגישה כמו אובדן שליטה"
+    ],
+    deep:`המוח שלך חכם מאוד: הוא גילה שאם את שולטת בכל — אי אפשר להפתיע אותך לרעה. אז את מתכננת, מארגנת, בודקת פעמיים, מוודאת שוב.
+
+זה נראה כמו שאפתנות ומקצועיות — ומבחוץ אפילו מרשים. אבל מבפנים יש עייפות עמוקה מלשמור שכל ההצלחות לא יתפרקו.
+
+כנראה שבשלב מסוים כאוס גרם לפגיעה. והמוח שלך הסיק: אם תשמרי שליטה — לא ייכאב. נכון אז. לא נכון עכשיו. הריבונות האמיתית אינה שליטה — היא אמון עמוק שגם כשדברים משתנים, את תהיי בסדר.`,
+    archetype:{ name:"האדריכלית 🏛️", desc:"יוצרת מתוך כוח — לא מפחד. מעצבת את המציאות שלה מתוך ביטחון פנימי, לא ניהול חיצוני. מסמיכה אחרים במקום לשלוט בהם." },
+    cta:"שליטה היא הקוד הכי קשה לזהות — כי הוא נראה כמו מקצועיות ושאפתנות. אם הדיוק הזה מדבר אלייך, בואי נדבר.",
+    wa:"*קוד השליטה* ⚙️\n\nאת שולטת בהכל כדי להרגיש בטוחה.\nאבל ריבונות אמיתית היא אמון — לא ניהול.\n\nבואי נדבר ← wa.me/message/VIHIGNG2RHHWK1"
+  },
+  G: {
+    name:"קוד ה<em>השוואה</em>", shortName:"השוואה",
+    tagline:"כשהמדד שלך תמיד הוא מישהי אחרת — לא את עצמך",
+    strengths:[
+      "מוטיבציה גבוהה וסטנדרטים שמייצרים עבודה ברמה גבוהה",
+      "מודעות חדה למה שאפשרי — את לא חיה בבועה, את רואה את העולם",
+      "שאפתנות אמיתית שמניעה אותך להמשיך לצמוח"
+    ],
+    blockers:[
+      "הצלחה אישית מאבדת ערך מיד כשרואים מישהי שהצליחה יותר",
+      "סקרול שמשאיר אותך קטנה — ״היא כבר שם, אני עדיין פה״",
+      "המרוץ לא נגמר אף פעם כי הסטנדרט תמיד משתנה לפי מה שאחרות עושות"
+    ],
+    deep:`ההשוואה התחילה כלקטת מידע שימושי — מה עובד לאחרות, מה אפשרי, איפה יש מקום לצמוח. זה כלי לגיטימי. הבעיה היא מה קרה אחר כך.
+
+בשלב מסוים ההשוואה הפסיקה לשמש ניווט והפכה לפסיקת דין. לא ״מה אני לומדת מהן״ אלא ״כמה אני מצליחה פחות מהן״. ומשם — אין נצחון. כי תמיד יש מישהי שקדימה.
+
+הטריק שהמוח שלך לא הבין: הדרך שלך לא נמדדת על אותה סקלה כמו של אחרות. כשאת מוצאת את המדד שלך — לא שלהן — את מפסיקה להיות מאחור. את פשוט בדרך שלך.`,
+    archetype:{ name:"הייחודית 💫", desc:"פועלת לפי הקצב והחזון שלה — לא לפי לוח הזמנים של אחרות. כשהיא מוצאת את המדד שלה, השוואה הופכת להשראה — לא לנשק." },
+    cta:"קוד ההשוואה הוא שקט ומתיש — כי הוא מדמה מוטיבציה. אם הדיוק הזה חד, בואי נדבר.",
+    wa:"*קוד ההשוואה* 🔢\n\nהמדד שלך תמיד הוא מישהי אחרת — לא את עצמך.\nהמרוץ לא נגמר כי הסטנדרט תמיד זזה.\n\nכשתמצאי את המדד שלך — הכל ישתנה.\n\nבואי נדבר ← wa.me/message/VIHIGNG2RHHWK1"
+  },
+  H: {
+    name:"קוד ה<em>ויתור המוקדם</em>", shortName:"ויתור מוקדם",
+    tagline:"כשהוויתור בא בדיוק לפני שנגמרת הדרך",
+    strengths:[
+      "מודעות עצמית גבוהה — את מזהה מהר כשמשהו לא עובד ולא בוזבזת זמן",
+      "ספונטניות ויכולת להתחיל — כשאת נדלקת על משהו, הכוח שלך עצום",
+      "אומץ להתחיל שוב — גם אחרי שעצרת, יש בך כוח לנסות שוב"
+    ],
+    blockers:[
+      "דפוס של ״כמעט שם״ — עוצרת בדיוק לפני שהדברים פורצים",
+      "פרויקטים, קשרים ותהליכים שנשארים לא גמורים — ״זה לא הנכון בשבילי״ ממש לפני הסוף",
+      "הוויתור מחופש לחוכמה עצמית, אבל לפעמים הוא פשוט פחד מהשלב הסופי"
+    ],
+    deep:`בשלב מסוים, המשך הדרך גרם לכאב. אולי כישלון שפגע עמוק, אולי הצלחה שהביאה איתה דברים לא צפויים. אז המוח שלך הסיק: כשזה נהיה קשה — זה הסימן לעצור.
+
+הבעיה? הפריצה מגיעה תמיד אחרי הקושי. הסטטיסטיקה אחידה: מי שממשיך כשזה קשה — מגיע. מי שעוצר בדיוק שם — לא רואה מה היה קורה.
+
+הוויתור המוקדם מתחפש לחוכמה עצמית: ״אני מכירה את עצמי, זה לא בשבילי״. לפעמים זה נכון. אבל לפעמים זו ההגנה הכי מתוחכמת של המוח — כי אם לא מגיעים לסוף, לא יכולים להיכשל.`,
+    archetype:{ name:"הלוחמת 🛡️", desc:"יודעת שהפריצה מחכה בדיוק אחרי הרגע שהכי קשה. מחויבת לסוף — לא מתוך עקשנות, אלא מתוך ידיעה שמה שמחכה שם שווה כל רגע של קושי." },
+    cta:"ויתור מוקדם הוא הקוד הכי כואב — כי את תמיד רואה אחרי מה שהיה יכול להיות. אם זה מדבר אלייך, בואי נדבר.",
+    wa:"*קוד הויתור המוקדם* 🚪\n\nאת עוצרת בדיוק לפני שדברים פורצים.\nהפריצה מגיעה תמיד אחרי הקושי — לא לפניו.\n\nבואי נדבר ← wa.me/message/VIHIGNG2RHHWK1"
+  }
+};
+
+// ── LOGIC ──
+let answers=[], currentQ=0, dominantCode=null, allCounts={}, userName='', shareURL='';
+
+// Load result from URL if ?r= param present
+(function(){
+  try {
+    const r = new URLSearchParams(location.search).get('r');
+    if (!r) return;
+    const data = JSON.parse(decodeURIComponent(escape(atob(r))));
+    if (!data.code || !CODES[data.code]) return;
+    dominantCode = data.code;
+    allCounts = data.counts || {A:0,B:0,C:0,D:0,E:0,F:0,G:0,H:0};
+    userName = data.name || '';
+    shareURL = location.href;
+    // wait for DOM
+    window.addEventListener('DOMContentLoaded', ()=>{ renderResult(); showScreen('screen-result'); });
+    // if DOM already ready:
+    if(document.readyState!=='loading'){ renderResult(); showScreen('screen-result'); }
+  } catch(e) { /* invalid link — show intro */ }
+})();
+
+function shuffle(arr){ for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}return arr; }
+
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  const el=document.getElementById(id);el.classList.remove('active');void el.offsetWidth;el.classList.add('active');
+}
+
+function startQuiz(){ answers=[];currentQ=0;showScreen('screen-quiz');renderQuestion(); }
+
+function renderQuestion(){
+  const q=QUESTIONS[currentQ];
+  const pct=(currentQ/QUESTIONS.length)*100;
+  document.getElementById('progressFill').style.width=pct+'%';
+  document.getElementById('progressBar').setAttribute('aria-valuenow',Math.round(pct));
+  document.getElementById('progressLabel').textContent=`שאלה ${currentQ+1} מתוך 13`;
+  document.getElementById('qNumber').textContent=String(currentQ+1).padStart(2,'0');
+  document.getElementById('qText').textContent=q.text;
+  const grid=document.getElementById('optionsGrid');
+  grid.innerHTML='';
+  // shuffle so no positional pattern is detectable
+  const shuffled=shuffle([...q.options]);
+  shuffled.forEach(opt=>{
+    const btn=document.createElement('button');
+    btn.className='option-btn';btn.textContent=opt.text;btn.setAttribute('dir','rtl');
+    btn.onclick=()=>selectAnswer(opt.code,btn);
+    grid.appendChild(btn);
+  });
+}
+
+function selectAnswer(code,btn){
+  document.querySelectorAll('.option-btn').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');answers.push(code);
+  setTimeout(()=>{currentQ++;if(currentQ<QUESTIONS.length)renderQuestion();else showLoading();},350);
+}
+
+function showLoading(){
+  showScreen('screen-loading');
+  const msgs=['קוראת את הארכיטקטורה שלך...','מזהה את מנגנון ה-0...','מחשבת את הדיוק...','מייצרת את הדיאגנוזה...'];
+  let i=0;const el=document.getElementById('loadingText');
+  const iv=setInterval(()=>{el.style.animation='none';void el.offsetWidth;el.style.animation='tC 3s ease forwards';el.textContent=msgs[i%msgs.length];i++;},2200);
+  setTimeout(()=>{clearInterval(iv);computeResult();},5500);
+}
+
+function computeResult(){
+  allCounts={A:0,B:0,C:0,D:0,E:0,F:0,G:0,H:0};
+  answers.forEach(a=>allCounts[a]++);
+  dominantCode=Object.entries(allCounts).sort((a,b)=>b[1]-a[1])[0][0];
+  showScreen('screen-contact');
+}
+
+function buildShareURL(code, counts, name) {
+  try {
+    const payload = { code, counts, name };
+    const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
+    return `${location.origin}/quiz?r=${encoded}`;
+  } catch(e) { return location.origin + '/quiz'; }
+}
+
+async function submitContact(){
+  const name=document.getElementById('c-name').value.trim();
+  const phone=document.getElementById('c-phone').value.trim();
+  const email=document.getElementById('c-email').value.trim();
+  const errEl=document.getElementById('form-error');
+  ['c-name','c-phone'].forEach(id=>document.getElementById(id).classList.remove('err'));
+  errEl.style.display='none';
+  if(!name||!phone){if(!name)document.getElementById('c-name').classList.add('err');if(!phone)document.getElementById('c-phone').classList.add('err');errEl.style.display='block';return;}
+  document.getElementById('submit-label').style.display='none';
+  document.getElementById('submit-spinner').style.display='inline';
+  document.getElementById('submit-btn').disabled=true;
+
+  userName = name;
+  shareURL = buildShareURL(dominantCode, allCounts, name);
+
+  const data=CODES[dominantCode];
+  // שליחה ל-Formspree (מייל מיידי) + ניסיון ל-Google Sheets ברקע
+  try{
+    // Formspree — עובד מיד, שולח מייל ל-lihibs26@gmail.com
+    fetch(FORMSPREE, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        _subject: `קוד חדש: ${data.shortName} — ${name}`,
+        שם: name,
+        טלפון: phone,
+        אימייל: email,
+        קוד: data.shortName,
+        'לינק אישי': shareURL,
+        תשובות: answers.join(',')
+      })
+    }).catch(()=>{});
+
+    // Google Sheets — Image trick
+    const params = new URLSearchParams({ name, phone, email, codeName: data.shortName, shareURL, answersRaw: answers.join(','), submittedAt: new Date().toISOString() });
+    const img = new Image();
+    img.src = `${MAKE_WEBHOOK}?${params.toString()}`;
+  }catch(e){console.warn(e);}
+
+  renderResult();
+  showScreen('screen-result');
+}
+
+function copyShareLink() {
+  navigator.clipboard.writeText(shareURL).then(()=>{
+    const btn = document.getElementById('copy-btn');
+    btn.textContent = '✓ הועתק!';
+    setTimeout(()=>{ btn.textContent='העתקי לינק אישי 🔗'; },2000);
+  });
+}
+
+function renderResult(){
+  const data=CODES[dominantCode];
+  const total=answers.length;
+  document.getElementById('r-name').innerHTML=data.name;
+  document.getElementById('r-tagline').textContent=data.tagline;
+
+  // Score breakdown — top 4 codes only
+  const sorted=Object.entries(allCounts).sort((a,b)=>b[1]-a[1]).slice(0,4);
+  const bd=document.getElementById('score-breakdown');bd.innerHTML='';
+  sorted.forEach(([code,count])=>{
+    const pct=Math.round((count/total)*100);
+    const dom=code===dominantCode;
+    const row=document.createElement('div');row.className='score-row';
+    row.innerHTML=`<div class="score-row-top"><span class="score-row-label">${CODE_LABELS[code]}</span><span class="score-row-pct"${dom?' style="color:hsl(42,90%,62%)"':''}>${pct}%</span></div><div class="score-bar-bg"><div class="score-bar-fill${dom?' dominant':''}" style="width:0%" data-w="${pct}%"></div></div>`;
+    bd.appendChild(row);
+  });
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{bd.querySelectorAll('.score-bar-fill').forEach(el=>{el.style.width=el.dataset.w;});}));
+
+  document.getElementById('r-strengths').innerHTML=data.strengths.map(s=>`<div class="info-item"><div class="info-item-dot"></div><span>${s}</span></div>`).join('');
+  document.getElementById('r-blockers').innerHTML=data.blockers.map(b=>`<div class="info-item"><div class="info-item-dot red"></div><span>${b}</span></div>`).join('');
+  document.getElementById('r-deep').innerHTML=data.deep.split('\n\n').map(p=>`<p>${p}</p>`).join('');
+  document.getElementById('r-arch-name').textContent=data.archetype.name;
+  document.getElementById('r-arch-desc').textContent=data.archetype.desc;
+  document.getElementById('r-cta').textContent=data.cta;
+
+  // Show share link block
+  if (shareURL) {
+    const block = document.getElementById('share-block');
+    const input = document.getElementById('share-input');
+    block.style.display = 'block';
+    input.value = shareURL;
+  }
+}
+
+function toggleDeep(header){
+  const body=header.nextElementSibling;
+  const toggle=header.querySelector('.deep-toggle');
+  const open=body.style.maxHeight&&body.style.maxHeight!=='0px';
+  body.style.maxHeight=open?'0px':body.scrollHeight+'px';
+  toggle.textContent=open?'קראי עוד ∨':'סגרי ∧';
+}
+
+function restartQuiz(){answers=[];currentQ=0;dominantCode=null;allCounts={};showScreen('screen-intro');}
+
+// CANVAS
+(function(){
+  const cv=document.getElementById('bg-canvas'),ctx=cv.getContext('2d');let W,H,nodes=[];
+  function resize(){W=cv.width=window.innerWidth;H=cv.height=window.innerHeight;}
+  resize();window.addEventListener('resize',()=>{resize();init();});
+  function Node(){this.x=Math.random()*W;this.y=Math.random()*H;this.vx=(Math.random()-.5)*.3;this.vy=(Math.random()-.5)*.3;this.r=Math.random()*1.5+.5;this.opacity=Math.random()*.5+.2;}
+  function init(){nodes=[];const c=Math.floor((W*H)/18000);for(let i=0;i<c;i++)nodes.push(new Node());}
+  init();
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    for(let i=0;i<nodes.length;i++)for(let j=i+1;j<nodes.length;j++){const dx=nodes[i].x-nodes[j].x,dy=nodes[i].y-nodes[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<160){ctx.beginPath();ctx.moveTo(nodes[i].x,nodes[i].y);ctx.lineTo(nodes[j].x,nodes[j].y);ctx.strokeStyle=`rgba(77,184,255,${(1-d/160)*.15})`;ctx.lineWidth=.5;ctx.stroke();}}
+    nodes.forEach(n=>{ctx.beginPath();ctx.arc(n.x,n.y,n.r,0,Math.PI*2);ctx.fillStyle=`rgba(77,184,255,${n.opacity})`;ctx.fill();n.x+=n.vx;n.y+=n.vy;if(n.x<0||n.x>W)n.vx*=-1;if(n.y<0||n.y>H)n.vy*=-1;});
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+</script>
+</body>
+</html>
