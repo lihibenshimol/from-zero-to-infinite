@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Code Reader - מה הקוד שלך? · From Zero to Infinite</title>
-<meta name="description" content="13 שאלות. 3 דקות. דיאגנוזה מדויקת של המנגנון שמחבל לך בהכל."/>
+<title>מה הקוד שלך? · From Zero to Infinite</title>
+<meta name="description" content="11 שאלות. 3 דקות. דיאגנוזה מדויקת של המנגנון שמחבל לך בהכל."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
@@ -112,18 +112,21 @@
 
 <!-- INTRO -->
 <div id="screen-intro" class="screen active">
-  <span class="quiz-eyebrow">&gt; CODE_READER</span>
+  <span class="quiz-eyebrow">אבחון · קוד הזהות</span>
   <div class="circuitry-line" style="max-width:320px" aria-hidden="true"></div>
-  <h1 class="quiz-title" dir="rtl">מה ה<em>קוד</em><br/>שמריץ אותך?</h1>
-  <p class="quiz-subtitle" dir="rtl">מתחת לכל הסיפורים, כל הטיפולים וכל ה״עבודה״ - יש <strong>מנגנון אחד</strong> שמחבל לך בהכל.<br/>13 שאלות. 3 דקות. דיאגנוזה מדויקת.</p>
+  <h1 class="quiz-title" dir="rtl">מה הקוד<br/>ש<em>מנהל</em> אותך?</h1>
+  <p class="quiz-subtitle" dir="rtl">מתחת לכל הסיפורים, כל הטיפולים וכל ה״עבודה״ - יש <strong>מנגנון אחד</strong> שמחבל לך בהכל.<br/>11 שאלות. 3 דקות. דיאגנוזה מדויקת.</p>
   <div class="meta-row">
-    <div class="meta-item"><span class="meta-num">13</span><span class="meta-label">שאלות</span></div>
+    <div class="meta-item"><span class="meta-num">11</span><span class="meta-label">שאלות</span></div>
     <div class="meta-divider" aria-hidden="true"></div>
     <div class="meta-item"><span class="meta-num">3′</span><span class="meta-label">דקות</span></div>
-    <div class="meta-divider" aria-hidden="true"></div>
-    <div class="meta-item"><span class="meta-num">8</span><span class="meta-label">קודים</span></div>
   </div>
-  <div><button class="btn-primary btn-pill" onclick="startQuiz()" dir="rtl">קוראים את הקוד ←</button></div>
+  <div><button class="btn-primary btn-pill" onclick="startQuiz()" dir="rtl">מפצחים את הקוד ←</button></div>
+
+  <p style="font-size:11px;color:var(--muted);line-height:1.7;max-width:420px" dir="rtl">
+    השאלון מנוסח בלשון נקבה מטעמי נוחות - אך מכוון לכל המינים והזהויות.
+  </p>
+
 </div>
 
 <!-- QUIZ -->
@@ -150,7 +153,7 @@
 
 <!-- CONTACT GATE -->
 <div id="screen-contact" class="screen">
-  <span class="quiz-eyebrow">&gt; ALMOST_THERE</span>
+  <span class="quiz-eyebrow">כמעט סיימת</span>
   <h2 class="contact-heading" dir="rtl">הקוד שלך <em>זוהה</em>.<br/>לאן לשלוח את הניתוח?</h2>
   <p style="font-size:15px;color:var(--muted);line-height:1.75" dir="rtl">השאירי פרטים כדי לראות את הניתוח המלא שלך.</p>
   <div style="display:flex;flex-direction:column;gap:20px">
@@ -170,7 +173,7 @@
 <!-- RESULT -->
 <div id="screen-result" class="screen">
   <div class="result-header rb">
-    <span class="result-code-label">הקוד הדומיננטי שלך הוא —</span>
+    <span class="result-code-label">הקוד הדומיננטי שלך הוא -</span>
     <div class="result-code-name" id="r-name"></div>
     <div class="result-code-tagline" id="r-tagline"></div>
   </div>
@@ -195,13 +198,17 @@
     <div class="archetype-name" id="r-arch-name"></div>
     <div class="archetype-desc" id="r-arch-desc"></div>
   </div>
-  <div class="cta-card rb">
-    <p class="cta-title" id="r-cta"></p>
-    <div class="urgency-banner">
-      <div class="urgency-line">⚡ מקומות מוגבלים בתהליך - כל מחזור מתמלא מהר</div>
-      <div class="urgency-line">🔥 שיחת ההתאמה היא בחינם ובלי התחייבות</div>
-    </div>
-    <a href="https://wa.me/message/VIHIGNG2RHHWK1" target="_blank" rel="noopener noreferrer" class="btn-primary btn-pill" style="display:inline-flex;width:100%;justify-content:center" dir="rtl">אני רוצה לשנות את הקוד שלי ←</a>
+  <!-- CTA -->
+  <div class="rb" style="text-align:center;padding:8px 0 16px">
+    <p style="font-size:clamp(15px,2.5vw,18px);color:rgba(240,240,255,0.85);line-height:1.85;max-width:480px;margin:0 auto 12px" dir="rtl">
+      כשמשנים את הקוד שמנהל אותך - לא מה שאת עושה, אלא <strong style="color:rgba(240,240,255,0.97)">מי שאת</strong> - את חוזרת להיות הבוראת של המציאות שלך.
+    </p>
+    <p style="font-size:clamp(16px,2.5vw,20px);font-weight:700;color:rgba(240,240,255,0.97);line-height:1.6;margin-bottom:28px" dir="rtl">
+      אם את רוצה לשנות את הקוד שלך - שלחי לי הודעה ונדבר ⬇️
+    </p>
+    <a href="https://wa.me/message/VIHIGNG2RHHWK1" target="_blank" rel="noopener noreferrer" class="btn-primary btn-pill" style="display:inline-flex;width:100%;max-width:360px;justify-content:center" dir="rtl">
+      שלחי הודעה ←
+    </a>
   </div>
   <!-- Share link -->
   <div id="share-block" style="background:rgba(77,184,255,0.05);border:1px solid rgba(77,184,255,0.15);border-radius:12px;padding:18px 22px;text-align:center;margin-bottom:14px;display:none">
@@ -224,66 +231,57 @@ const FORMSPREE = 'https://formspree.io/f/mlgaoygw';
 // Options are shuffled on render so no pattern is visible to respondents
 const QUESTIONS = [
   {
-    text: "כשמשהו לא מצליח - מה הגישה הטבעית שלך?",
+    text: "כשמשהו לא מצליח לך - מה הגישה הטבעית שלך?",
     options: [
       { text: "מנסה שוב, הפעם עם יותר מאמץ ומשמעת", code: "A" },
-      { text: "עוצרת ושוקלת אם כדאי להמשיך בכלל", code: "H" },
-      { text: "עוברת לחשוב על גישה חדשה לגמרי", code: "E" },
-      { text: "לוקחת צעד אחורה ומעכלת לבד", code: "D" },
+      { text: "עוצרת לנתח מה השתבש לפני שזזה קדימה", code: "C" },
+      { text: "לוקחת צעד אחורה ומעכלת לבד מה עכשיו", code: "D" },
+      { text: "חוזרת לתוכנית ובודקת אם הביצוע היה מסודר מספיק", code: "F" },
     ]
   },
   {
     text: "כשאת רוצה משהו בגדול - מה בדרך כלל מאט אותך?",
     options: [
-      { text: "הרבה אפשרויות בו-זמנית, קשה לבחור כיוון", code: "C" },
-      { text: "צריכה שאחרים יאמינו בזה לפני שזזה", code: "B" },
-      { text: "אחרות בתחום נראות מוכנות ומקדימות אותי", code: "G" },
+      { text: "הרבה אפשרויות בו-זמנית, קשה לי לבחור כיוון", code: "C" },
+      { text: "צריכה שאחרים יאמינו בי לפני שאני זזה", code: "B" },
+      { text: "מרגישה שלא מוכנה מספיק ועדיין לא הזמן", code: "D" },
       { text: "עוד לא גיבשת תוכנית ברורה מספיק", code: "F" },
     ]
   },
   {
-    text: "בקשרים קרובים - מה מאפיין אותך לרוב?",
+    text: "במערכות יחסים - מה מאפיין אותך לרוב?",
     options: [
-      { text: "גמישה ומסתגלת לצרכים של האחר", code: "B" },
-      { text: "אחראית על הלוגיסטיקה ומוודאת שהכל מסודר", code: "F" },
-      { text: "זקוקה לזמן לעצמך יותר מרוב האנשים", code: "D" },
-      { text: "חולמת על הפוטנציאל של הקשר ומתכננת קדימה", code: "E" },
+      { text: "גמישה ומסתגלת לצרכים של הצד השני", code: "B" },
+      { text: "אחראית, יוזמת, מארגנת ומוודאת שהכל במקום", code: "F" },
+      { text: "מאוד מקפידה על זמן ומרחב אישי לעצמך", code: "D" },
+      { text: "מנתחת הרבה את הדינמיקה ומה היא אומרת על הקשר", code: "C" },
     ]
   },
   {
-    text: "כשיש לך הצלחה - מה קורה ברגע שאחריה?",
+    text: "כשאת חווה הצלחה מסוימת - מה קורה ברגע שאחריה?",
     options: [
-      { text: "עוברת לשלב הבא - אין זמן לעצור", code: "A" },
-      { text: "מחכה לתגובות ורוצה לשמוע מה אחרים חושבים", code: "B" },
-      { text: "מוודאת שהכל מתועד ומסודר לפני שממשיכה", code: "F" },
-      { text: "בודקת מה עוד אפשר לשפר בהשוואה לאחרות", code: "G" },
+      { text: "מיד עוברת לשלב הבא - אין זמן לעצור", code: "A" },
+      { text: "מחכה לפידבקים ורוצה לשמוע מה אחרים חושבים", code: "B" },
+      { text: "מנתחת מה היה ומסיקה מסקנות לעתיד לפני שממשיכה", code: "F" },
+      { text: "מרגישה שזה היה מזל ומתקשה לחגוג את זה", code: "D" },
     ]
   },
   {
-    text: "כשתהליך נהיה קשה - מה הגישה שלך?",
+    text: "כשהדרך נהיית קשה או מאתגרת - מה הגישה שלך?",
     options: [
-      { text: "מעמיקה את המאמץ ומתמידה", code: "A" },
-      { text: "עוצרת לנתח ולהבין לפני שממשיכה", code: "C" },
-      { text: "מעכלת לבד ומבקשת מרחק", code: "D" },
-      { text: "בודקת אם הכיוון עדיין נכון ואולי עוצרת", code: "H" },
-    ]
-  },
-  {
-    text: "כשאת מדמיינת את הגרסה הכי טובה שלך - איך היא נראית?",
-    options: [
-      { text: "עצמאית לחלוטין ומוכיחה את עצמה בכוחות עצמה", code: "A" },
-      { text: "אהובה ומוערכת על ידי אנשים רבים", code: "B" },
-      { text: "עושה דברים שאנשים שמעוררים בה השראה כבר עושים", code: "G" },
-      { text: "חיה בדיוק את החיים שתכננה עם הכל מסודר", code: "F" },
+      { text: "מעמיקה את המאמץ שלי ומתמידה", code: "A" },
+      { text: "עוצרת לנתח ולהבין את המצב לפני שממשיכה", code: "C" },
+      { text: "מתעצבנת ומרחיקה ממני את מי שמנסה לכוון", code: "D" },
+      { text: "מחפשת מישהו שיאמר לי מה לעשות", code: "B" },
     ]
   },
   {
     text: "מה גורם לך להרגיש הכי בטוחה?",
     options: [
-      { text: "סדר יום מלא ותחושה שהשגת דברים", code: "A" },
-      { text: "אנשים קרובים מרוצים ויחסים טובים", code: "B" },
-      { text: "תוכנית ברורה ותחושה שאת שולטת על מה שקורה", code: "F" },
-      { text: "מרחב שקט בלי ציפיות חיצוניות", code: "D" },
+      { text: "סדר יום מלא ותחושה שהשגת יעדים ומטרות", code: "A" },
+      { text: "אנשים קרובים מרוצים ומערכות יחסים טובות", code: "B" },
+      { text: "תוכנית פעולה ברורה ותחושה שאת שולטת על מה שקורה", code: "F" },
+      { text: "מרחב שקט ורגוע בלי ציפיות או אחריות", code: "D" },
     ]
   },
   {
@@ -294,53 +292,43 @@ const QUESTIONS = [
     ratingMap: { 1:"A", 2:"D", 3:null, 4:"B", 5:"B" }
   },
   {
-    text: "כשאת חושבת על מה שאת מרוויחה - מה עולה?",
+    text: "כשאת מסתכלת על יעד שלא הצלחת להשיג - מה הסיפור שלך על זה?",
     options: [
-      { text: "ראיתי שאם אעבוד יותר - ארוויח יותר", code: "A" },
-      { text: "אחרות בתחום שלי נראות מרוויחות יותר", code: "G" },
-      { text: "אני יודעת מה אני שווה אבל קשה לי לבקש את זה", code: "D" },
-      { text: "כשיגיע הפרויקט הנכון - אז אגבה את המחיר האמיתי", code: "E" },
-    ]
-  },
-  {
-    text: "כשאת מסתכלת על יעד שלא השגת - מה הסיפור שלך על זה?",
-    options: [
-      { text: "לא השקעתי מספיק, הייתי יכולה לעבוד יותר קשה", code: "A" },
-      { text: "לא הייתה לי תוכנית ברורה ומסודרת מספיק", code: "F" },
-      { text: "הגעתי קרוב ואז הפסקתי לפני הסוף", code: "H" },
-      { text: "הייתי עסוקה מדי בלראות מה אחרות עושות", code: "G" },
+      { text: "לא השקעתי מספיק, הייתי יכולה להתאמץ יותר", code: "A" },
+      { text: "הייתי מפוזרת. לא תכננתי את זה מספיק טוב", code: "F" },
+      { text: "הרגשתי שאני לא מספיק טובה בשביל זה", code: "D" },
+      { text: "לא קיבלתי מספיק עידוד מהאנשים סביבי", code: "B" },
     ]
   },
   {
     type: "rating",
-    text: "כמה סביר שתסיימי פרויקט שהתחלת?",
+    text: "כמה סביר שתסיימי משהו שהתחלת?",
     lowLabel: "לא סביר בכלל",
     highLabel: "תמיד מסיימת",
-    ratingMap: { 1:"H", 2:"H", 3:null, 4:"A", 5:"F" }
+    ratingMap: { 1:"D", 2:"D", 3:null, 4:"A", 5:"F" }
   },
   {
-    text: "כשמישהי בתחום שלך מצליחה - מה קורה אצלך?",
+    text: "כשמישהי אחרת מצליחה במשהו שאת רוצה להצליח בו גם - מה קורה אצלך?",
     options: [
-      { text: "מרגישה מוטיבציה לעבוד יותר", code: "A" },
-      { text: "בודקת מה היא עושה שאני לא עושה", code: "G" },
-      { text: "מתרגשת ומתחילה לתכנן דברים גדולים", code: "E" },
+      { text: "מרגישה מוטיבציה להשקיע יותר בעצמי", code: "A" },
+      { text: "בודקת מה היא עושה שאני לא עושה, ואולי עושה גם", code: "B" },
+      { text: "מתחילה לבחון מחדש אם הנתיב שלי עדיין נכון", code: "C" },
       { text: "שמחה עבורה ומחכה לזמן שלי", code: "D" },
     ]
   },
   {
-    text: "בסוף יום שבו ״הכל עבד״ - מה גרם לו להרגיש כך?",
+    text: "בסוף יום מוצלח שבו הכל זרם - מה גרם לו להרגיש כך?",
     options: [
-      { text: "עשיתי הכל שתכננתי ועוד קצת מעבר", code: "A" },
-      { text: "האנשים סביבי היו מרוצים ודברים זרמו", code: "B" },
-      { text: "הכל הלך לפי התוכנית בלי הפתעות", code: "F" },
-      { text: "הייתי נוכחת בעצמי בלי להשוות לאף אחת", code: "G" },
+      { text: "עשיתי את המקסימום שלי ועוד קצת מעבר", code: "A" },
+      { text: "שימחתי אנשים אחרים ועשיתי להם טוב בלב", code: "B" },
+      { text: "הכל הלך לפי התכנית בלי בלת\"מים", code: "F" },
+      { text: "הצלחתי להבין ולפתור משהו שבלבל אותי", code: "C" },
     ]
   }
 ];
 
 const CODE_LABELS = {
-  A:"מאמץ 💪", B:"ריצוי 🪞", C:"סיבוך 🌀", D:"כיווץ 🦋",
-  E:"בריחה לעתיד 🌅", F:"שליטה ⚙️", G:"השוואה 🔢", H:"ויתור מוקדם 🚪"
+  A:"מאמץ 💪", B:"ריצוי 🪞", C:"סיבוך 🌀", D:"כיווץ 🦋", F:"שליטה ⚙️"
 };
 
 const CODES = {
@@ -533,7 +521,7 @@ let answers=[], currentQ=0, dominantCode=null, allCounts={}, userName='', shareU
     const data = JSON.parse(decodeURIComponent(escape(atob(r))));
     if (!data.code || !CODES[data.code]) return;
     dominantCode = data.code;
-    allCounts = data.counts || {A:0,B:0,C:0,D:0,E:0,F:0,G:0,H:0};
+    allCounts = data.counts || {A:0,B:0,C:0,D:0,F:0};
     userName = data.name || '';
     shareURL = location.href;
     // wait for DOM
@@ -618,7 +606,7 @@ function showLoading(){
 }
 
 function computeResult(){
-  allCounts={A:0,B:0,C:0,D:0,E:0,F:0,G:0,H:0};
+  allCounts={A:0,B:0,C:0,D:0,F:0};
   answers.forEach(a=>allCounts[a]++);
   dominantCode=Object.entries(allCounts).sort((a,b)=>b[1]-a[1])[0][0];
   showScreen('screen-contact');
@@ -706,7 +694,6 @@ function renderResult(){
   document.getElementById('r-deep').innerHTML=data.deep.split('\n\n').map(p=>`<p>${p}</p>`).join('');
   document.getElementById('r-arch-name').textContent=data.archetype.name;
   document.getElementById('r-arch-desc').textContent=data.archetype.desc;
-  document.getElementById('r-cta').textContent=data.cta;
 
   // Show share link block
   if (shareURL) {
