@@ -2,7 +2,7 @@
 .reveal {
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.65s ease, transform 0.65s ease;
+  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .reveal.in {
@@ -10,8 +10,53 @@
   transform: translateY(0);
 }
 
+/* slide in from the right (mirrors naturally in RTL) */
+.reveal-right {
+  opacity: 0;
+  transform: translateX(36px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-right.in {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* slide in from the left */
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-36px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-left.in {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* pronounced slide-up — for emphasis on key card grids */
+.reveal-up {
+  opacity: 0;
+  transform: translateY(48px);
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-up.in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* scale up from slightly smaller — good for grid/card items */
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.92) translateY(12px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-scale.in {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
 /* staggered delays for sibling elements */
 .d1 { transition-delay: 0.08s; }
 .d2 { transition-delay: 0.16s; }
 .d3 { transition-delay: 0.24s; }
 .d4 { transition-delay: 0.32s; }
+.d5 { transition-delay: 0.40s; }
