@@ -25,7 +25,7 @@
 /* ── SPLIT HERO (index page) ── */
 .hero-split {
   flex-direction: row;
-  gap: 48px;
+  gap: 16px;
   text-align: right;
   padding: 80px clamp(24px, 5vw, 80px);
   align-items: center;
@@ -41,7 +41,7 @@
 }
 
 .hero-visual .hero-logo {
-  width: clamp(200px, 22vw, 380px);
+  width: clamp(260px, 28vw, 460px);
   position: relative;
   z-index: 2;
   margin: 0;
@@ -95,17 +95,17 @@
   .hero-split {
     flex-direction: column;
     text-align: center;
-    padding: 80px 24px 48px;
-    gap: 32px;
+    padding: 56px 24px 40px;
+    gap: 8px;
   }
-  .hero-visual { min-height: 260px; }
+  .hero-visual { min-height: 220px; }
   .ring-3, .ring-4 { display: none; }
   .hero-content { max-width: 100%; }
 }
 
 @media (max-width: 640px) {
   .hero { padding: 32px 20px; }
-  .hero-logo { width: clamp(160px, 60vw, 280px); }
-  .hero-visual { min-height: 220px; }
+  .hero-logo { width: clamp(190px, 68vw, 320px); }
+  .hero-visual { min-height: 170px; }
   .ring-2 { display: none; }
 }

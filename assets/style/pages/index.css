@@ -388,7 +388,7 @@ main > section:nth-child(odd) {
   .faq-btn  { font-size: 14px; }
   .faq-item { padding: 0 14px; }
 
-  /* WhatsApp — keep visible but smaller */
-  .wa-float { bottom: 16px; right: 16px; }
+  /* WhatsApp — keep visible but smaller, raised above the sticky CTA bar */
+  .wa-float { bottom: 88px; right: 16px; }
   .wa-btn   { width: 48px; height: 48px; }
 }
