@@ -8,12 +8,6 @@ main > section:nth-child(odd) {
   background: radial-gradient(ellipse at 40% 50%, rgba(10,10,20,0.6) 0%, transparent 80%);
 }
 
-/* ── PILL CTA ── */
-.btn-pill {
-  border-radius: 100px !important;
-  padding: 0 40px !important;
-}
-
 /* Hero text — index only (logo/centering comes from basics/hero.css) */
 .hero-logo { width: clamp(280px, 30vw, 580px); }
 
@@ -250,64 +244,6 @@ main > section:nth-child(odd) {
   flex-shrink: 0;
   width: 20px;
   height: 20px;
-}
-
-/* FAQ Accordion */
-.faq-item {
-  border-bottom: 1px solid var(--border-neon);
-  border-radius: 8px;
-  padding: 0 20px;
-  margin-bottom: 8px;
-  background: rgba(15, 15, 25, 0.5);
-  backdrop-filter: blur(8px);
-  overflow: hidden;
-}
-
-.faq-item:last-child { margin-bottom: 0; }
-
-.faq-btn {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 16px 0;
-  font-family: 'Assistant', sans-serif;
-  font-size: 15px;
-  font-weight: 500;
-  color: rgba(240, 240, 255, 0.92);
-  text-align: right;
-  direction: rtl;
-  gap: 12px;
-}
-
-.faq-btn:hover { color: #fff; }
-
-.faq-chevron {
-  flex-shrink: 0;
-  width: 16px;
-  height: 16px;
-  color: var(--muted);
-  transition: transform 0.2s ease;
-}
-
-.faq-item.open .faq-chevron { transform: rotate(180deg); }
-
-.faq-body {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease;
-}
-
-.faq-body-inner {
-  padding-bottom: 16px;
-  font-size: 14px;
-  line-height: 1.75;
-  color: var(--muted);
-  direction: rtl;
-  text-align: right;
 }
 
 /* Floating WhatsApp */

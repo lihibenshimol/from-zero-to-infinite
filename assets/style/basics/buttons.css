@@ -81,6 +81,12 @@
   .btn-primary { width: 100%; font-size: 13px; height: 52px; padding: 0 24px; }
 }
 
+/* pill modifier — usable on .btn-primary or .btn-outline */
+.btn-pill {
+  border-radius: 100px !important;
+  padding: 0 40px !important;
+}
+
 /* blinking cursor used in CTA labels */
 .cursor-blink {
   display: inline-block;
