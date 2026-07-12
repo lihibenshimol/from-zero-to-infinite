@@ -336,6 +336,9 @@
         <button class="review-photo reveal d3" style="--r:-2deg" onclick="openLightbox('assets/reviews/IMG_1659.jpg')">
           <img src="assets/reviews/IMG_1659.jpg" alt="הודעת וואטסאפ מלקוחה: יצאתי מהמפגש בתחושה של התקדמות" loading="lazy"/>
         </button>
+        <button class="review-photo reveal" style="--r:2deg" onclick="openLightbox('assets/reviews/IMG_2488.jpg')">
+          <img src="assets/reviews/IMG_2488.jpg" alt="הודעת וואטסאפ מלקוחה" loading="lazy"/>
+        </button>
       </div>
       <p class="text-muted" style="text-align:center;font-size:12px;letter-spacing:0.08em;margin-top:20px" dir="rtl">לחצי על תמונה להגדלה</p>
     </div>
@@ -1028,19 +1031,22 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLightbox();});
   const bar=document.getElementById('sticky-bar');
   const hero=document.querySelector('.hero');
   const pricing=document.getElementById('pricing');
-  let heroVisible=true, pricingVisible=false;
+  const footer=document.querySelector('footer');
+  let heroVisible=true, pricingVisible=false, footerVisible=false;
   function update(){
-    bar.style.transform=(heroVisible||pricingVisible)?'translateY(100%)':'translateY(0)';
+    bar.style.transform=(heroVisible||pricingVisible||footerVisible)?'translateY(100%)':'translateY(0)';
   }
   const scrollObs=new IntersectionObserver(entries=>{
     entries.forEach(e=>{
       if(e.target===hero) heroVisible=e.isIntersecting;
       if(e.target===pricing) pricingVisible=e.isIntersecting;
+      if(e.target===footer) footerVisible=e.isIntersecting;
     });
     update();
   },{threshold:0.1});
   scrollObs.observe(hero);
   scrollObs.observe(pricing);
+  if(footer) scrollObs.observe(footer);
   bar.removeAttribute('aria-hidden');
 })();
 
@@ -1060,5 +1066,6 @@ function toggleFaq(btn){
   }
 }
 </script>
+<script src="/assets/js/legal.js"></script>
 </body>
 </html>

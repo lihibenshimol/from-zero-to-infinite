@@ -133,6 +133,27 @@
           ></textarea>
         </div>
 
+        <!-- Privacy + Marketing consent -->
+        <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:28px;padding:20px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:10px" dir="rtl">
+          <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer">
+            <input type="checkbox" id="consent-privacy" name="consent_privacy" value="yes" required
+                   style="margin-top:3px;flex-shrink:0;accent-color:hsl(210,100%,65%);width:16px;height:16px"/>
+            <span style="font-size:13px;color:rgba(200,200,220,0.85);line-height:1.65">
+              קראתי ואני מסכימה ל<a href="/terms" target="_blank" style="color:var(--neon);text-decoration:none">תקנון ומדיניות הביטולים</a>
+              ול<a href="/privacy" target="_blank" style="color:var(--neon);text-decoration:none">מדיניות הפרטיות</a>.
+              ידוע לי שהמידע שמסרתי (שם, כתובת, טלפון, מייל) ישמש לצורך מתן השירות בלבד.
+              <span style="color:#ff6b6b">*</span>
+            </span>
+          </label>
+          <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer">
+            <input type="checkbox" id="consent-marketing" name="consent_marketing" value="yes"
+                   style="margin-top:3px;flex-shrink:0;accent-color:hsl(210,100%,65%);width:16px;height:16px"/>
+            <span style="font-size:13px;color:rgba(200,200,220,0.85);line-height:1.65">
+              אני מעוניינת לקבל עדכונים, תכנים והצעות מ-From Zero to Infinite (ניתן להסיר בכל עת).
+            </span>
+          </label>
+        </div>
+
         <!-- Submit -->
         <button type="submit" class="form-submit" id="submit-btn">
           <span id="submit-label">אישור פרטים ומעבר לתשלום</span>
@@ -251,5 +272,6 @@ document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 })();
 </script>
 
+<script src="/assets/js/legal.js"></script>
 </body>
 </html>
