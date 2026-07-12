@@ -118,7 +118,7 @@
     <div class="meta-divider" aria-hidden="true"></div>
     <div class="meta-item"><span class="meta-num">3′</span><span class="meta-label">דקות</span></div>
   </div>
-  <div><button class="btn-primary btn-pill" onclick="startQuiz()" dir="rtl">מפצחים את הקוד ←</button></div>
+  <div><button class="btn-primary btn-pill" onclick="startQuiz()" dir="rtl">מפצחים את הקוד</button></div>
 
   <p style="font-size:11px;color:var(--muted);line-height:1.7;max-width:420px" dir="rtl">
     השאלון מנוסח בלשון נקבה מטעמי נוחות - אך מכוון לכל המינים והזהויות.
@@ -154,13 +154,20 @@
   <h2 class="contact-heading" dir="rtl">הקוד שלך <em>זוהה</em>.<br/>לאן לשלוח את הניתוח?</h2>
   <p style="font-size:15px;color:var(--muted);line-height:1.75" dir="rtl">השאירי פרטים כדי לראות את הניתוח המלא שלך.</p>
   <div style="display:flex;flex-direction:column;gap:20px">
-    <div class="form-field"><label for="c-name">שם מלא</label><input type="text" id="c-name" placeholder="השם שלך" autocomplete="name" dir="rtl"/></div>
-    <div class="form-field"><label for="c-phone">טלפון</label><input type="tel" id="c-phone" placeholder="05X-XXXXXXX" autocomplete="tel" dir="ltr"/></div>
-    <div class="form-field"><label for="c-email">אימייל <span style="font-weight:400;letter-spacing:0;text-transform:none;color:var(--muted)">(אופציונלי)</span></label><input type="email" id="c-email" placeholder="your@email.com" autocomplete="email" dir="ltr"/></div>
-    <p id="form-error" role="alert">אנא מלאי שם וטלפון לפני המשך.</p>
+    <div class="form-field"><label for="c-name">שם מלא <span style="color:#ff6b6b">*</span></label><input type="text" id="c-name" placeholder="שם פרטי + שם משפחה" autocomplete="name" dir="rtl"/></div>
+    <div class="form-field"><label for="c-phone">טלפון <span style="color:#ff6b6b">*</span></label><input type="tel" id="c-phone" placeholder="05X-XXXXXXX" autocomplete="tel" dir="ltr" inputmode="numeric"/></div>
+    <div class="form-field"><label for="c-email">אימייל <span style="color:#ff6b6b">*</span></label><input type="email" id="c-email" placeholder="your@email.com" autocomplete="email" dir="ltr"/></div>
+    <p id="form-error" role="alert">אנא מלאי את כל הפרטים לפני המשך.</p>
+    <!-- Marketing consent -->
+    <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer;padding:16px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:10px" dir="rtl">
+      <input type="checkbox" id="c-marketing" style="margin-top:3px;flex-shrink:0;accent-color:hsl(210,100%,65%);width:16px;height:16px"/>
+      <span style="font-size:13px;color:rgba(200,200,220,0.85);line-height:1.65;font-family:'Assistant',sans-serif">
+        אני מאשרת קבלת תכנים, עדכונים והצעות מ-From Zero to Infinite (ניתן להסיר בכל עת).
+      </span>
+    </label>
     <div>
       <button class="btn-primary btn-pill" onclick="submitContact()" id="submit-btn" dir="rtl">
-        <span id="submit-label">הצגי לי את הניתוח ←</span>
+        <span id="submit-label">הצגי לי את הניתוח</span>
         <span id="submit-spinner" style="display:none">שולחת...</span>
       </button>
     </div>
@@ -621,10 +628,23 @@ async function submitContact(){
   const name=document.getElementById('c-name').value.trim();
   const phone=document.getElementById('c-phone').value.trim();
   const email=document.getElementById('c-email').value.trim();
+  const marketing=document.getElementById('c-marketing').checked;
   const errEl=document.getElementById('form-error');
-  ['c-name','c-phone'].forEach(id=>document.getElementById(id).classList.remove('err'));
+  ['c-name','c-phone','c-email'].forEach(id=>document.getElementById(id).classList.remove('err'));
   errEl.style.display='none';
-  if(!name||!phone){if(!name)document.getElementById('c-name').classList.add('err');if(!phone)document.getElementById('c-phone').classList.add('err');errEl.style.display='block';return;}
+
+  // Validation
+  const nameOk = name.trim().split(/\s+/).length >= 2;
+  const phoneOk = /^0[5-9]\d{8}$/.test(phone.replace(/[-\s]/g,''));
+  const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+  if(!nameOk||!phoneOk||!emailOk){
+    if(!nameOk){ document.getElementById('c-name').classList.add('err'); errEl.textContent='נא להזין שם פרטי ושם משפחה.'; }
+    else if(!phoneOk){ document.getElementById('c-phone').classList.add('err'); errEl.textContent='נא להזין מספר טלפון ישראלי תקין (05X-XXXXXXX).'; }
+    else if(!emailOk){ document.getElementById('c-email').classList.add('err'); errEl.textContent='נא להזין כתובת אימייל תקינה.'; }
+    errEl.style.display='block';
+    return;
+  }
   document.getElementById('submit-label').style.display='none';
   document.getElementById('submit-spinner').style.display='inline';
   document.getElementById('submit-btn').disabled=true;
@@ -646,12 +666,13 @@ async function submitContact(){
         אימייל: email,
         קוד: data.shortName,
         'לינק אישי': shareURL,
-        תשובות: answers.join(',')
+        תשובות: answers.join(','),
+        'הסכמה לדיוור': marketing ? 'כן' : 'לא'
       })
     }).catch(()=>{});
 
     // Google Sheets - Image trick
-    const params = new URLSearchParams({ name, phone, email, codeName: data.shortName, shareURL, answersRaw: answers.join(','), submittedAt: new Date().toISOString() });
+    const params = new URLSearchParams({ name, phone, email, codeName: data.shortName, shareURL, answersRaw: answers.join(','), marketing: marketing?'כן':'לא', submittedAt: new Date().toISOString() });
     const img = new Image();
     img.src = `${MAKE_WEBHOOK}?${params.toString()}`;
   }catch(e){console.warn(e);}
