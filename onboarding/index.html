@@ -273,5 +273,239 @@ document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 </script>
 
 <script src="/assets/js/legal.js"></script>
+<!-- ── SIDE NAV ── -->
+<style>
+.nav-toggle {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 500;
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: rgba(10,10,15,0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  padding: 0;
+}
+.nav-toggle:hover { border-color: rgba(77,184,255,0.35); background: rgba(77,184,255,0.06); }
+.nav-toggle span {
+  display: block;
+  width: 18px;
+  height: 1.5px;
+  background: rgba(220,220,235,0.8);
+  border-radius: 2px;
+  transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), opacity 0.2s;
+  transform-origin: center;
+}
+.nav-toggle.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-toggle.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.nav-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+.nav-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 490;
+  background: rgba(0,0,0,0);
+  pointer-events: none;
+  transition: background 0.35s;
+}
+.nav-overlay.open {
+  background: rgba(0,0,0,0.55);
+  pointer-events: all;
+}
+.nav-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 495;
+  width: clamp(260px, 72vw, 320px);
+  background: rgba(10,10,18,0.97);
+  backdrop-filter: blur(20px);
+  border-left: 1px solid rgba(77,184,255,0.12);
+  transform: translateX(100%);
+  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow: hidden;
+}
+.nav-drawer.open { transform: translateX(0); }
+.nav-drawer-inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 72px 32px 40px;
+  direction: rtl;
+}
+.nav-drawer-label {
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(77,184,255,0.5);
+  margin-bottom: 28px;
+  font-family: 'Assistant', sans-serif;
+}
+.nav-drawer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+.nav-drawer-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px 20px;
+  border-radius: 12px;
+  text-decoration: none;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.05);
+  transition: background 0.2s, border-color 0.2s, transform 0.2s;
+}
+.nav-drawer-link:hover {
+  background: rgba(77,184,255,0.06);
+  border-color: rgba(77,184,255,0.2);
+  transform: translateX(-3px);
+}
+.nav-drawer-link:active { transform: translateX(-1px); }
+.nav-drawer-link .ndl-text { display: flex; flex-direction: column; gap: 3px; }
+.nav-drawer-link .ndl-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: rgba(240,240,255,0.95);
+  font-family: 'Assistant', sans-serif;
+}
+.nav-drawer-link .ndl-sub {
+  font-size: 12px;
+  color: rgba(160,160,180,0.6);
+  font-family: 'Assistant', sans-serif;
+  letter-spacing: 0.04em;
+}
+.nav-drawer-link .ndl-icon {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+.nav-drawer-link.gold {
+  background: rgba(212,175,55,0.05);
+  border-color: rgba(212,175,55,0.15);
+}
+.nav-drawer-link.gold:hover {
+  background: rgba(212,175,55,0.1);
+  border-color: rgba(212,175,55,0.3);
+}
+.nav-drawer-divider {
+  height: 1px;
+  background: rgba(255,255,255,0.06);
+  margin: 12px 0;
+}
+.nav-drawer-footer {
+  font-size: 10px;
+  color: rgba(160,160,180,0.35);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-align: center;
+  font-family: 'Assistant', sans-serif;
+}
+</style>
+
+<!-- hamburger button -->
+<button class="nav-toggle" id="nav-toggle" aria-label="פתח תפריט ניווט" aria-expanded="false" aria-controls="nav-drawer">
+  <span></span>
+  <span></span>
+  <span></span>
+</button>
+
+<!-- overlay -->
+<div class="nav-overlay" id="nav-overlay" aria-hidden="true"></div>
+
+<!-- drawer -->
+<nav class="nav-drawer" id="nav-drawer" aria-label="ניווט ראשי">
+  <div class="nav-drawer-inner">
+    <p class="nav-drawer-label">NAVIGATION</p>
+    <div class="nav-drawer-links">
+
+      <a href="/" class="nav-drawer-link">
+        <div class="ndl-text">
+          <span class="ndl-title">דף הבית</span>
+          <span class="ndl-sub">From Zero to Infinite</span>
+        </div>
+        <span class="ndl-icon" aria-hidden="true">🏠</span>
+      </a>
+
+      <div class="nav-drawer-divider" aria-hidden="true"></div>
+
+      <a href="/challenge" class="nav-drawer-link gold">
+        <div class="ndl-text">
+          <span class="ndl-title">אתגר השפע</span>
+          <span class="ndl-sub">30/8 - 5/9 · 27₪</span>
+        </div>
+        <span class="ndl-icon" aria-hidden="true">✨</span>
+      </a>
+
+      <a href="/cards" class="nav-drawer-link">
+        <div class="ndl-text">
+          <span class="ndl-title">קלפי מסר</span>
+          <span class="ndl-sub">58 קלפים · 159₪</span>
+        </div>
+        <span class="ndl-icon" aria-hidden="true">🃏</span>
+      </a>
+
+      <div class="nav-drawer-divider" aria-hidden="true"></div>
+
+      <a href="/quiz" class="nav-drawer-link">
+        <div class="ndl-text">
+          <span class="ndl-title">שאלון אבחון</span>
+          <span class="ndl-sub">גלי את הקוד שמנהל אותך</span>
+        </div>
+        <span class="ndl-icon" aria-hidden="true">🔍</span>
+      </a>
+
+      <a href="/#pricing" class="nav-drawer-link">
+        <div class="ndl-text">
+          <span class="ndl-title">ליווי אישי</span>
+          <span class="ndl-sub">קפיצה קוונטית · 5 מפגשים</span>
+        </div>
+        <span class="ndl-icon" aria-hidden="true">⚡</span>
+      </a>
+
+    </div>
+    <p class="nav-drawer-footer">FROM ZERO TO INFINITE</p>
+  </div>
+</nav>
+
+<script>
+(function(){
+  const toggle = document.getElementById('nav-toggle');
+  const overlay = document.getElementById('nav-overlay');
+  const drawer = document.getElementById('nav-drawer');
+  function openNav(){
+    toggle.classList.add('open');
+    overlay.classList.add('open');
+    drawer.classList.add('open');
+    toggle.setAttribute('aria-expanded','true');
+    document.body.style.overflow='hidden';
+  }
+  function closeNav(){
+    toggle.classList.remove('open');
+    overlay.classList.remove('open');
+    drawer.classList.remove('open');
+    toggle.setAttribute('aria-expanded','false');
+    document.body.style.overflow='';
+  }
+  toggle.addEventListener('click',()=>{ toggle.classList.contains('open') ? closeNav() : openNav(); });
+  overlay.addEventListener('click', closeNav);
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeNav(); });
+})();
+</script>
+
 </body>
 </html>
