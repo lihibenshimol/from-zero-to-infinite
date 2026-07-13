@@ -229,7 +229,7 @@
 
 </main>
 <script>
-const MAKE_WEBHOOK = 'https://script.google.com/macros/s/AKfycbx-wyAsfl0mn3KzPUQWtLztcR80HfBegme0WgqvzmluxHNI66bRD1Mljfm2bTDHHiLZtQ/exec';
+const MAKE_WEBHOOK = 'https://script.google.com/macros/s/AKfycbwxwtU_KL39gxJXY-ggCw_ZiIrCHgLo0OYRjigCGaI6T8oSB8me-oHYK6WJrv6jLOkmtg/exec';
 const FORMSPREE = 'https://formspree.io/f/mlgaoygw';
 
 // ── QUESTIONS ──
@@ -675,7 +675,7 @@ async function submitContact(){
 
     // Google Sheets
     const params = new URLSearchParams({ name, phone, email, codeName: data.shortName, shareURL, answersRaw: answers.join(','), marketing: marketing?'כן':'לא', submittedAt: new Date().toISOString() });
-    fetch(`${MAKE_WEBHOOK}?${params.toString()}`, { mode: 'no-cors' }).catch(()=>{});
+    fetch(MAKE_WEBHOOK, { method: 'POST', mode: 'no-cors', body: params }).catch(()=>{});
   }catch(e){console.warn(e);}
 
   renderResult();
