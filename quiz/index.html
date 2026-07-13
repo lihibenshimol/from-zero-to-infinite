@@ -675,7 +675,7 @@ async function submitContact(){
 
     // Google Sheets
     const params = new URLSearchParams({ name, phone, email, codeName: data.shortName, shareURL, answersRaw: answers.join(','), marketing: marketing?'כן':'לא', submittedAt: new Date().toISOString() });
-    fetch(`${MAKE_WEBHOOK}?${params.toString()}`, { method: 'GET', mode: 'no-cors' }).catch(()=>{});
+    fetch(`${MAKE_WEBHOOK}?${params.toString()}`, { mode: 'no-cors' }).catch(()=>{});
   }catch(e){console.warn(e);}
 
   renderResult();
