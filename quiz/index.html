@@ -673,10 +673,9 @@ async function submitContact(){
       })
     }).catch(()=>{});
 
-    // Google Sheets - Image trick
+    // Google Sheets
     const params = new URLSearchParams({ name, phone, email, codeName: data.shortName, shareURL, answersRaw: answers.join(','), marketing: marketing?'כן':'לא', submittedAt: new Date().toISOString() });
-    const img = new Image();
-    img.src = `${MAKE_WEBHOOK}?${params.toString()}`;
+    fetch(`${MAKE_WEBHOOK}?${params.toString()}`, { method: 'GET', mode: 'no-cors' }).catch(()=>{});
   }catch(e){console.warn(e);}
 
   renderResult();
