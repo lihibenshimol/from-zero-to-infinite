@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>מדריכים חינמיים · From Zero to Infinite</title>
+<meta name="description" content="3 מדריכים חינמיים לחיווט מחדש, שחרור וקפיצה קוונטית. ידע שנהיה פרקטיקה."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../assets/style/main.css"/>
+<style>
+.guides-hero {
+  min-height: 52vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: clamp(80px,12vw,140px) 24px clamp(48px,6vw,80px);
+  position: relative;
+}
+.guides-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+.guide-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(77,184,255,0.14);
+  border-radius: 20px;
+  padding: 36px 28px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  cursor: pointer;
+  transition: border-color 0.3s, background 0.3s, transform 0.3s cubic-bezier(0.16,1,0.3,1);
+  text-align: right;
+}
+.guide-card:hover {
+  border-color: rgba(77,184,255,0.35);
+  background: rgba(77,184,255,0.04);
+  transform: translateY(-4px);
+}
+.guide-card:focus-visible {
+  outline: 2px solid hsl(210,100%,65%);
+  outline-offset: 3px;
+}
+.guide-icon {
+  font-size: 40px;
+  line-height: 1;
+}
+.guide-title {
+  font-size: clamp(17px,2.5vw,20px);
+  font-weight: 700;
+  color: rgba(240,240,255,0.97);
+  font-family: 'Assistant', sans-serif;
+  line-height: 1.4;
+}
+.guide-desc {
+  font-size: clamp(13px,1.8vw,15px);
+  color: rgba(160,160,180,0.8);
+  line-height: 1.8;
+  flex: 1;
+  font-family: 'Assistant', sans-serif;
+}
+.guide-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: hsl(210,100%,65%);
+  font-family: 'Assistant', sans-serif;
+  letter-spacing: 0.06em;
+  margin-top: 4px;
+  transition: gap 0.2s;
+}
+.guide-card:hover .guide-cta { gap: 12px; }
+
+/* ── MODAL ── */
+.pdf-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+.pdf-modal.open {
+  opacity: 1;
+  pointer-events: all;
+}
+.pdf-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.8);
+  backdrop-filter: blur(8px);
+}
+.pdf-box {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 860px;
+  height: 88vh;
+  background: rgba(10,10,20,0.97);
+  border: 1px solid rgba(77,184,255,0.2);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transform: scale(0.96) translateY(12px);
+  transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
+}
+.pdf-modal.open .pdf-box {
+  transform: scale(1) translateY(0);
+}
+.pdf-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  flex-shrink: 0;
+  gap: 12px;
+}
+.pdf-header-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: rgba(240,240,255,0.95);
+  font-family: 'Assistant', sans-serif;
+}
+.pdf-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.pdf-download-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 18px;
+  background: rgba(77,184,255,0.1);
+  border: 1px solid rgba(77,184,255,0.3);
+  border-radius: 10px;
+  color: hsl(210,100%,65%);
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'Assistant', sans-serif;
+  text-decoration: none;
+  transition: background 0.2s, border-color 0.2s;
+  cursor: pointer;
+}
+.pdf-download-btn:hover {
+  background: rgba(77,184,255,0.18);
+  border-color: rgba(77,184,255,0.5);
+}
+.pdf-close-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: rgba(200,200,220,0.7);
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s;
+  font-family: 'Assistant', sans-serif;
+  line-height: 1;
+}
+.pdf-close-btn:hover {
+  background: rgba(255,100,100,0.1);
+  border-color: rgba(255,100,100,0.25);
+  color: rgba(255,150,150,0.9);
+}
+.pdf-frame-wrap {
+  flex: 1;
+  overflow: hidden;
+}
+.pdf-frame-wrap iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+</style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">דלג לתוכן הראשי</a>
+<canvas id="bg-canvas" aria-hidden="true"></canvas>
+
+<div class="page">
+<main id="main-content">
+
+<!-- ── HERO ── -->
+<section class="guides-hero">
+  <p class="section-label reveal">&gt; FREE_GUIDES</p>
+  <h1 class="font-heading reveal d1" style="font-size:clamp(32px,6vw,64px);color:rgba(240,240,255,0.97);margin-bottom:24px">
+    מדריכים <span style="background:linear-gradient(135deg,hsl(42,90%,65%),hsl(36,80%,50%));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">חינמיים</span>
+  </h1>
+
+  <div class="glass border-neon reveal d2" style="max-width:640px;margin:0 auto;padding:clamp(28px,4vw,40px);text-align:center">
+    <p style="font-size:clamp(15px,2vw,18px);color:rgba(220,220,235,0.88);line-height:1.9;font-family:'Assistant',sans-serif" dir="rtl">
+      ידע הוא נקודת ההתחלה - לא הסוף.<br/>
+      אתם יכולים לקרוא על שינוי דפוסים והרגלים, על חיווט מחדש, על קפיצות קוונטיות במשך שנים - ועדיין לעמוד באותו מקום בדיוק.
+      <br/><br/>
+      <strong style="color:rgba(240,240,255,0.97)">כי מה שמשנה מציאות הוא לא הבנה - אלא פרקטיקה.</strong><br/>
+      המדריכים האלה נוצרו מניסיון בשטח: כלים שאני משתמשת בהם, שלקוחות שלי משתמשים בהם, וגורמים לדברים לזוז ולהשתנות בפועל.<br/>
+      לא תיאוריה. לא השראה לחמש דקות.<br/>
+      <span style="color:hsl(210,100%,65%)">פעולות שיוצרות שינוי.</span>
+      <br/><br/>
+      המדריכים חינמיים ולשימושכם כי אני מאמינה שאלו כלים שכל אדם צריך בארגז הכלים שלו.<br/>
+      מוזמנים לשתף ולהעביר אותם הלאה ולהגדיל עוד את השפע והעשייה ביקום. תהנו 🤍
+    </p>
+  </div>
+</section>
+
+<!-- ── GUIDES GRID ── -->
+<section style="padding:0 24px clamp(80px,10vw,120px)">
+  <div class="circuitry-line reveal" style="margin-bottom:56px;max-width:960px;margin-left:auto;margin-right:auto"></div>
+
+  <div class="guides-grid">
+
+    <button class="guide-card reveal" onclick="openGuide('חיווט מחדש', '../assets/guides/חיווט מחדש.pdf')" aria-label="פתחי מדריך חיווט מחדש">
+      <span class="guide-icon" aria-hidden="true">🧠</span>
+      <div class="guide-title">חיווט מחדש</div>
+      <p class="guide-desc">
+        המוח שלך פועל לפי תבניות שנבנו שנים אחורה. המדריך הזה מראה איך לזהות את הלופים שמחזיקים אותך ואיך לשבור אותם — בפרקטיקה יומיומית.
+      </p>
+      <span class="guide-cta">
+        קראי את המדריך
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      </span>
+    </button>
+
+    <button class="guide-card reveal d1" onclick="openGuide('שחרור חפצים', '../assets/guides/שחרור חפצים.pdf')" aria-label="פתחי מדריך שחרור חפצים">
+      <span class="guide-icon" aria-hidden="true">🌊</span>
+      <div class="guide-title">שחרור חפצים</div>
+      <p class="guide-desc">
+        מה שלא שחררת — עדיין תופס מקום. לא רק פיזית. המדריך הזה לוקח אותך צעד צעד בתהליך שחרור שהוא הרבה יותר מסידור הבית — הוא פינוי אנרגטי אמיתי.
+      </p>
+      <span class="guide-cta">
+        קראי את המדריך
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      </span>
+    </button>
+
+    <button class="guide-card reveal d2" onclick="openGuide('פרוטוקול הקפיצה הקוונטית', '../assets/guides/פרוטוקול הקפיצה הקוונטית.pdf')" aria-label="פתחי מדריך פרוטוקול הקפיצה הקוונטית">
+      <span class="guide-icon" aria-hidden="true">⚡</span>
+      <div class="guide-title">פרוטוקול הקפיצה הקוונטית</div>
+      <p class="guide-desc">
+        קפיצה קוונטית היא לא אירוע — היא תהליך. המדריך נותן לך את הפרוטוקול המדויק לעבור ממציאות אחת לאחרת, עם כלים שאפשר להפעיל כבר היום.
+      </p>
+      <span class="guide-cta">
+        קראי את המדריך
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      </span>
+    </button>
+
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section style="padding:0 24px clamp(80px,10vw,120px)">
+  <div class="wrap" style="text-align:center">
+    <div class="circuitry-line reveal" style="margin-bottom:48px"></div>
+    <p class="reveal" style="font-size:clamp(15px,2vw,18px);color:rgba(200,200,220,0.8);line-height:1.85;max-width:520px;margin:0 auto 32px;font-family:'Assistant',sans-serif" dir="rtl">
+      המדריכים הם רק ההתחלה.<br/>
+      אם את מרגישה שהגיע הזמן לעבוד על הקוד שמנהל אותך — בואי נדבר.
+    </p>
+    <a href="https://wa.me/message/VIHIGNG2RHHWK1" target="_blank" rel="noopener noreferrer" class="btn-outline reveal d1" style="display:inline-flex" dir="rtl">
+      <span class="cursor-blink">_</span>BOOK A CALL
+    </a>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap" style="text-align:center">
+    <p style="font-size:11px;color:var(--muted);letter-spacing:0.1em">© 2025 FROM ZERO TO INFINITE · ALL RIGHTS RESERVED</p>
+    <div style="display:flex;justify-content:center;gap:24px;margin-top:12px;flex-wrap:wrap">
+      <a href="/privacy" style="font-size:11px;color:var(--muted);text-decoration:none;letter-spacing:0.08em">מדיניות פרטיות</a>
+      <a href="/terms" style="font-size:11px;color:var(--muted);text-decoration:none;letter-spacing:0.08em">תנאי שימוש</a>
+    </div>
+  </div>
+</footer>
+</div>
+
+<!-- ── PDF MODAL ── -->
+<div class="pdf-modal" id="pdf-modal" role="dialog" aria-modal="true" aria-labelledby="pdf-modal-title">
+  <div class="pdf-overlay" id="pdf-overlay"></div>
+  <div class="pdf-box">
+    <div class="pdf-header">
+      <span class="pdf-header-title" id="pdf-modal-title"></span>
+      <div class="pdf-header-actions">
+        <a id="pdf-download-link" href="#" download class="pdf-download-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+          הורידי PDF
+        </a>
+        <button class="pdf-close-btn" id="pdf-close-btn" aria-label="סגרי">✕</button>
+      </div>
+    </div>
+    <div class="pdf-frame-wrap">
+      <iframe id="pdf-iframe" title="תצוגת מדריך"></iframe>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<style>
+.nav-toggle {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 500;
+  width: 42px;
+  height: 42px;
+  background: rgba(10,10,20,0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(77,184,255,0.2);
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 0;
+  transition: border-color 0.2s, background 0.2s;
+}
+.nav-toggle:hover { border-color: rgba(77,184,255,0.45); background: rgba(10,10,20,0.95); }
+.nav-toggle span {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: rgba(220,220,235,0.85);
+  border-radius: 2px;
+  transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), opacity 0.3s;
+}
+.nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle.open span:nth-child(2) { opacity: 0; }
+.nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.nav-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 490;
+  background: rgba(0,0,0,0);
+  pointer-events: none;
+  transition: background 0.35s;
+}
+.nav-overlay.open { background: rgba(0,0,0,0.55); pointer-events: all; }
+.nav-drawer {
+  position: fixed;
+  top: 0; right: 0; bottom: 0;
+  z-index: 495;
+  width: clamp(260px,72vw,320px);
+  background: rgba(10,10,18,0.97);
+  backdrop-filter: blur(20px);
+  border-left: 1px solid rgba(77,184,255,0.12);
+  transform: translateX(100%);
+  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.nav-drawer.open { transform: translateX(0); }
+.nav-drawer-inner { display:flex;flex-direction:column;height:100%;padding:72px 32px 40px;direction:rtl; }
+.nav-drawer-label { font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(77,184,255,0.5);margin-bottom:28px;font-family:'Assistant',sans-serif; }
+.nav-drawer-links { display:flex;flex-direction:column;gap:4px;flex:1; }
+.nav-drawer-link { display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 20px;border-radius:12px;text-decoration:none;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);transition:background 0.2s,border-color 0.2s,transform 0.2s; }
+.nav-drawer-link:hover { background:rgba(77,184,255,0.06);border-color:rgba(77,184,255,0.2);transform:translateX(-3px); }
+.nav-drawer-link .ndl-text { display:flex;flex-direction:column;gap:3px; }
+.nav-drawer-link .ndl-title { font-size:16px;font-weight:700;color:rgba(240,240,255,0.95);font-family:'Assistant',sans-serif; }
+.nav-drawer-link .ndl-sub { font-size:12px;color:rgba(160,160,180,0.6);font-family:'Assistant',sans-serif;letter-spacing:0.04em; }
+.nav-drawer-link .ndl-icon { font-size:24px;flex-shrink:0; }
+.nav-drawer-link.gold { background:rgba(212,175,55,0.05);border-color:rgba(212,175,55,0.15); }
+.nav-drawer-link.gold:hover { background:rgba(212,175,55,0.1);border-color:rgba(212,175,55,0.3); }
+.nav-drawer-link.active-page { border-color:rgba(77,184,255,0.25);background:rgba(77,184,255,0.05); }
+.nav-drawer-divider { height:1px;background:rgba(255,255,255,0.06);margin:12px 0; }
+.nav-drawer-footer { font-size:10px;color:rgba(160,160,180,0.35);letter-spacing:0.12em;text-transform:uppercase;text-align:center;font-family:'Assistant',sans-serif; }
+</style>
+
+<button class="nav-toggle" id="nav-toggle" aria-label="פתח תפריט ניווט" aria-expanded="false" aria-controls="nav-drawer">
+  <span></span><span></span><span></span>
+</button>
+<div class="nav-overlay" id="nav-overlay" aria-hidden="true"></div>
+<nav class="nav-drawer" id="nav-drawer" aria-label="ניווט ראשי">
+  <div class="nav-drawer-inner">
+    <p class="nav-drawer-label">NAVIGATION</p>
+    <div class="nav-drawer-links">
+      <a href="/" class="nav-drawer-link">
+        <div class="ndl-text"><span class="ndl-title">דף הבית</span><span class="ndl-sub">From Zero to Infinite</span></div>
+        <span class="ndl-icon" aria-hidden="true">🏠</span>
+      </a>
+      <div class="nav-drawer-divider" aria-hidden="true"></div>
+      <a href="/challenge" class="nav-drawer-link gold">
+        <div class="ndl-text"><span class="ndl-title">אתגר השפע</span><span class="ndl-sub">30/8 - 5/9 · 27₪</span></div>
+        <span class="ndl-icon" aria-hidden="true">✨</span>
+      </a>
+      <a href="/cards" class="nav-drawer-link">
+        <div class="ndl-text"><span class="ndl-title">קלפי מסר</span><span class="ndl-sub">58 קלפים · 159₪</span></div>
+        <span class="ndl-icon" aria-hidden="true">🃏</span>
+      </a>
+      <div class="nav-drawer-divider" aria-hidden="true"></div>
+      <a href="/quiz" class="nav-drawer-link">
+        <div class="ndl-text"><span class="ndl-title">שאלון אבחון</span><span class="ndl-sub">גלי את הקוד שמנהל אותך</span></div>
+        <span class="ndl-icon" aria-hidden="true">🔍</span>
+      </a>
+      <a href="/guides" class="nav-drawer-link active-page">
+        <div class="ndl-text"><span class="ndl-title">מדריכים חינמיים</span><span class="ndl-sub">3 מדריכים להורדה</span></div>
+        <span class="ndl-icon" aria-hidden="true">📖</span>
+      </a>
+      <a href="/#pricing" class="nav-drawer-link">
+        <div class="ndl-text"><span class="ndl-title">ליווי אישי</span><span class="ndl-sub">קפיצה קוונטית · 5 מפגשים</span></div>
+        <span class="ndl-icon" aria-hidden="true">⚡</span>
+      </a>
+    </div>
+    <p class="nav-drawer-footer">FROM ZERO TO INFINITE</p>
+  </div>
+</nav>
+
+<script src="../assets/js/legal.js" defer></script>
+<script>
+// ── NAV ──
+(function(){
+  const toggle=document.getElementById('nav-toggle');
+  const overlay=document.getElementById('nav-overlay');
+  const drawer=document.getElementById('nav-drawer');
+  function openNav(){ toggle.classList.add('open');overlay.classList.add('open');drawer.classList.add('open');toggle.setAttribute('aria-expanded','true');document.body.style.overflow='hidden'; }
+  function closeNav(){ toggle.classList.remove('open');overlay.classList.remove('open');drawer.classList.remove('open');toggle.setAttribute('aria-expanded','false');document.body.style.overflow=''; }
+  toggle.addEventListener('click',()=>{ toggle.classList.contains('open')?closeNav():openNav(); });
+  overlay.addEventListener('click',closeNav);
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&!document.getElementById('pdf-modal').classList.contains('open')) closeNav(); });
+})();
+
+// ── PDF MODAL ──
+const modal = document.getElementById('pdf-modal');
+const iframe = document.getElementById('pdf-iframe');
+const titleEl = document.getElementById('pdf-modal-title');
+const downloadLink = document.getElementById('pdf-download-link');
+
+function openGuide(title, path) {
+  titleEl.textContent = title;
+  iframe.src = path;
+  downloadLink.href = path;
+  downloadLink.download = title + '.pdf';
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeGuide() {
+  modal.classList.remove('open');
+  document.body.style.overflow = '';
+  setTimeout(() => { iframe.src = ''; }, 400);
+}
+
+document.getElementById('pdf-overlay').addEventListener('click', closeGuide);
+document.getElementById('pdf-close-btn').addEventListener('click', closeGuide);
+document.addEventListener('keydown', e => { if(e.key === 'Escape') closeGuide(); });
+
+// ── CANVAS ──
+(function(){
+  const cv=document.getElementById('bg-canvas'),ctx=cv.getContext('2d');let W,H,nodes=[];
+  function resize(){W=cv.width=window.innerWidth;H=cv.height=window.innerHeight;}
+  resize();window.addEventListener('resize',()=>{resize();init();});
+  function Node(){this.x=Math.random()*W;this.y=Math.random()*H;this.vx=(Math.random()-.5)*.3;this.vy=(Math.random()-.5)*.3;this.r=Math.random()*1.5+.5;this.opacity=Math.random()*.5+.2;}
+  function init(){nodes=[];const c=Math.floor((W*H)/18000);for(let i=0;i<c;i++)nodes.push(new Node());}
+  init();
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    nodes.forEach(n=>{
+      n.x+=n.vx;n.y+=n.vy;
+      if(n.x<0||n.x>W)n.vx*=-1;
+      if(n.y<0||n.y>H)n.vy*=-1;
+      ctx.beginPath();ctx.arc(n.x,n.y,n.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(77,184,255,${n.opacity})`;ctx.fill();
+    });
+    nodes.forEach((a,i)=>{nodes.slice(i+1).forEach(b=>{
+      const d=Math.hypot(a.x-b.x,a.y-b.y);
+      if(d<120){ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);
+      ctx.strokeStyle=`rgba(77,184,255,${0.12*(1-d/120)})`;ctx.lineWidth=.5;ctx.stroke();}
+    });});
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ── REVEAL ──
+(function(){
+  const els=document.querySelectorAll('.reveal,.reveal-right,.reveal-left,.reveal-scale');
+  const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');});},{threshold:0.12});
+  els.forEach(el=>obs.observe(el));
+})();
+</script>
+</body>
+</html>
