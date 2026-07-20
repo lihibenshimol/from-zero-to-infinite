@@ -435,11 +435,10 @@
         </div>
       </div>
 
-      <a href="https://mrng.to/3erXF369P4" class="btn-primary btn-pill" style="width:100%;display:block;text-align:center;font-size:16px;padding:18px 0 !important;margin-top:8px" dir="rtl"
+      <button onclick="openJoinForm()" class="btn-primary btn-pill" style="width:100%;display:block;text-align:center;font-size:16px;padding:18px 0 !important;margin-top:8px;border:none;cursor:pointer" dir="rtl"
          id="main-cta"
-         target="_blank" rel="noopener noreferrer"
          aria-label="הצטרפות לאתגר השפע">
-        אני מצטרפת לאתגר ב-27₪</a>
+        אני מצטרפת לאתגר ב-27₪</button>
 
       <div class="scarcity-bar" dir="rtl" aria-live="polite">
         ⚡ מקומות מוגבלים · הצטרפות מוקדמת מבטיחה מקום
@@ -572,9 +571,8 @@
   <span class="sticky-text" dir="rtl">
     אתגר השפע 30/8–5/9 · <span class="sticky-price">27₪</span>
   </span>
-  <a href="https://mrng.to/3erXF369P4" class="btn-primary btn-pill" style="font-size:13px;padding:10px 28px !important;white-space:nowrap" dir="rtl"
-     target="_blank" rel="noopener noreferrer">
-    אני מצטרפת</a>
+  <button onclick="openJoinForm()" class="btn-primary btn-pill" style="font-size:13px;padding:10px 28px !important;white-space:nowrap;border:none;cursor:pointer" dir="rtl">
+    אני מצטרפת</button>
 </div>
 
 <!-- ── BOB ANIMATION ── -->
@@ -652,6 +650,56 @@ document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 })();
 
 /* ── FAQ ACCORDION ── */
+/* ── JOIN FORM MODAL ── */
+const SHEETS_WEBHOOK = 'https://script.google.com/macros/s/AKfycbwxwtU_KL39gxJXY-ggCw_ZiIrCHgLo0OYRjigCGaI6T8oSB8me-oHYK6WJrv6jLOkmtg/exec';
+const MORNING_URL = 'https://mrng.to/3erXF369P4';
+
+function openJoinForm(){
+  document.getElementById('join-modal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeJoinForm(){
+  document.getElementById('join-modal').classList.remove('open');
+  document.body.style.overflow='';
+  document.getElementById('join-error').style.display='none';
+}
+
+async function submitJoinForm(){
+  const name = document.getElementById('j-name').value.trim();
+  const phone = document.getElementById('j-phone').value.trim();
+  const email = document.getElementById('j-email').value.trim();
+  const marketing = document.getElementById('j-marketing').checked;
+  const errEl = document.getElementById('join-error');
+  errEl.style.display='none';
+  ['j-name','j-phone','j-email'].forEach(id=>document.getElementById(id).classList.remove('err'));
+
+  const nameOk = name.split(/\s+/).length >= 2;
+  const phoneOk = /^0[5-9]\d{8}$/.test(phone.replace(/[-\s]/g,''));
+  const emailOk = /^[^\s@]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
+
+  if(!nameOk){ document.getElementById('j-name').classList.add('err'); errEl.textContent='נא להזין שם פרטי ושם משפחה.'; errEl.style.display='block'; return; }
+  if(!phoneOk){ document.getElementById('j-phone').classList.add('err'); errEl.textContent='נא להזין מספר טלפון ישראלי תקין (05X-XXXXXXX).'; errEl.style.display='block'; return; }
+  if(!emailOk){ document.getElementById('j-email').classList.add('err'); errEl.textContent='נא להזין כתובת אימייל תקינה.'; errEl.style.display='block'; return; }
+  if(!marketing){ errEl.textContent='יש לאשר קבלת תכנים ועדכונים מ-ליהי זיו ™ כדי להמשיך.'; errEl.style.display='block'; return; }
+
+  const btn = document.getElementById('j-submit');
+  btn.disabled=true; btn.textContent='שולחת...';
+
+  // שמירה ב-Google Sheets
+  const params = new URLSearchParams({
+    name, phone, email,
+    codeName: 'אתגר השפע',
+    marketing: marketing?'כן':'לא',
+    submittedAt: new Date().toISOString()
+  });
+  fetch(SHEETS_WEBHOOK, { method:'POST', mode:'no-cors', body: params }).catch(()=>{});
+
+  // מעבר לתשלום
+  window.open(MORNING_URL, '_blank');
+  closeJoinForm();
+  btn.disabled=false; btn.textContent='לתשלום';
+}
+
 document.querySelectorAll('.faq-btn').forEach(btn=>{
   btn.addEventListener('click',function(){
     const item=this.closest('.faq-item');
@@ -665,6 +713,62 @@ document.querySelectorAll('.faq-btn').forEach(btn=>{
   });
 });
 </script>
+
+<!-- ── JOIN FORM MODAL ── -->
+<style>
+.join-modal{position:fixed;inset:0;z-index:800;display:flex;align-items:center;justify-content:center;padding:16px;opacity:0;pointer-events:none;transition:opacity 0.3s}
+.join-modal.open{opacity:1;pointer-events:all}
+.join-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.78);backdrop-filter:blur(8px)}
+.join-box{position:relative;z-index:1;width:100%;max-width:460px;background:rgba(10,10,20,0.98);border:1px solid rgba(77,184,255,0.22);border-radius:20px;padding:clamp(28px,5vw,44px);transform:scale(0.96) translateY(12px);transition:transform 0.35s cubic-bezier(0.16,1,0.3,1)}
+.join-modal.open .join-box{transform:scale(1) translateY(0)}
+.join-close{position:absolute;top:16px;left:16px;width:32px;height:32px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:rgba(200,200,220,0.6);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s}
+.join-close:hover{background:rgba(255,80,80,0.12);color:rgba(255,150,150,0.9)}
+.join-title{font-size:clamp(18px,3vw,22px);font-weight:700;color:rgba(240,240,255,0.97);font-family:'Assistant',sans-serif;margin-bottom:6px;text-align:right}
+.join-sub{font-size:13px;color:rgba(160,160,180,0.7);font-family:'Assistant',sans-serif;margin-bottom:24px;text-align:right;line-height:1.6}
+.join-field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.join-field label{font-size:13px;font-weight:600;color:rgba(200,200,220,0.85);font-family:'Assistant',sans-serif;text-align:right}
+.join-field input{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;font-size:15px;color:rgba(240,240,255,0.95);font-family:'Assistant',sans-serif;outline:none;transition:border-color 0.2s;width:100%;box-sizing:border-box}
+.join-field input:focus{border-color:rgba(77,184,255,0.45)}
+.join-field input.err{border-color:rgba(255,107,107,0.6)}
+#join-error{font-size:13px;color:#ff6b6b;font-family:'Assistant',sans-serif;text-align:right;margin-bottom:12px;display:none}
+.join-marketing{display:flex;align-items:flex-start;gap:10px;cursor:pointer;padding:12px 14px;background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.07);border-radius:10px;margin-bottom:18px}
+.join-marketing input{margin-top:3px;flex-shrink:0;accent-color:hsl(210,100%,65%);width:15px;height:15px}
+.join-marketing span{font-size:12px;color:rgba(200,200,220,0.8);line-height:1.6;font-family:'Assistant',sans-serif;text-align:right}
+#j-submit{width:100%;padding:15px;font-size:16px;font-weight:700;font-family:'Assistant',sans-serif;background:linear-gradient(135deg,hsl(210,100%,60%),hsl(210,100%,50%));color:#fff;border:none;border-radius:12px;cursor:pointer;transition:opacity 0.2s}
+#j-submit:hover{opacity:0.88}
+#j-submit:disabled{opacity:0.5;cursor:not-allowed}
+</style>
+
+<div class="join-modal" id="join-modal" role="dialog" aria-modal="true" aria-labelledby="join-title">
+  <div class="join-overlay" onclick="closeJoinForm()"></div>
+  <div class="join-box" dir="rtl">
+    <button class="join-close" onclick="closeJoinForm()" aria-label="סגרי">✕</button>
+    <h2 class="join-title" id="join-title">כמעט שם! 🌟</h2>
+    <p class="join-sub">השאירי פרטים ונעביר אותך לתשלום המאובטח</p>
+
+    <div class="join-field">
+      <label for="j-name">שם מלא <span style="color:#ff6b6b">*</span></label>
+      <input type="text" id="j-name" placeholder="שם פרטי + שם משפחה" autocomplete="name" dir="rtl"/>
+    </div>
+    <div class="join-field">
+      <label for="j-phone">טלפון <span style="color:#ff6b6b">*</span></label>
+      <input type="tel" id="j-phone" placeholder="05X-XXXXXXX" autocomplete="tel" dir="ltr" inputmode="numeric"/>
+    </div>
+    <div class="join-field">
+      <label for="j-email">אימייל <span style="color:#ff6b6b">*</span></label>
+      <input type="email" id="j-email" placeholder="your@email.com" autocomplete="email" dir="ltr"/>
+    </div>
+
+    <p id="join-error" role="alert"></p>
+
+    <label class="join-marketing">
+      <input type="checkbox" id="j-marketing"/>
+      <span>אני מאשרת קבלת תכנים, עדכונים ודואר שיווקי מ-<strong style="color:rgba(220,220,240,0.95)">ליהי זיו ™</strong> (ניתן להסיר בכל עת).</span>
+    </label>
+
+    <button id="j-submit" onclick="submitJoinForm()">לתשלום מאובטח ← 27₪</button>
+  </div>
+</div>
 
 <script src="/assets/js/legal.js"></script>
 <!-- ── SIDE NAV ── -->
