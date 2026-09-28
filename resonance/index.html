@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<title>Resonance · From Zero to Infinite</title>
+<meta name="description" content="למנהיגי האור של העולם החדש."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,500;1,400;1,500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../assets/style/main.css"/>
+<style>
+/* ── RESONANCE PAGE ──────────────────────────────────────────────────────── */
+:root{
+  --gold:hsl(42,90%,65%);
+  --gold-deep:hsl(36,80%,50%);
+  --gold-dim:rgba(212,175,55,0.12);
+  --ink:rgba(240,240,255,0.97);
+  --body:rgba(210,210,228,0.88);
+  --ease-spring:cubic-bezier(0.16,1,0.3,1);
+  --s1:8px; --s2:16px; --s3:24px; --s4:32px; --s5:48px; --s6:72px;
+}
+html{scroll-behavior:smooth}
+body{line-height:1.7}
+.serif{font-family:'Cormorant Garamond',serif}
+.gold-text{background:linear-gradient(135deg,var(--gold),var(--gold-deep));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.rs-section{padding:clamp(64px,9vw,112px) 0}
+.rs-section .wrap,.rs-section .wrap-lg{padding:0 16px}
+@media (min-width:640px){.rs-section .wrap,.rs-section .wrap-lg{padding:0 24px}}
+.rs-h2{font-size:clamp(26px,6vw,42px);font-weight:800;line-height:1.25;letter-spacing:-0.02em;color:var(--ink);text-align:center}
+.rs-lead{font-size:clamp(16px,4.2vw,19px);color:var(--body);line-height:1.8}
+
+/* grain */
+.grain{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.06;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* ── HERO ── */
+.rs-hero{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:96px 20px 72px;position:relative;overflow:hidden}
+.rs-hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:
+  radial-gradient(ellipse 70% 45% at 50% 40%,rgba(77,184,255,0.08) 0%,transparent 70%),
+  radial-gradient(ellipse 60% 40% at 50% 100%,rgba(212,175,55,0.07) 0%,transparent 70%)}
+.res-rings{position:absolute;top:42%;left:50%;width:min(140vw,820px);aspect-ratio:1;transform:translate(-50%,-50%);pointer-events:none}
+.res-rings span{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(77,184,255,0.22);opacity:0;animation:ripple 7.5s var(--ease-spring) infinite}
+.res-rings span:nth-child(2){animation-delay:1.875s;border-color:rgba(220,220,235,0.16)}
+.res-rings span:nth-child(3){animation-delay:3.75s;border-color:rgba(212,175,55,0.22)}
+.res-rings span:nth-child(4){animation-delay:5.625s}
+@keyframes ripple{0%{transform:scale(.08);opacity:0}15%{opacity:.9}100%{transform:scale(1);opacity:0}}
+.rs-brand{display:inline-flex;flex-direction:column;align-items:center;gap:4px;margin-bottom:var(--s4);position:relative}
+.rs-brand .wordmark{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;font-size:clamp(34px,9vw,52px);line-height:1;letter-spacing:0.01em;color:var(--ink)}
+.rs-brand .wm-sub{font-size:14px;font-weight:600;letter-spacing:0.06em;color:var(--gold)}
+.rs-headline{font-size:clamp(38px,10.5vw,84px);font-weight:800;line-height:1.12;letter-spacing:-0.03em;color:var(--ink);position:relative}
+.rs-headline .w{display:inline-block}
+.rs-headline .w-void{color:rgba(220,220,235,0.55)}
+.rs-headline .w-code{color:var(--neon)}
+.rs-sub{font-size:clamp(17px,4.4vw,21px);color:var(--body);line-height:1.75;max-width:560px;margin:var(--s3) auto var(--s4);position:relative}
+.rs-chips{display:flex;flex-wrap:wrap;justify-content:center;gap:var(--s1);max-width:560px;margin:0 auto var(--s4);position:relative;padding:0;list-style:none}
+.rs-chips li{font-size:14px;font-weight:600;color:rgba(230,230,245,0.9);background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);border-radius:100px;padding:7px 14px;white-space:nowrap}
+.rs-chips li.hot{color:var(--gold);border-color:rgba(212,175,55,0.3);background:rgba(212,175,55,0.07);display:inline-flex;align-items:center;gap:8px}
+.rs-chips li.hot .dot{width:7px;height:7px;border-radius:50%;background:var(--gold);animation:dotpulse 2s ease-in-out infinite}
+@keyframes dotpulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+.rs-host{margin-top:var(--s3);font-size:13px;color:var(--muted);letter-spacing:0.06em;position:relative}
+
+.btn-primary.rs-cta{font-size:17px;letter-spacing:0.02em;text-transform:none}
+.btn-primary.rs-cta .arr{display:inline-block;transition:transform .35s var(--ease-spring)}
+.btn-primary.rs-cta:hover .arr{transform:translateX(-4px)}
+
+/* ── NOW (section 2) ── */
+.now-lines{max-width:620px;margin:0 auto;display:flex;flex-direction:column;gap:var(--s3)}
+.now-line{font-size:clamp(18px,4.8vw,23px);line-height:1.65;color:var(--body);padding-right:var(--s3);border-right:2px solid rgba(77,184,255,0.25)}
+.now-turn{font-size:clamp(18px,4.8vw,23px);line-height:1.65;color:var(--ink);font-weight:700;margin-top:var(--s2)}
+.now-final{font-size:clamp(44px,13vw,88px);font-weight:800;letter-spacing:-0.03em;line-height:1.1;text-align:center;margin-top:var(--s5)}
+
+/* ── PERSPECTIVE (section 3) ── */
+.persp-card{max-width:680px;margin:var(--s5) auto 0;padding:clamp(28px,6vw,52px);border-radius:20px;position:relative;
+  box-shadow:0 1px 0 rgba(255,255,255,0.04) inset,0 24px 60px -20px rgba(77,184,255,0.18),0 8px 24px -12px rgba(0,0,0,0.6)}
+.persp-card p{font-size:clamp(16px,4.2vw,18.5px);color:var(--body);line-height:1.85}
+.persp-card p+p{margin-top:var(--s3)}
+.persp-card .pivot{color:var(--ink);font-weight:700;font-size:clamp(18px,4.8vw,22px)}
+.persp-close{margin-top:var(--s4);padding-top:var(--s4);border-top:1px solid rgba(212,175,55,0.18);text-align:center}
+.persp-close p{font-size:clamp(18px,4.8vw,22px);font-weight:700;color:var(--ink);line-height:1.6}
+
+/* ── MOVEMENTS (section 4) ── */
+.moves{max-width:960px;margin:var(--s5) auto 0;display:grid;gap:var(--s2);position:relative}
+.move{position:relative;padding:var(--s3);padding-right:76px;border-radius:16px;background:rgba(15,15,25,0.6);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.07)}
+.move .node{position:absolute;right:var(--s3);top:var(--s3);width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic}
+.move h3{font-size:22px;font-weight:800;color:var(--ink);margin-bottom:6px}
+.move p{font-size:15.5px;color:var(--body);line-height:1.75}
+.move.m1 .node{border:1px solid rgba(220,220,235,0.35);color:rgba(220,220,235,0.8)}
+.move.m2 .node{border:1px solid rgba(77,184,255,0.5);color:var(--neon);box-shadow:0 0 18px rgba(77,184,255,0.25)}
+.move.m3 .node{border:1px solid rgba(212,175,55,0.55);color:var(--gold);box-shadow:0 0 18px rgba(212,175,55,0.25)}
+.move.m2 h3{color:var(--neon)}
+.move.m3 h3{color:var(--gold)}
+@media (min-width:860px){
+  .moves{grid-template-columns:repeat(3,1fr);gap:var(--s3)}
+  .move{padding:var(--s4) var(--s3);padding-top:88px;text-align:center}
+  .move .node{right:50%;transform:translateX(50%);top:var(--s4)}
+}
+
+/* ── LISTS (sections 5, 6) ── */
+.rs-list{max-width:640px;margin:var(--s5) auto 0;display:flex;flex-direction:column;gap:12px;list-style:none;padding:0}
+.rs-list li{display:flex;gap:var(--s2);align-items:flex-start;padding:18px 20px;border-radius:14px;font-size:16px;line-height:1.7;color:var(--body);
+  background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07)}
+.rs-list .ic{flex-shrink:0;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.rs-list.for .ic{border:1px solid rgba(77,184,255,0.45);color:var(--neon)}
+.rs-list.out li{background:rgba(212,175,55,0.035);border-color:rgba(212,175,55,0.13)}
+.rs-list.out .ic{background:rgba(212,175,55,0.14);border:1px solid rgba(212,175,55,0.4);color:var(--gold)}
+.rs-list .en{direction:ltr;unicode-bidi:isolate;font-weight:700;color:var(--ink)}
+
+/* ── SYLLABUS (section 9) ── */
+.syl{max-width:1080px;margin:var(--s5) auto 0;display:grid;gap:var(--s3)}
+@media (min-width:980px){.syl{grid-template-columns:repeat(3,1fr);align-items:stretch}}
+.sc{--c:77,184,255;position:relative;border-radius:22px;overflow:hidden;background:rgba(12,12,20,0.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border:1px solid rgba(var(--c),0.2);box-shadow:0 30px 60px -30px rgba(var(--c),0.3),0 10px 30px -15px rgba(0,0,0,0.7);display:flex;flex-direction:column;
+  transition:transform .5s var(--ease-spring)}
+.sc:hover{transform:translateY(-4px)}
+.sc.s1{--c:200,205,230}
+.sc.s3{--c:212,175,55}
+.sc-visual{position:relative;height:190px;overflow:hidden;border-bottom:1px solid rgba(var(--c),0.12);
+  background:radial-gradient(ellipse 60% 80% at 50% 50%,rgba(var(--c),0.12),transparent 70%)}
+.sc-visual svg{position:absolute;top:30px;left:0;width:100%;height:160px}
+.sc-num{position:absolute;bottom:10px;left:18px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:64px;line-height:1;color:rgba(var(--c),0.9);opacity:.9}
+.sc-date{position:absolute;top:14px;right:14px;left:14px;display:flex;flex-wrap:wrap;gap:6px}
+.sc-date span{font-size:12.5px;font-weight:700;letter-spacing:0.04em;padding:5px 11px;border-radius:100px;background:rgba(10,10,15,0.7);border:1px solid rgba(var(--c),0.3);color:rgba(240,240,255,0.92)}
+.sc-body{padding:var(--s3);display:flex;flex-direction:column;gap:var(--s2);flex:1}
+.sc-kicker{font-size:12px;font-weight:700;letter-spacing:0.14em;color:rgba(var(--c),0.85)}
+.sc-title{font-size:clamp(23px,6vw,27px);font-weight:800;line-height:1.25;letter-spacing:-0.02em;color:var(--ink)}
+.sc-freq{border-radius:14px;padding:14px 16px;background:rgba(var(--c),0.07);border:1px solid rgba(var(--c),0.18);display:flex;gap:12px;align-items:flex-start}
+.sc-freq .wave{flex-shrink:0;display:flex;align-items:center;gap:3px;height:22px;margin-top:2px}
+.sc-freq .wave i{display:block;width:3px;height:100%;border-radius:2px;background:rgba(var(--c),0.9);transform-origin:center;animation:eq 1.2s ease-in-out infinite}
+.sc-freq .wave i:nth-child(2){animation-delay:.15s}.sc-freq .wave i:nth-child(3){animation-delay:.3s}.sc-freq .wave i:nth-child(4){animation-delay:.45s}.sc-freq .wave i:nth-child(5){animation-delay:.6s}
+@keyframes eq{0%,100%{transform:scaleY(.25)}50%{transform:scaleY(1)}}
+.sc-freq .fl{font-size:12px;font-weight:700;letter-spacing:0.12em;color:rgba(var(--c),0.9);display:block;margin-bottom:2px}
+.sc-freq .fv{font-size:15.5px;color:var(--ink);font-weight:600;line-height:1.6}
+.sc-topics{list-style:none;padding:0;margin:0;position:relative;display:flex;flex-direction:column;gap:14px}
+.sc-topics::before{content:'';position:absolute;right:11px;top:10px;bottom:10px;width:1px;background:linear-gradient(to bottom,rgba(var(--c),0.5),rgba(var(--c),0.05))}
+.sc-topics li{position:relative;padding-right:36px;font-size:15.5px;color:var(--body);line-height:1.7}
+.sc-topics li::before{content:attr(data-i);position:absolute;right:0;top:1px;width:23px;height:23px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:700;color:rgba(var(--c),1);background:#0d0d15;border:1px solid rgba(var(--c),0.45)}
+.sc-topics .en{direction:ltr;unicode-bidi:isolate;font-weight:700;color:var(--ink)}
+
+/* svg motion */
+.spin{transform-box:fill-box;transform-origin:center;animation:spin 26s linear infinite}
+.spin.rev{animation-direction:reverse;animation-duration:38s}
+@keyframes spin{to{transform:rotate(360deg)}}
+.breathe{transform-box:fill-box;transform-origin:center;animation:breathe 4.5s ease-in-out infinite}
+@keyframes breathe{0%,100%{transform:scale(.85);opacity:.35}50%{transform:scale(1.1);opacity:1}}
+.bit{animation:flick 3.2s ease-in-out infinite;opacity:.15}
+@keyframes flick{0%,100%{opacity:.12}45%{opacity:.9}60%{opacity:.25}}
+.field-ring{transform-box:fill-box;transform-origin:center;animation:fieldout 5s ease-out infinite;opacity:0}
+@keyframes fieldout{0%{transform:scale(.2);opacity:0}20%{opacity:.9}100%{transform:scale(1.6);opacity:0}}
+
+/* ── REGISTER (section 10) ── */
+.reg{scroll-margin-top:24px;background:radial-gradient(ellipse 80% 60% at 50% 40%,rgba(212,175,55,0.08) 0%,transparent 70%)}
+.reg-card{max-width:520px;margin:var(--s5) auto 0;border-radius:24px;padding:clamp(24px,6vw,44px);position:relative;overflow:hidden;
+  background:rgba(12,12,20,0.88);border:1.5px solid rgba(212,175,55,0.3);
+  box-shadow:0 0 60px rgba(212,175,55,0.07),0 30px 70px -20px rgba(0,0,0,0.7)}
+.reg-card::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 100% 45% at 50% 0%,rgba(212,175,55,0.1),transparent 60%)}
+.reg-price{text-align:center;position:relative}
+.reg-price .amt{font-size:clamp(64px,18vw,92px);font-weight:800;line-height:1;letter-spacing:-0.03em}
+.reg-price .cur{font-size:.45em;font-weight:500;vertical-align:super}
+.reg-includes{list-style:none;padding:0;margin:var(--s3) 0;display:flex;flex-direction:column;gap:10px;position:relative}
+.reg-includes li{display:flex;align-items:center;gap:12px;font-size:15px;color:rgba(225,225,242,0.9)}
+.reg-includes .ck{width:20px;height:20px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:rgba(212,175,55,0.15);border:1px solid rgba(212,175,55,0.4);color:var(--gold)}
+.reg-meta{position:relative;text-align:center;font-size:13.5px;color:var(--muted);line-height:1.7;padding:12px;border-radius:10px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);margin-bottom:var(--s3)}
+.reg-note{position:relative;text-align:center;font-size:13.5px;color:rgba(205,205,222,0.8);margin-bottom:var(--s3)}
+.reg-form{position:relative;display:flex;flex-direction:column;gap:14px}
+.fld{display:flex;flex-direction:column;gap:6px}
+.fld label{font-size:14px;font-weight:600;color:rgba(215,215,232,0.9)}
+.fld label .req{color:#ff8a8a}
+.fld input{width:100%;box-sizing:border-box;font-family:'Assistant',sans-serif;font-size:16px;color:var(--ink);background:rgba(255,255,255,0.045);
+  border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:14px 16px;outline:none;transition:border-color .2s,background-color .2s}
+.fld input::placeholder{color:rgba(160,160,180,0.45)}
+.fld input:hover{border-color:rgba(255,255,255,0.22)}
+.fld input:focus-visible{border-color:rgba(212,175,55,0.6);background:rgba(212,175,55,0.04);box-shadow:0 0 0 3px rgba(212,175,55,0.14)}
+.fld input[aria-invalid="true"]{border-color:rgba(255,107,107,0.7)}
+.fld .msg{font-size:13px;color:#ff8a8a;min-height:0;display:none}
+.fld .msg.show{display:block}
+.consent{display:flex;gap:12px;align-items:flex-start;cursor:pointer;padding:14px 16px;border-radius:12px;background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.08);transition:border-color .2s}
+.consent:hover{border-color:rgba(212,175,55,0.3)}
+.consent.invalid{border-color:rgba(255,107,107,0.7)}
+.consent input{flex-shrink:0;width:18px;height:18px;margin-top:3px;accent-color:hsl(42,90%,58%);cursor:pointer}
+.consent input:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.consent span{font-size:13.5px;color:rgba(205,205,222,0.85);line-height:1.65}
+.form-error{display:none;font-size:14px;color:#ff8a8a;background:rgba(255,80,80,0.07);border:1px solid rgba(255,80,80,0.25);border-radius:10px;padding:12px 14px;line-height:1.6}
+.form-error.show{display:block}
+.reg-wa{display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;font-weight:600;color:rgba(225,225,242,0.9);padding:10px 14px;border-radius:10px;background:rgba(37,211,102,0.06);border:1px solid rgba(37,211,102,0.2)}
+.reg-wa svg{color:#25d366;flex-shrink:0}
+.reg-submit{width:100%;margin-top:4px}
+.reg-submit[disabled]{opacity:.6;cursor:wait;transform:none}
+.reg-secure{text-align:center;font-size:12.5px;color:var(--muted);margin-top:4px}
+
+/* ── FAQ (section 11) ── */
+.rs-faq{max-width:680px;margin:var(--s5) auto 0;display:flex;flex-direction:column;gap:10px}
+.rs-faq .faq-item{background:rgba(255,255,255,0.025);border:1px solid rgba(77,184,255,0.1);border-radius:14px;overflow:hidden;transition:border-color .2s}
+.rs-faq .faq-item:hover,.rs-faq .faq-item.open{border-color:rgba(77,184,255,0.25)}
+.rs-faq .faq-btn{width:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 22px;background:none;border:none;cursor:pointer;
+  font-family:'Assistant',sans-serif;font-size:16.5px;font-weight:700;color:rgba(230,230,250,0.94);text-align:right;line-height:1.5}
+.rs-faq .faq-btn:hover{color:#fff}
+.rs-faq .faq-btn:focus-visible{outline:2px solid var(--neon);outline-offset:-2px;border-radius:14px}
+.rs-faq .faq-btn:active{opacity:.85}
+.rs-faq .faq-chevron{flex-shrink:0;color:rgba(77,184,255,0.6);transition:transform .35s var(--ease-spring)}
+.rs-faq .faq-item.open .faq-chevron{transform:rotate(180deg);color:var(--neon)}
+.rs-faq .faq-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s var(--ease-spring)}
+.rs-faq .faq-item.open .faq-body{grid-template-rows:1fr}
+.rs-faq .faq-body>div{overflow:hidden}
+.rs-faq .faq-body p{padding:0 22px 20px;font-size:15.5px;color:rgba(185,185,210,0.9);line-height:1.85}
+
+/* ── CLOSING (section 12) ── */
+.closing{text-align:center;background:radial-gradient(ellipse 70% 60% at 50% 50%,rgba(212,175,55,0.07) 0%,transparent 70%)}
+.closing h2{font-size:clamp(24px,6.2vw,48px);font-weight:800;line-height:1.3;letter-spacing:-0.03em;color:var(--ink);margin-bottom:var(--s4)}
+
+/* ── STICKY CTA (mobile) ── */
+.rs-sticky{position:fixed;left:0;right:0;bottom:0;z-index:200;padding:12px 16px calc(12px + env(safe-area-inset-bottom));
+  background:rgba(10,10,15,0.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid rgba(212,175,55,0.2);
+  transform:translateY(110%);transition:transform .45s var(--ease-spring)}
+.rs-sticky.visible{transform:translateY(0)}
+.rs-sticky .btn-primary{width:100%;height:50px;font-size:16px;letter-spacing:0.02em;text-transform:none}
+@media (min-width:769px){.rs-sticky{display:none}}
+
+footer{padding-bottom:calc(96px + env(safe-area-inset-bottom))}
+@media (min-width:769px){footer{padding-bottom:48px}}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition-duration:.01ms!important}
+  html{scroll-behavior:auto}
+  .reveal,.reveal-up,.reveal-right,.reveal-left,.reveal-scale{opacity:1!important;transform:none!important}
+}
+</style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">דלג לתוכן הראשי</a>
+
+<canvas id="bg-canvas" aria-hidden="true"></canvas>
+<div class="grain" aria-hidden="true"></div>
+
+<div class="page">
+
+<!-- ═══════════════════════ 1. HERO ═══════════════════════ -->
+<header>
+<section class="rs-hero" id="hero" aria-labelledby="hero-heading">
+  <div class="res-rings" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+
+  <div class="rs-brand reveal">
+    <span class="wordmark" dir="ltr">Resonance</span>
+    <span class="wm-sub">מעבר לעולם החדש</span>
+  </div>
+
+  <h1 id="hero-heading" class="rs-headline reveal d1">
+    <span class="w w-void">מהריק,</span>
+    <span class="w w-code">דרך הקוד,</span><br/>
+    <span class="w gold-text">אל השדה.</span>
+  </h1>
+
+  <p class="rs-sub reveal d2">למנהיגי האור של העולם החדש.</p>
+
+  <ul class="rs-chips reveal d3" aria-label="פרטי הסדנה">
+    <li>3 מפגשים</li>
+    <li>ימי שני 2.11, 9.11, 16.11</li>
+    <li dir="ltr">20:00–21:30</li>
+    <li>זום</li>
+    <li class="hot"><span class="dot" aria-hidden="true"></span>מספר המקומות מוגבל</li>
+  </ul>
+
+  <div class="reveal d4" style="position:relative;width:100%;display:flex;justify-content:center">
+    <a href="#register" class="btn-primary btn-pill rs-cta">אני רוצה להצטרף <span class="arr" aria-hidden="true">←</span></a>
+  </div>
+
+  <p class="rs-host reveal d5">ליהי זיו | From Zero to Infinite</p>
+</section>
+</header>
+
+<main id="main-content">
+
+<!-- ═══════════════════════ 2. NOW ═══════════════════════ -->
+<section class="rs-section" aria-label="מה קורה איתך עכשיו">
+  <div class="wrap">
+    <div class="circuitry-line reveal" style="margin-bottom:var(--s5)" aria-hidden="true"></div>
+    <div class="now-lines">
+      <p class="now-line reveal-right">אם גם את מרגישה שמה שנתן לך משמעות בעבר כבר לא מספיק היום.</p>
+      <p class="now-line reveal-right d1">שהכלים שלמדת, הסדנאות, התהליכים והריפוי, פתאום לא עובדים כמו פעם.</p>
+      <p class="now-line reveal-right d2">שיש ריק, שקט מוזר, או עייפות מלהמשיך "לעבוד על עצמך".</p>
+      <p class="now-turn reveal d3">זו לא תקלה. זו לא נסיגה. וזה לא עוד שכבה שצריך לרפא.</p>
+    </div>
+    <p class="now-final gold-text reveal-scale">זה המעבר.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════ 3. PERSPECTIVE ═══════════════════════ -->
+<section class="rs-section" aria-labelledby="persp-heading" style="background:radial-gradient(ellipse 80% 50% at 50% 30%,rgba(77,184,255,0.06),transparent 70%)">
+  <div class="wrap">
+    <h2 id="persp-heading" class="rs-h2 reveal">את לא מקולקלת.<br/><span class="text-neon">את במעבר.</span></h2>
+    <div class="glass border-neon persp-card reveal d1">
+      <p>עברנו תקופה מופלאה של ריפוי עמוק. למדנו, החלמנו, העברנו הלאה. זה שירת את זמנו, ואנחנו פשוט כבר לא שם.</p>
+      <p>המילה "טיפול" מניחה שמשהו בך פגום ודורש תיקון בלתי פוסק. וכל עוד מקבלים את ההנחה הזו, תמיד נהיה "בטיפול".</p>
+      <p class="pivot">העידן החדש לא מבקש ממך לתקן יותר. הוא מבקש ממך <span class="gold-text">להיזכר</span>.</p>
+      <div class="persp-close">
+        <p>אין צעד הבא. יש רק את העכשיו, ואת הזהות שמסוגלת להכיל אותו.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ 4. MOVEMENTS ═══════════════════════ -->
+<section class="rs-section" aria-labelledby="moves-heading">
+  <div class="wrap-lg">
+    <h2 id="moves-heading" class="rs-h2 reveal">שלושה מפגשים, שלוש תנועות:</h2>
+    <div class="moves">
+      <article class="move m1 reveal-up">
+        <span class="node" aria-hidden="true">1</span>
+        <h3>הריק</h3>
+        <p>נבין מה באמת קורה בתודעה במעבר בין המימדים, ונכיר את השפה הקוונטית של השדה והאפשרויות.</p>
+      </article>
+      <article class="move m2 reveal-up d1">
+        <span class="node" aria-hidden="true">2</span>
+        <h3>הקוד</h3>
+        <p>נפענח את הקוד הבינארי שכתב את הזהות הישנה, ונראה איפה הוא נשמר בגוף.</p>
+      </article>
+      <article class="move m3 reveal-up d2">
+        <span class="node" aria-hidden="true">3</span>
+        <h3>השדה</h3>
+        <p>נלמד להיות מחזיקות שדה: נוכחות כל כך יציבה ומכוילת, שהיא מזכירה לנו ולכל מי שמולנו את השלמות המקורית.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ 5. FOR WHOM ═══════════════════════ -->
+<section class="rs-section" aria-labelledby="for-heading">
+  <div class="wrap">
+    <h2 id="for-heading" class="rs-h2 reveal">למי הסדנה מתאימה</h2>
+    <ul class="rs-list for">
+      <li class="reveal d1"><span class="ic" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>לאנשים שעברו דרך רוחנית ארוכה ומרגישות שהן במקום חדש שעוד אין לו שם</li>
+      <li class="reveal d2"><span class="ic" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>למטפלות, מנחות ומלוות שמרגישות שהדרך הישנה כבר לא מדויקת להן</li>
+      <li class="reveal d3"><span class="ic" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>למי שמוכנה להפסיק לרדוף אחרי המציאות, ולהתחיל להכיל אותה</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════════════════ 6. OUTCOMES ═══════════════════════ -->
+<section class="rs-section" aria-labelledby="out-heading" style="background:radial-gradient(ellipse 90% 60% at 50% 0%,rgba(212,175,55,0.05),transparent 60%)">
+  <div class="wrap">
+    <h2 id="out-heading" class="rs-h2 reveal">עם מה תצאי</h2>
+    <ul class="rs-list out">
+      <li class="reveal d1"><span class="ic" aria-hidden="true">✦</span><span><span class="en">alignment</span> אנרגטי לתודעת מימד 5</span></li>
+      <li class="reveal d2"><span class="ic" aria-hidden="true">✦</span>הבנה עמוקה של המבנה: מימדים, קוד, צינור ושדה</li>
+      <li class="reveal d3"><span class="ic" aria-hidden="true">✦</span>תשובה לשאלה "אם לא טיפול, אז מה?"</li>
+      <li class="reveal d4"><span class="ic" aria-hidden="true">✦</span>שלושה עמודי תווך שבנית בעצמך: הזהות הישנה, מילון הקוד וקוד המקור החדש שלך</li>
+      <li class="reveal d5"><span class="ic" aria-hidden="true">✦</span>תרגול יומי שנשאר איתך אחרי הסדנה</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════════════════ 9. SYLLABUS ═══════════════════════ -->
+<section class="rs-section" aria-label="סילבוס">
+  <div class="wrap-lg">
+    <div class="circuitry-line reveal" style="max-width:640px;margin:0 auto" aria-hidden="true"></div>
+    <div class="syl">
+
+      <!-- SESSION 1 -->
+      <article class="sc s1 reveal-up" aria-labelledby="sc1-title">
+        <div class="sc-visual" aria-hidden="true">
+          <svg viewBox="0 0 400 170" preserveAspectRatio="xMidYMid slice">
+            <g class="spin"><circle cx="200" cy="85" r="62" fill="none" stroke="rgba(200,205,230,0.35)" stroke-dasharray="2 9"/></g>
+            <g class="spin rev"><circle cx="200" cy="85" r="44" fill="none" stroke="rgba(200,205,230,0.22)" stroke-dasharray="14 10"/></g>
+            <circle class="breathe" cx="200" cy="85" r="24" fill="none" stroke="rgba(230,232,250,0.7)" stroke-width="1.2"/>
+            <circle class="breathe" cx="200" cy="85" r="3" fill="rgba(240,240,255,0.9)"/>
+            <g fill="rgba(210,215,240,0.7)" font-family="Assistant" font-size="11" font-weight="700" letter-spacing="1">
+              <text x="92" y="40" class="bit">3D</text><text x="290" y="52" class="bit" style="animation-delay:1s">4D</text><text x="300" y="140" class="bit" style="animation-delay:2s">5D</text>
+            </g>
+          </svg>
+          <div class="sc-date"><span>מפגש 1</span><span>יום שני 2.11</span><span dir="ltr">20:00–21:30</span></div>
+          <span class="sc-num">I</span>
+        </div>
+        <div class="sc-body">
+          <h3 id="sc1-title" class="sc-title">הריק שבין העולמות</h3>
+          <div class="sc-freq">
+            <span class="wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+            <div><span class="fl">התדר</span><span class="fv">הכרה והקלה. "אני לא מקולקלת, אני במעבר."</span></div>
+          </div>
+          <ul class="sc-topics">
+            <li data-i="1">חוסר המשמעות כסימן של מעבר, ולא כתקלה</li>
+            <li data-i="2">שלושת המימדים, <span class="en">3D</span>, <span class="en">4D</span> ו-<span class="en">5D</span>, מקורקעים בחוויה האנושית</li>
+            <li data-i="3">למה <span class="en">4D</span> מוצה, וסופו של עידן הטיפול</li>
+            <li data-i="4">בסיס בפיזיקה קוונטית</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- SESSION 2 -->
+      <article class="sc s2 reveal-up d1" aria-labelledby="sc2-title">
+        <div class="sc-visual" aria-hidden="true">
+          <svg viewBox="0 0 400 170" preserveAspectRatio="xMidYMid slice">
+            <g fill="rgba(77,184,255,0.9)" font-family="ui-monospace,Menlo,monospace" font-size="13" id="bits"></g>
+            <g transform="translate(206 92)">
+              <g class="spin" style="animation-duration:40s">
+                <path d="M0 0 a2 2 0 0 1 2 2 a3 3 0 0 1 -3 3 a5 5 0 0 1 -5 -5 a8 8 0 0 1 8 -8 a13 13 0 0 1 13 13 a21 21 0 0 1 -21 21 a34 34 0 0 1 -34 -34 a55 55 0 0 1 55 -55"
+                  fill="none" stroke="rgba(120,200,255,0.85)" stroke-width="1.4" stroke-linecap="round"/>
+              </g>
+            </g>
+          </svg>
+          <div class="sc-date"><span>מפגש 2</span><span>יום שני 9.11</span><span dir="ltr">20:00–21:30</span></div>
+          <span class="sc-num">II</span>
+        </div>
+        <div class="sc-body">
+          <h3 id="sc2-title" class="sc-title">הקוד, הצינור והשדה</h3>
+          <div class="sc-freq">
+            <span class="wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+            <div><span class="fl">התדר</span><span class="fv">עומק ופיצוח</span></div>
+          </div>
+          <ul class="sc-topics">
+            <li data-i="1">הבריאה והזהות כתובות בקוד בינארי: <span class="en">0</span> ו-<span class="en">1</span></li>
+            <li data-i="2">רצף פיבונאצי: הזוג הוא הזרע, לא האויב</li>
+            <li data-i="3">הצינורות בעלי המסה: איך הקוד נשמר בגוף ובמערכת הרגשית, ואיך הוא משתחרר</li>
+            <li data-i="4">מנהיגות אור והחזקת שדה של רזוננס</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- SESSION 3 -->
+      <article class="sc s3 reveal-up d2" aria-labelledby="sc3-title">
+        <div class="sc-visual" aria-hidden="true">
+          <svg viewBox="0 0 400 170" preserveAspectRatio="xMidYMid slice">
+            <circle class="field-ring" cx="200" cy="85" r="60" fill="none" stroke="rgba(230,190,90,0.7)"/>
+            <circle class="field-ring" style="animation-delay:1.25s" cx="200" cy="85" r="60" fill="none" stroke="rgba(230,190,90,0.6)"/>
+            <circle class="field-ring" style="animation-delay:2.5s" cx="200" cy="85" r="60" fill="none" stroke="rgba(230,190,90,0.5)"/>
+            <circle class="field-ring" style="animation-delay:3.75s" cx="200" cy="85" r="60" fill="none" stroke="rgba(230,190,90,0.4)"/>
+            <circle cx="200" cy="85" r="16" fill="rgba(212,175,55,0.2)" stroke="rgba(240,200,100,0.9)"/>
+            <circle class="breathe" cx="200" cy="85" r="5" fill="rgba(250,215,120,1)"/>
+          </svg>
+          <div class="sc-date"><span>מפגש 3</span><span>יום שני 16.11</span><span dir="ltr">20:00–21:30</span></div>
+          <span class="sc-num">III</span>
+        </div>
+        <div class="sc-body">
+          <h3 id="sc3-title" class="sc-title">מחזיקת השדה</h3>
+          <div class="sc-freq">
+            <span class="wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+            <div><span class="fl">התדר</span><span class="fv">ריבונות, שקט ויציבות</span></div>
+          </div>
+          <ul class="sc-topics">
+            <li data-i="1">מרדיפה אחרי המציאות לזהות שמכילה אותה</li>
+            <li data-i="2">שכתוב קוד המקור, מתוך שלמות</li>
+            <li data-i="3">מחזיקת שדה ביומיום: כסף, יחסים ועבודה</li>
+          </ul>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ 10. REGISTER ═══════════════════════ -->
+<section class="rs-section reg" id="register" aria-labelledby="reg-heading">
+  <div class="wrap">
+    <h2 id="reg-heading" class="rs-h2 reveal">שמרי את מקומך</h2>
+    <p class="rs-lead reveal d1" style="text-align:center;margin-top:var(--s1)">הקבוצה מוגבלת ל-20 משתתפות.</p>
+
+    <div class="reg-card reveal d2">
+      <div class="reg-price">
+        <p style="font-size:13px;font-weight:700;letter-spacing:0.1em;color:var(--gold);margin-bottom:var(--s1)" dir="ltr">Resonance</p>
+        <span class="amt gold-text">779<span class="cur">₪</span></span>
+      </div>
+
+      <ul class="reg-includes">
+        <li><span class="ck" aria-hidden="true">✓</span>3 מפגשים חיים</li>
+        <li><span class="ck" aria-hidden="true">✓</span>3 דפי עבודה לבניית הזהות החדשה</li>
+        <li><span class="ck" aria-hidden="true">✓</span>הקלטות של המפגשים</li>
+      </ul>
+
+      <p class="reg-meta">3 מפגשים בזום, קבוצה של עד 20 משתתפות<br/>ימי שני, 2.11 | 9.11 | 16.11 · <span dir="ltr">20:00–21:30</span></p>
+
+      <p class="reg-note">הדף מנוסח בלשון נקבה, אבל פתוח לכולם.</p>
+
+      <form class="reg-form" id="reg-form" novalidate>
+        <div class="fld">
+          <label for="f-name">שם מלא <span class="req" aria-hidden="true">*</span></label>
+          <input id="f-name" name="name" type="text" autocomplete="name" required aria-describedby="e-name"/>
+          <span class="msg" id="e-name" role="alert"></span>
+        </div>
+        <div class="fld">
+          <label for="f-phone">טלפון <span class="req" aria-hidden="true">*</span></label>
+          <input id="f-phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel" dir="ltr" placeholder="05X-XXXXXXX" required aria-describedby="e-phone"/>
+          <span class="msg" id="e-phone" role="alert"></span>
+        </div>
+        <div class="fld">
+          <label for="f-email">אימייל <span class="req" aria-hidden="true">*</span></label>
+          <input id="f-email" name="email" type="email" inputmode="email" autocomplete="email" dir="ltr" placeholder="your@email.com" required aria-describedby="e-email"/>
+          <span class="msg" id="e-email" role="alert"></span>
+        </div>
+
+        <label class="consent" id="consent-wrap">
+          <input type="checkbox" id="f-marketing" required aria-describedby="e-marketing"/>
+          <span>אני מאשרת קבלת תכנים, עדכונים ודואר שיווקי מ-<strong style="color:rgba(230,230,245,0.95)">ליהי זיו ™</strong> (ניתן להסיר בכל עת). <span class="req" style="color:#ff8a8a" aria-hidden="true">*</span></span>
+        </label>
+        <span class="msg" id="e-marketing" role="alert" style="font-size:13px;color:#ff8a8a;display:none"></span>
+
+        <p class="form-error" id="form-error" role="alert"></p>
+
+        <p class="reg-wa"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2c0 1.3.9 2.5 1.1 2.7.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg>לאחר התשלום תצורפו לקבוצת וואטסאפ</p>
+
+        <button type="submit" class="btn-primary btn-pill rs-cta reg-submit" id="reg-submit">להמשך לתשלום</button>
+        <p class="reg-secure">סליקה מאובטחת</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ 11. FAQ ═══════════════════════ -->
+<section class="rs-section" aria-labelledby="faq-heading">
+  <div class="wrap">
+    <h2 id="faq-heading" class="rs-h2 reveal">שאלות נפוצות</h2>
+    <div class="rs-faq reveal d1">
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false" aria-controls="fq1"><span>מה אם אני לא יכולה להגיע לאחד המפגשים?</span>
+          <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="faq-body" id="fq1"><div><p>תקבלי את ההקלטה.</p></div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false" aria-controls="fq2"><span>צריך ידע מוקדם בפיזיקה קוונטית?</span>
+          <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="faq-body" id="fq2"><div><p>ממש לא. כל מה שצריך מוסבר בשפה פשוטה, דרך החוויה.</p></div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false" aria-controls="fq3"><span>מה צריך להכין?</span>
+          <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="faq-body" id="fq3"><div><p>מחברת, עט, מקום שקט ומצלמה פתוחה, אם אפשר.</p></div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false" aria-controls="fq4"><span>האם זה טיפול?</span>
+          <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="faq-body" id="fq4"><div><p>לא. זו פרספקטיבה חדשה ותרגול של תדר חדש. את לא צריכה תיקון.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ 12. CLOSING ═══════════════════════ -->
+<section class="rs-section closing" id="closing" aria-labelledby="closing-heading">
+  <div class="wrap">
+    <h2 id="closing-heading" class="reveal">אין צעד הבא. יש רק את העכשיו,<br/><span class="gold-text">ואת הזהות שמסוגלת להכיל אותו.</span></h2>
+    <div class="reveal d1" style="display:flex;justify-content:center">
+      <a href="#register" class="btn-primary btn-pill rs-cta">אני רוצה להצטרף <span class="arr" aria-hidden="true">←</span></a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p class="font-heading" style="font-size:10px;color:var(--muted);letter-spacing:0.15em">© FROM ZERO TO INFINITE - LIHI ZIV</p>
+  <nav aria-label="קישורי תחתית עמוד" style="display:flex;flex-direction:column;align-items:center;gap:8px;margin-top:4px">
+    <a href="/terms" style="font-size:11px;color:var(--muted);text-decoration:none;letter-spacing:0.08em;transition:color .2s"
+       onmouseover="this.style.color='hsl(210,100%,65%)'" onmouseout="this.style.color='var(--muted)'">מדיניות ביטולים ותקנון</a>
+    <a href="/accessibility" style="font-size:11px;color:var(--muted);text-decoration:none;letter-spacing:0.08em;transition:color .2s"
+       onmouseover="this.style.color='hsl(210,100%,65%)'" onmouseout="this.style.color='var(--muted)'">הצהרת נגישות</a>
+    <p style="font-size:11px;color:var(--muted);letter-spacing:0.05em;text-align:center" dir="rtl">From Zero to Infinite | ליהי זיו בן שימול | עמישב תל אביב-יפו, ישראל</p>
+  </nav>
+</footer>
+
+</div><!-- /.page -->
+
+<!-- ── STICKY CTA (mobile) ── -->
+<div class="rs-sticky" id="rs-sticky" role="complementary" aria-label="הרשמה מהירה">
+  <a href="#register" class="btn-primary btn-pill rs-cta">אני רוצה להצטרף <span class="arr" aria-hidden="true">←</span></a>
+</div>
+
+<script>
+/* ── CANVAS ── */
+(function(){
+  const canvas=document.getElementById('bg-canvas');
+  const ctx=canvas.getContext('2d');
+  let W,H,nodes=[];
+  function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
+  resize();
+  window.addEventListener('resize',()=>{resize();init();});
+  function Node(){
+    this.x=Math.random()*W;this.y=Math.random()*H;
+    this.vx=(Math.random()-.5)*.3;this.vy=(Math.random()-.5)*.3;
+    this.r=Math.random()*1.5+.5;this.opacity=Math.random()*.5+.2;
+  }
+  function init(){nodes=[];const c=Math.floor((W*H)/18000);for(let i=0;i<c;i++)nodes.push(new Node());}
+  init();
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    for(let i=0;i<nodes.length;i++){
+      for(let j=i+1;j<nodes.length;j++){
+        const dx=nodes[i].x-nodes[j].x,dy=nodes[i].y-nodes[j].y;
+        const d=Math.sqrt(dx*dx+dy*dy);
+        if(d<160){ctx.beginPath();ctx.moveTo(nodes[i].x,nodes[i].y);ctx.lineTo(nodes[j].x,nodes[j].y);ctx.strokeStyle=`rgba(77,184,255,${(1-d/160)*.15})`;ctx.lineWidth=.5;ctx.stroke();}
+      }
+    }
+    nodes.forEach(n=>{
+      ctx.beginPath();ctx.arc(n.x,n.y,n.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(77,184,255,${n.opacity})`;ctx.fill();
+      n.x+=n.vx;n.y+=n.vy;
+      if(n.x<0||n.x>W)n.vx*=-1;if(n.y<0||n.y>H)n.vy*=-1;
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ── BINARY FIELD (session 2 visual) ── */
+(function(){
+  const g=document.getElementById('bits');
+  if(!g) return;
+  const ns='http://www.w3.org/2000/svg';
+  for(let r=0;r<8;r++){
+    for(let c=0;c<22;c++){
+      const t=document.createElementNS(ns,'text');
+      t.setAttribute('x',8+c*18);t.setAttribute('y',18+r*21);
+      t.setAttribute('class','bit');
+      t.style.animationDelay=(Math.random()*3.2).toFixed(2)+'s';
+      t.style.animationDuration=(2.4+Math.random()*2.4).toFixed(2)+'s';
+      t.textContent=Math.random()<.5?'0':'1';
+      g.appendChild(t);
+    }
+  }
+})();
+
+/* ── SCROLL REVEAL ── */
+const revealObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');revealObs.unobserve(e.target);}});
+},{threshold:.1});
+document.querySelectorAll('.reveal,.reveal-up,.reveal-right,.reveal-left,.reveal-scale').forEach(el=>revealObs.observe(el));
+
+/* ── STICKY CTA: hidden on hero, register form and closing CTA ── */
+(function(){
+  const bar=document.getElementById('rs-sticky');
+  const state={hero:true,register:false,closing:false};
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{state[e.target.id]=e.isIntersecting;});
+    bar.classList.toggle('visible',!state.hero&&!state.register&&!state.closing);
+  },{threshold:0.05});
+  ['hero','register','closing'].forEach(id=>{const el=document.getElementById(id);if(el)obs.observe(el);});
+})();
+
+/* ── FAQ ACCORDION ── */
+document.querySelectorAll('.rs-faq .faq-btn').forEach(btn=>{
+  btn.addEventListener('click',function(){
+    const item=this.closest('.faq-item');
+    const isOpen=item.classList.contains('open');
+    document.querySelectorAll('.rs-faq .faq-item.open').forEach(o=>{o.classList.remove('open');o.querySelector('.faq-btn').setAttribute('aria-expanded','false');});
+    if(!isOpen){item.classList.add('open');this.setAttribute('aria-expanded','true');}
+  });
+});
+
+/* ── REGISTRATION: save lead first, then redirect to payment ── */
+const SHEETS_WEBHOOK='https://script.google.com/macros/s/AKfycbwxwtU_KL39gxJXY-ggCw_ZiIrCHgLo0OYRjigCGaI6T8oSB8me-oHYK6WJrv6jLOkmtg/exec';
+const PAYMENT_URL='https://pay.sumit.co.il/je86l3/13kfi9z/13kfia0/payment/';
+
+(function(){
+  const form=document.getElementById('reg-form');
+  const btn=document.getElementById('reg-submit');
+  const formErr=document.getElementById('form-error');
+  const consentWrap=document.getElementById('consent-wrap');
+  const marketingMsg=document.getElementById('e-marketing');
+
+  function setFieldError(id,msg){
+    const input=document.getElementById('f-'+id);
+    const el=document.getElementById('e-'+id);
+    input.setAttribute('aria-invalid',msg?'true':'false');
+    el.textContent=msg||'';
+    el.classList.toggle('show',!!msg);
+  }
+  function setConsentError(msg){
+    consentWrap.classList.toggle('invalid',!!msg);
+    marketingMsg.textContent=msg||'';
+    marketingMsg.style.display=msg?'block':'none';
+  }
+
+  function validate(){
+    const name=document.getElementById('f-name').value.trim();
+    const phone=document.getElementById('f-phone').value.replace(/[\s-]/g,'');
+    const email=document.getElementById('f-email').value.trim();
+    const marketing=document.getElementById('f-marketing').checked;
+    const errors={
+      name: name.length<2?'נא להזין שם מלא.':'',
+      phone: !/^05\d{8}$/.test(phone)?'נא להזין מספר נייד ישראלי תקין: 10 ספרות שמתחילות ב-05.':'',
+      email: !/^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/.test(email)?'נא להזין כתובת אימייל תקינה.':''
+    };
+    Object.keys(errors).forEach(k=>setFieldError(k,errors[k]));
+    setConsentError(marketing?'':'יש לאשר קבלת דיוור כדי להמשיך.');
+    const firstBad=['name','phone','email'].find(k=>errors[k]);
+    if(firstBad){document.getElementById('f-'+firstBad).focus();return null;}
+    if(!marketing){document.getElementById('f-marketing').focus();return null;}
+    return {name,phone,email};
+  }
+
+  // clear a field's error as soon as she fixes it
+  ['name','phone','email'].forEach(k=>{
+    document.getElementById('f-'+k).addEventListener('input',()=>setFieldError(k,''));
+  });
+  document.getElementById('f-marketing').addEventListener('change',e=>{if(e.target.checked)setConsentError('');});
+
+  form.addEventListener('submit',async e=>{
+    e.preventDefault();
+    formErr.classList.remove('show');
+    const data=validate();
+    if(!data) return;
+
+    btn.disabled=true;
+    btn.textContent='שומרת את הפרטים...';
+
+    const params=new URLSearchParams({
+      name:data.name,
+      phone:data.phone,
+      email:data.email,
+      codeName:'Resonance - מעבר לעולם החדש',
+      marketing:'כן',
+      submittedAt:new Date().toISOString()
+    });
+
+    const ctrl=new AbortController();
+    const timer=setTimeout(()=>ctrl.abort(),15000);
+    try{
+      // no-cors: Apps Script doesn't expose a readable response cross-origin.
+      // The promise resolves only once the server has received the request and
+      // responded; it rejects on network failure or timeout.
+      await fetch(SHEETS_WEBHOOK,{method:'POST',mode:'no-cors',body:params,signal:ctrl.signal});
+      clearTimeout(timer);
+      btn.textContent='מעבירה לתשלום...';
+      window.location.href=PAYMENT_URL;
+    }catch(err){
+      clearTimeout(timer);
+      formErr.textContent='משהו השתבש בשמירת הפרטים. נא לבדוק את החיבור לאינטרנט ולנסות שוב.';
+      formErr.classList.add('show');
+      btn.disabled=false;
+      btn.textContent='להמשך לתשלום';
+    }
+  });
+})();
+</script>
+
+<script src="/assets/js/legal.js"></script>
+
+<!-- ── SIDE NAV ── -->
+<style>
+.nav-toggle{position:fixed;top:16px;right:16px;z-index:500;width:42px;height:42px;border-radius:10px;background:rgba(10,10,15,0.7);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.1);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer;transition:border-color 0.2s,background 0.2s;padding:0}
+.nav-toggle:hover{border-color:rgba(77,184,255,0.35);background:rgba(77,184,255,0.06)}
+.nav-toggle:focus-visible{outline:2px solid var(--neon);outline-offset:2px}
+.nav-toggle span{display:block;width:18px;height:1.5px;background:rgba(220,220,235,0.8);border-radius:2px;transition:transform 0.3s cubic-bezier(0.16,1,0.3,1),opacity 0.2s;transform-origin:center}
+.nav-toggle.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.nav-toggle.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.nav-toggle.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+.nav-overlay{position:fixed;inset:0;z-index:490;background:rgba(0,0,0,0);pointer-events:none;transition:background 0.35s}
+.nav-overlay.open{background:rgba(0,0,0,0.55);pointer-events:all}
+.nav-drawer{position:fixed;top:0;right:0;bottom:0;z-index:495;width:clamp(260px,72vw,320px);background:rgba(10,10,18,0.97);backdrop-filter:blur(20px);border-left:1px solid rgba(77,184,255,0.12);transform:translateX(100%);transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);display:flex;flex-direction:column;padding:0;overflow:hidden}
+.nav-drawer.open{transform:translateX(0)}
+.nav-drawer-inner{display:flex;flex-direction:column;height:100%;padding:72px 32px 40px;direction:rtl}
+.nav-drawer-label{font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(77,184,255,0.5);margin-bottom:28px;font-family:'Assistant',sans-serif}
+.nav-drawer-links{display:flex;flex-direction:column;gap:4px;flex:1}
+.nav-drawer-link{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 20px;border-radius:12px;text-decoration:none;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);transition:background 0.2s,border-color 0.2s,transform 0.2s}
+.nav-drawer-link:hover{background:rgba(77,184,255,0.06);border-color:rgba(77,184,255,0.2);transform:translateX(-3px)}
+.nav-drawer-link:active{transform:translateX(-1px)}
+.nav-drawer-link:focus-visible{outline:2px solid var(--neon);outline-offset:2px}
+.nav-drawer-link .ndl-text{display:flex;flex-direction:column;gap:3px}
+.nav-drawer-link .ndl-title{font-size:16px;font-weight:700;color:rgba(240,240,255,0.95);font-family:'Assistant',sans-serif}
+.nav-drawer-link .ndl-sub{font-size:12px;color:rgba(160,160,180,0.6);font-family:'Assistant',sans-serif;letter-spacing:0.04em}
+.nav-drawer-link .ndl-icon{font-size:24px;flex-shrink:0}
+.nav-drawer-link.gold{background:rgba(212,175,55,0.05);border-color:rgba(212,175,55,0.15)}
+.nav-drawer-link.gold:hover{background:rgba(212,175,55,0.1);border-color:rgba(212,175,55,0.3)}
+.nav-drawer-divider{height:1px;background:rgba(255,255,255,0.06);margin:12px 0}
+.nav-drawer-footer{font-size:10px;color:rgba(160,160,180,0.35);letter-spacing:0.12em;text-transform:uppercase;text-align:center;font-family:'Assistant',sans-serif}
+</style>
+
+<style>.nav-drawer-inner{overflow-y:auto;overscroll-behavior:contain}</style>
+<button class="nav-toggle" id="nav-toggle" aria-label="פתח תפריט ניווט" aria-expanded="false" aria-controls="nav-drawer">
+  <span></span><span></span><span></span>
+</button>
+<div class="nav-overlay" id="nav-overlay" aria-hidden="true"></div>
+<nav class="nav-drawer" id="nav-drawer" aria-label="ניווט ראשי">
+  <div class="nav-drawer-inner">
+    <p class="nav-drawer-label">NAVIGATION</p>
+    <div class="nav-drawer-links">
+      <a href="/" class="nav-drawer-link">
+        <div class="ndl-text"><span class="ndl-title">דף הבית</span><span class="ndl-sub">From Zero to Infinite</span></div>
+        <span class="ndl-icon" aria-hidden="true">🏠</span>
+      </a>
+      <div class="nav-drawer-divider" aria-hidden="true"></div>
+      <a href="/resonance" class="nav-drawer-link gold">
+        <div class="ndl-text"><span class="ndl-title">Resonance</span><span class="ndl-sub">סדנת זום · 2.11–16.11</span></div>
+        <span class="ndl-icon" aria-hidden="true">🌀</span>
+      </a>
+      <a href="/challenge" class="nav-drawer-link">
+        <div class="ndl-text"><span class="ndl-title">אתגר השפע</span><span class="ndl-sub">30/8 - 5/9 · 27₪</span></div>
+        <span class="ndl-icon" aria-hidden="true">✨</span>
+      </a>
+      <a href="/cards" class="nav-drawer-link">
+        <div class="ndl-text"><span class="ndl-title">קלפי מסר</span><span class="ndl-sub">58 קלפים · 159₪</span></div>
+        <span class="ndl-icon" aria-hidden="true">🃏</span>
+      </a>
+      <div class="nav-drawer-divider" aria-hidden="true"></div>
+      <a href="/quiz" class="nav-drawer-link">
+        <div class="ndl-text"><span class="ndl-title">שאלון אבחון</span><span class="ndl-sub">גלי את הקוד שמנהל אותך</span></div>
+        <span class="ndl-icon" aria-hidden="true">🔍</span>
+      </a>
+      <a href="/guides" class="nav-drawer-link">
+        <div class="ndl-text"><span class="ndl-title">מדריכים חינמיים</span><span class="ndl-sub">3 מדריכים להורדה</span></div>
+        <span class="ndl-icon" aria-hidden="true">📖</span>
+      </a>
+      <a href="/#pricing" class="nav-drawer-link">
+        <div class="ndl-text"><span class="ndl-title">ליווי אישי</span><span class="ndl-sub">קפיצה קוונטית · 5 מפגשים</span></div>
+        <span class="ndl-icon" aria-hidden="true">⚡</span>
+      </a>
+    </div>
+    <p class="nav-drawer-footer">FROM ZERO TO INFINITE</p>
+  </div>
+</nav>
+
+<script>
+(function(){
+  const toggle=document.getElementById('nav-toggle');
+  const overlay=document.getElementById('nav-overlay');
+  const drawer=document.getElementById('nav-drawer');
+  function openNav(){toggle.classList.add('open');overlay.classList.add('open');drawer.classList.add('open');toggle.setAttribute('aria-expanded','true');document.body.style.overflow='hidden';}
+  function closeNav(){toggle.classList.remove('open');overlay.classList.remove('open');drawer.classList.remove('open');toggle.setAttribute('aria-expanded','false');document.body.style.overflow='';}
+  toggle.addEventListener('click',()=>{toggle.classList.contains('open')?closeNav():openNav();});
+  overlay.addEventListener('click',closeNav);
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeNav();});
+})();
+</script>
+
+</body>
+</html>
